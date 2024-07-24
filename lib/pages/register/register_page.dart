@@ -82,26 +82,15 @@ class _RegisterPageState extends State<RegisterPage> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
 
-/*
-{
-    "code": 422,
-    "error_code": "weak_password",
-    "msg": "Password should be at least 6 characters.",
-    "weak_password": {
-        "reasons": [
-            "length"
-        ]
-    }
-}
-*/
       if (mounted) {
+        print(authResponse.user);
+        print(authResponse.session);
         if (authResponse.session != null) {
+          print(authResponse.session);
           context.pushReplacementNamed(
             HomePage.routeName,
           );
         }
-        _passwordController.clear();
-        _confirmPasswordController.clear();
       }
     } on AuthException catch (error) {
       if (mounted) context.showSnackBar(error.message, isError: true);
@@ -125,54 +114,60 @@ class _RegisterPageState extends State<RegisterPage> {
         title: const Text('Sign Up'),
         automaticallyImplyLeading: true,
       ),
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            shrinkWrap: true,
-            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-            children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-              ),
-              const SizedBox(height: 18),
-              TextFormField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
+      body: Align(
+        alignment: const FractionalOffset(0, 0.2),
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Colors.amberAccent,
+          ),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+              children: [
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(labelText: 'Email'),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 18),
-              TextFormField(
-                controller: _confirmPasswordController,
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  if (value == _passwordController.text) {
+                const SizedBox(height: 18),
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
                     return null;
-                  }
-                  return 'Passwords dont match.';
-                },
-                decoration: const InputDecoration(
-                  labelText: 'Confirm password',
+                  },
                 ),
-              ),
-              const SizedBox(height: 18),
-              ElevatedButton(
-                onPressed: _isLoading ? null : _signUp,
-                child: Text(_isLoading ? 'Registering...' : 'Register'),
-              ),
-            ],
+                const SizedBox(height: 18),
+                TextFormField(
+                  controller: _confirmPasswordController,
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    if (value == _passwordController.text) {
+                      return null;
+                    }
+                    return 'Passwords dont match.';
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Confirm password',
+                  ),
+                ),
+                const SizedBox(height: 18),
+                ElevatedButton(
+                  onPressed: _isLoading ? null : _signUp,
+                  child: Text(_isLoading ? 'Registering...' : 'Register'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

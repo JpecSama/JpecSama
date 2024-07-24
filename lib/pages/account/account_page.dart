@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/main.dart';
+import 'package:jpec_sama/router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../login/login_page.dart';
@@ -87,8 +89,8 @@ class _AccountPageState extends State<AccountPage> {
       }
     } finally {
       if (mounted) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const LoginPage()),
+        context.pushReplacementNamed(
+          LoginPage.routeName,
         );
       }
     }
