@@ -20,7 +20,6 @@ final router = GoRouter(
         ].contains(state.fullPath!.split('?')[0])) {
       return null;
     }
-    print(supabase.auth.currentSession);
     if (supabase.auth.currentSession == null) {
       return '/login';
     }

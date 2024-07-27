@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
-import 'package:jpec_sama/main.dart';
+import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/pages/account/account_page.dart';
 import 'package:jpec_sama/pages/review/review_page.dart';
+import 'package:jpec_sama/repositories/review_repository.dart';
 import 'package:jpec_sama/theme/theme_title.dart';
+
+import '../../main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,7 +18,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _future = supabase.from('flashcard').select();
+  final _future = ReviewRepository.getCardsToReview();
+  final _countFuture = ReviewRepository.getCardsToReviewCount();
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +55,10 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: ((context, index) {
                       final flashcard = flashcards[index];
                       return ListTile(
-                        title: Text(flashcard['flashcard_text']),
-                        subtitle: Text(flashcard['hint']),
+                        title: Text(flashcard.flashcardText),
+                        subtitle: flashcard.hint != null
+                            ? Text(flashcard.hint!)
+                            : null,
                       );
                     }),
                   );
@@ -63,7 +69,20 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 context.pushNamed(ReviewPage.routeName);
               },
-              child: Text('Review'),
+              child: FutureBuilder(
+                  future: _countFuture,
+                  builder: (context, snap) {
+                    if (snap.connectionState == ConnectionState.waiting) {
+                      return const Text('? Review');
+                    }
+                    if (snap.hasData && snap.data != null) {
+                      final flashcards = snap.data!;
+                      return Text(
+                          "$flashcards Review${flashcards > 1 ? 's' : ''}");
+                    }
+                    return Container();
+                  }),
+              // child: Text('Review'),
             ),
           ],
         ),

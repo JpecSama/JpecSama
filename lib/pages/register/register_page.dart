@@ -32,12 +32,12 @@ class _RegisterPageState extends State<RegisterPage> {
   void initState() {
     _authStateSubscription = supabase.auth.onAuthStateChange.listen(
       (AuthState data) {
-        print(data);
+        // print(data);
         if (_redirecting) {
           return;
         }
         final session = data.session;
-        print(session);
+        // print(session);
 
         if (session != null) {
           _redirecting = true;

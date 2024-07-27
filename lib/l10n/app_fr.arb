@@ -1,3 +1,9 @@
 {
-  "helloWorld": "Bonjour le monde !"
+  "helloWorld": "Bonjour le monde !",
+  "notMemberRegister": "Toujours pas membre ? Inscris toi ici",
+  "passwordForgotten": "Mot de passe oublié ?",
+  "signInWithPassword": "Se connecter avec le mot de passe",
+  "password": "Mot de passe",
+  "email": "Email",
+  "loading": "Chargement..."
 }

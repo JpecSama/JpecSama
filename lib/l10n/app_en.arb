@@ -1,6 +1,12 @@
 {
-    "helloWorld": "Hello World!",
-    "@helloWorld": {
-      "description": "The conventional newborn programmer greeting"
-    }
-  }
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "notMemberRegister": "Not yet a member ? Sign up here",
+  "passwordForgotten": "Password forgotten ?",
+  "signInWithPassword": "Sign in with password",
+  "password": "Password",
+  "email": "Email",
+  "loading": "Loading..."
+}

@@ -68,12 +68,12 @@ class _LoginPageState extends State<LoginPage> {
 //
     _authStateSubscription = supabase.auth.onAuthStateChange.listen(
       (AuthState data) {
-        print(data);
+        // print(data);
         if (_redirecting) {
           return;
         }
         final session = data.session;
-        print(session);
+        // print(session);
 
         if (session != null) {
           _redirecting = true;
@@ -131,68 +131,78 @@ class _LoginPageState extends State<LoginPage> {
         title: const Text('Sign In'),
         automaticallyImplyLeading: false,
       ),
-      body: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.symmetric(vertical: 2 * kPadding),
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 2 * kPadding,
-              vertical: kPadding,
-            ),
-            decoration: const BoxDecoration(
-              color: Colors.lightGreen,
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 2 * kPadding),
-                  child: TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(labelText: 'Email'),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 2 * kPadding),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
+      body: Align(
+        alignment: const FractionalOffset(0, 0.25),
+        child: ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.symmetric(vertical: 2 * kPadding),
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 2 * kPadding,
+                vertical: kPadding,
+              ),
+              decoration: const BoxDecoration(
+                color: Colors.lightGreen,
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 2 * kPadding),
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                          labelText: context.translations.email),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: kPadding),
-                  child: ElevatedButton(
-                    onPressed: _isLoading ? null : _signIn,
-                    child: Text(
-                        _isLoading ? 'Checking...' : 'Sign in with password'),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 2 * kPadding),
+                    child: TextFormField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: context.translations.password,
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: kPadding),
-            child: TextButton(
-              onPressed: () {
-                context.pushNamed(RegisterPage.routeName);
-              },
-              child: Text('Not yet a member ? Sign up here'),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: kPadding),
-            child: TextButton(
-              onPressed: _showResetPasswordDialog,
-              child: Text(
-                'Password forgotten ?',
-                style: context.textTheme.labelMedium,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: kPadding),
+                    child: ElevatedButton(
+                      onPressed: _isLoading ? null : _signIn,
+                      child: Text(
+                        _isLoading
+                            ? context.translations.loading
+                            : context.translations.signInWithPassword,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: kPadding),
+              child: TextButton(
+                onPressed: () {
+                  context.pushNamed(RegisterPage.routeName);
+                },
+                child: Text(
+                  context.translations.notMemberRegister,
+                  style: context.textTheme.labelLarge,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: kPadding),
+              child: TextButton(
+                onPressed: _showResetPasswordDialog,
+                child: Text(
+                  context.translations.passwordForgotten,
+                  style: context.textTheme.labelMedium,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
