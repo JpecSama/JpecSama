@@ -1,5 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/repositories/review_repository.dart';
@@ -71,14 +72,18 @@ class _AddFlashcardPageState extends State<AddFlashcardPage> {
       bool isSuccess = await repo.createFlashcard(
         userId,
         Flashcard(
-          flashcardText: _searchTextController.text,
-          hint: hintText.isNotEmpty ? hintText : null,
-        ),
+            flashcardText: _searchTextController.text,
+            hint: hintText.isNotEmpty ? hintText : null,
+            sourceLanguage: _sourceLocale,
+            destLanguage: _destLocale),
         _answerControllers
             .map((controller) => controller.text.trim())
             .where((text) => text.isNotEmpty)
             .toList(),
       );
+      if (isSuccess) {
+        _resetForm();
+      }
       setState(() {
         _isSubmitting = false;
       });
@@ -92,9 +97,26 @@ class _AddFlashcardPageState extends State<AddFlashcardPage> {
     return false;
   }
 
+  void _resetForm() {
+    _searchTextController.clear();
+    _hintController.clear();
+    for (int i = _answerControllers.length - 1; i >= 0; i++) {
+      var answerController = _answerControllers[i];
+      _answerControllers.removeAt(i);
+      answerController.dispose();
+    }
+    setState(() {
+      _searchText = '';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Add a flashcard'),
+        actions: [],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -105,59 +127,122 @@ class _AddFlashcardPageState extends State<AddFlashcardPage> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CountryCodePicker(
-                            hideMainText: true,
-                            onChanged: (CountryCode code) {
-                              String countryCode = code.toCountryStringOnly();
-                              if (!countryToLanguageMap
-                                  .containsKey(countryCode)) {
-                                context.showSnackBar(
-                                    'This country has no locale mapping currently. Please create a bug');
-                                return;
-                              }
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                        vertical: kPadding,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: kPadding,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'From',
+                                      style: context.textTheme.labelMedium,
+                                    ),
+                                    CountryCodePicker(
+                                      hideMainText: true,
+                                      onChanged: (CountryCode code) {
+                                        String countryCode =
+                                            code.code.toString().toUpperCase();
+                                        print("countryCode $countryCode");
+                                        if (!countryToLanguageMap
+                                            .containsKey(countryCode)) {
+                                          context.showSnackBar(
+                                              'This country has no locale mapping currently. Please create a bug');
+                                          return;
+                                        }
+                                        setState(() {
+                                          _sourceLocale = countryToLanguageMap[
+                                              countryCode]!;
+                                        });
+                                      },
+                                      initialSelection: countryToLanguageMap
+                                          .entries
+                                          .where((entry) =>
+                                              entry.value == _sourceLocale)
+                                          .firstOrNull
+                                          ?.key,
+                                      showCountryOnly: true,
+                                      showOnlyCountryWhenClosed: true,
+                                      alignLeft: true,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              String tmpLocale = _sourceLocale;
                               setState(() {
-                                _sourceLocale =
-                                    countryToLanguageMap[countryCode]!;
+                                _sourceLocale = _destLocale;
+                                _destLocale = tmpLocale;
                               });
                             },
-                            initialSelection: countryToLanguageMap.entries
-                                .where((entry) => entry.value == _sourceLocale)
-                                .firstOrNull
-                                ?.key,
-                            showCountryOnly: true,
-                            showOnlyCountryWhenClosed: true,
-                            alignLeft: false,
+                            icon: const Icon(
+                                Icons.swap_horizontal_circle_outlined),
                           ),
-                        ),
-                        const Icon(Icons.arrow_circle_right_outlined),
-                        Expanded(
-                          child: CountryCodePicker(
-                            hideMainText: true,
-                            onChanged: (CountryCode code) {
-                              final map = LanguageService.countryToLanguageCode;
-                              String countryCode = code.toCountryStringOnly();
-                              if (!map.containsKey(countryCode)) {
-                                context.showSnackBar(
-                                    'This country has no locale mapping currently. Please create a bug');
-                                return;
-                              }
-                              setState(() {
-                                _destLocale = map[countryCode]!;
-                              });
-                            },
-                            initialSelection: countryToLanguageMap.entries
-                                .where((entry) => entry.value == _destLocale)
-                                .firstOrNull
-                                ?.key,
-                            showCountryOnly: true,
-                            showOnlyCountryWhenClosed: true,
-                            alignLeft: false,
+                          Expanded(
+                            child: Center(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: kPadding,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'To',
+                                      style: context.textTheme.labelMedium,
+                                    ),
+                                    CountryCodePicker(
+                                      hideMainText: true,
+                                      onChanged: (CountryCode code) {
+                                        final map = LanguageService
+                                            .countryToLanguageCode;
+                                        String countryCode =
+                                            code.code.toString().toUpperCase();
+                                        if (!map.containsKey(countryCode)) {
+                                          context.showSnackBar(
+                                              'This country has no locale mapping currently. Please create a bug');
+                                          return;
+                                        }
+                                        setState(() {
+                                          _destLocale = map[countryCode]!;
+                                        });
+                                      },
+                                      initialSelection: countryToLanguageMap
+                                          .entries
+                                          .where((entry) =>
+                                              entry.value == _destLocale)
+                                          .firstOrNull
+                                          ?.key,
+                                      showCountryOnly: true,
+                                      showOnlyCountryWhenClosed: true,
+                                      showDropDownButton: false,
+                                      alignLeft: true,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     TextFormField(
                       controller: _searchTextController,

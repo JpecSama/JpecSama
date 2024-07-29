@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:jpec_sama/extensions/context_extension.dart';
 
 import '../../models/flashcard.dart';
 import '../../repositories/review_repository.dart';
@@ -58,25 +59,66 @@ class _ListPageState extends State<ListPage> {
             child: PagedListView<int, Flashcard>(
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<Flashcard>(
-                itemBuilder: (context, flashcard, index) => ListTile(
-                  title: Text.rich(
-                    TextSpan(
-                      children: ([
-                        TextSpan(
-                          text: flashcard.flashcardText,
-                        ),
-                        flashcard.hint != null
-                            ? TextSpan(text: flashcard.hint!)
-                            : null
-                      ]
-                          .where((span) => span != null)
-                          .map((span) => span as TextSpan)).toList(),
+                itemBuilder: (context, flashcard, index) => Dismissible(
+                  key: Key("flashcard_${flashcard.id}"),
+                  background: Container(color: Colors.red),
+                  confirmDismiss: (direction) async {
+                    if (direction == DismissDirection.startToEnd) {
+                      bool dismiss = false;
+                      await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              backgroundColor: Colors.amber,
+                              title: const Text(
+                                  "Are you sure you want to delete the item"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () async {
+                                      dismiss = true;
+                                      ReviewRepository _repo =
+                                          ReviewRepository();
+
+                                      await _repo.deleteCard(flashcard.id!);
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Yes")),
+                                TextButton(
+                                    onPressed: () {
+                                      dismiss = false;
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("No")),
+                              ],
+                            );
+                          });
+                      return dismiss;
+                    }
+                    return false;
+                  },
+                  onDismissed: (direction) {
+                    context.showSnackBar('Successfully deleted');
+                  },
+                  child: ListTile(
+                    title: Text.rich(
+                      TextSpan(
+                        children: ([
+                          TextSpan(
+                            text: flashcard.flashcardText,
+                          ),
+                          flashcard.hint != null
+                              ? TextSpan(text: flashcard.hint!)
+                              : null
+                        ]
+                            .where((span) => span != null)
+                            .map((span) => span as TextSpan)).toList(),
+                      ),
                     ),
-                  ),
-                  subtitle: Text(
-                    flashcard.flashcardAnswer
-                        .map((ans) => ans.answer)
-                        .join(', '),
+                    subtitle: Text(
+                      flashcard.flashcardAnswer
+                          .map((ans) => ans.answer)
+                          .join(', '),
+                    ),
                   ),
                 ),
               ),

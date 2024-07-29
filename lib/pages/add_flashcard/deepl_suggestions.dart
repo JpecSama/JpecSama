@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
-import 'package:jpec_sama/main.dart';
 import 'package:jpec_sama/models/api/deepl_translation_answer.dart';
 import 'package:jpec_sama/models/api/deepl_translation_request.dart';
 import 'package:jpec_sama/repositories/user_cred_repository.dart';
 import 'package:jpec_sama/repositories/user_repository.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../models/api/api_translation.dart';
 import '../../models/api/deepl_translation.dart';
@@ -41,6 +39,9 @@ class _DeeplSuggestionsState extends State<DeeplSuggestions> {
 
   Future<void> _fetchDeeplTranslations() async {
     if (widget.searchText.isEmpty) {
+      setState(() {
+        _deeplTranslationAnswerFuture = Future.value(null);
+      });
       context.showSnackBar("Nothing to search.", isError: true);
       return;
     }

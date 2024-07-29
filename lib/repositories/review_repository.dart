@@ -19,12 +19,10 @@ class ReviewRepository {
           'dest_language': flashcard.destLanguage,
           'user_id': userId
         })
-        .single()
-        .select('id');
-    print('res');
-    print(res);
+        .select('id')
+        .single();
 
-    final flashcardId = res.first['id'];
+    final flashcardId = res['id'];
     for (var answer in answers) {
       await supabase.from('flashcard_answer').insert({
         'flashcard_id': flashcardId,
@@ -44,6 +42,13 @@ class ReviewRepository {
           DateTime.now(),
         )
         .limit(100);
+  }
+
+  Future<void> deleteCard(String cardId) async {
+    return await supabase.from('flashcard').delete().eq(
+          'id',
+          cardId,
+        );
   }
 
   Future<List<Flashcard>> getCardsToReview() async {
