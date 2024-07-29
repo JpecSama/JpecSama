@@ -15,18 +15,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'JpecSama',
-      // localizationsDelegates: const [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
-      // supportedLocales: const [
-      //   Locale('en'),
-      //   Locale('fr'),
-      // ],
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: themeData,
+      // theme: themeData,
+      theme: japaneseTheme,
       routerConfig: router,
     );
   }

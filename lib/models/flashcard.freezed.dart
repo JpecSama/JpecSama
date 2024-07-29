@@ -20,11 +20,11 @@ Flashcard _$FlashcardFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Flashcard {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   int get level => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
-  DateTime get nextAvailableAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get nextAvailableAt => throw _privateConstructorUsedError;
   String get flashcardText => throw _privateConstructorUsedError;
   String? get hint => throw _privateConstructorUsedError;
   String? get answerInfos => throw _privateConstructorUsedError;
@@ -49,11 +49,11 @@ abstract class $FlashcardCopyWith<$Res> {
       _$FlashcardCopyWithImpl<$Res, Flashcard>;
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String type,
       int level,
-      DateTime createdAt,
-      DateTime nextAvailableAt,
+      DateTime? createdAt,
+      DateTime? nextAvailableAt,
       String flashcardText,
       String? hint,
       String? answerInfos,
@@ -77,11 +77,11 @@ class _$FlashcardCopyWithImpl<$Res, $Val extends Flashcard>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? type = null,
     Object? level = null,
-    Object? createdAt = null,
-    Object? nextAvailableAt = null,
+    Object? createdAt = freezed,
+    Object? nextAvailableAt = freezed,
     Object? flashcardText = null,
     Object? hint = freezed,
     Object? answerInfos = freezed,
@@ -90,10 +90,10 @@ class _$FlashcardCopyWithImpl<$Res, $Val extends Flashcard>
     Object? flashcardAnswer = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -102,14 +102,14 @@ class _$FlashcardCopyWithImpl<$Res, $Val extends Flashcard>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as int,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      nextAvailableAt: null == nextAvailableAt
+              as DateTime?,
+      nextAvailableAt: freezed == nextAvailableAt
           ? _value.nextAvailableAt
           : nextAvailableAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       flashcardText: null == flashcardText
           ? _value.flashcardText
           : flashcardText // ignore: cast_nullable_to_non_nullable
@@ -147,11 +147,11 @@ abstract class _$$FlashcardImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String type,
       int level,
-      DateTime createdAt,
-      DateTime nextAvailableAt,
+      DateTime? createdAt,
+      DateTime? nextAvailableAt,
       String flashcardText,
       String? hint,
       String? answerInfos,
@@ -173,11 +173,11 @@ class __$$FlashcardImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? type = null,
     Object? level = null,
-    Object? createdAt = null,
-    Object? nextAvailableAt = null,
+    Object? createdAt = freezed,
+    Object? nextAvailableAt = freezed,
     Object? flashcardText = null,
     Object? hint = freezed,
     Object? answerInfos = freezed,
@@ -186,10 +186,10 @@ class __$$FlashcardImplCopyWithImpl<$Res>
     Object? flashcardAnswer = null,
   }) {
     return _then(_$FlashcardImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -198,14 +198,14 @@ class __$$FlashcardImplCopyWithImpl<$Res>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as int,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      nextAvailableAt: null == nextAvailableAt
+              as DateTime?,
+      nextAvailableAt: freezed == nextAvailableAt
           ? _value.nextAvailableAt
           : nextAvailableAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       flashcardText: null == flashcardText
           ? _value.flashcardText
           : flashcardText // ignore: cast_nullable_to_non_nullable
@@ -238,11 +238,11 @@ class __$$FlashcardImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FlashcardImpl implements _Flashcard {
   const _$FlashcardImpl(
-      {required this.id,
-      required this.type,
-      required this.level,
-      required this.createdAt,
-      required this.nextAvailableAt,
+      {this.id,
+      this.type = 'vocabulary',
+      this.level = 0,
+      this.createdAt,
+      this.nextAvailableAt,
       required this.flashcardText,
       this.hint,
       this.answerInfos,
@@ -255,15 +255,17 @@ class _$FlashcardImpl implements _Flashcard {
       _$$FlashcardImplFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
+  @JsonKey()
   final String type;
   @override
+  @JsonKey()
   final int level;
   @override
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @override
-  final DateTime nextAvailableAt;
+  final DateTime? nextAvailableAt;
   @override
   final String flashcardText;
   @override
@@ -347,11 +349,11 @@ class _$FlashcardImpl implements _Flashcard {
 
 abstract class _Flashcard implements Flashcard {
   const factory _Flashcard(
-      {required final String id,
-      required final String type,
-      required final int level,
-      required final DateTime createdAt,
-      required final DateTime nextAvailableAt,
+      {final String? id,
+      final String type,
+      final int level,
+      final DateTime? createdAt,
+      final DateTime? nextAvailableAt,
       required final String flashcardText,
       final String? hint,
       final String? answerInfos,
@@ -363,15 +365,15 @@ abstract class _Flashcard implements Flashcard {
       _$FlashcardImpl.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
   String get type;
   @override
   int get level;
   @override
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
-  DateTime get nextAvailableAt;
+  DateTime? get nextAvailableAt;
   @override
   String get flashcardText;
   @override

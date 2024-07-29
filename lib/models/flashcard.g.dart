@@ -8,11 +8,15 @@ part of 'flashcard.dart';
 
 _$FlashcardImpl _$$FlashcardImplFromJson(Map<String, dynamic> json) =>
     _$FlashcardImpl(
-      id: json['id'] as String,
-      type: json['type'] as String,
-      level: (json['level'] as num).toInt(),
-      createdAt: DateTime.parse(json['created_at'] as String),
-      nextAvailableAt: DateTime.parse(json['next_available_at'] as String),
+      id: json['id'] as String?,
+      type: json['type'] as String? ?? 'vocabulary',
+      level: (json['level'] as num?)?.toInt() ?? 0,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      nextAvailableAt: json['next_available_at'] == null
+          ? null
+          : DateTime.parse(json['next_available_at'] as String),
       flashcardText: json['flashcard_text'] as String,
       hint: json['hint'] as String?,
       answerInfos: json['answer_infos'] as String?,
@@ -29,12 +33,13 @@ Map<String, dynamic> _$$FlashcardImplToJson(_$FlashcardImpl instance) =>
       'id': instance.id,
       'type': instance.type,
       'level': instance.level,
-      'created_at': instance.createdAt.toIso8601String(),
-      'next_available_at': instance.nextAvailableAt.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
+      'next_available_at': instance.nextAvailableAt?.toIso8601String(),
       'flashcard_text': instance.flashcardText,
       'hint': instance.hint,
       'answer_infos': instance.answerInfos,
       'source_language': instance.sourceLanguage,
       'dest_language': instance.destLanguage,
-      'flashcard_answer': instance.flashcardAnswer,
+      'flashcard_answer':
+          instance.flashcardAnswer.map((e) => e.toJson()).toList(),
     };

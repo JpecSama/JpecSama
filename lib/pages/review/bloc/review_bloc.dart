@@ -1,16 +1,29 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:jpec_sama/extensions/string_extension.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/models/flashcard_answer.dart';
 import 'package:jpec_sama/models/flashcard_session_answer.dart';
+import 'package:jpec_sama/repositories/review_repository.dart';
 
 part 'review_event.dart';
 part 'review_state.dart';
 part 'review_bloc.freezed.dart';
+part 'review_bloc.g.dart';
 
-class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
+class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
   final List<Flashcard> flashcards;
+
+  @override
+  ReviewState fromJson(Map<String, dynamic> json) => json['isSessionEnded']
+      ? ReviewState(
+          flashcards: flashcards,
+          sessionAnswers: [],
+        )
+      : ReviewState.fromJson(json);
+
+  @override
+  Map<String, dynamic> toJson(ReviewState state) => state.toJson();
 
   ReviewBloc({
     required this.flashcards,
@@ -42,6 +55,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
         isCorrect = true;
       }
     }
+    final currentCard = state.currentCard!;
     emit(
       state.copyWith(
         hasReviewError: !isCorrect,
@@ -52,6 +66,8 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
         sessionAnswers: [
           ...state.sessionAnswers,
           FlashcardSessionAnswer(
+            flashCard: currentCard.copyWith(
+                level: currentCard.level + (isCorrect ? 1 : -1)),
             givenAnswer: event.givenAnswer,
             isCorrect: isCorrect,
           ),
@@ -61,10 +77,14 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
   }
 
   _onSessionCanceled(_SessionCanceled event, Emitter<ReviewState> emit) {
-    emit(state);
+    emit(state.copyWith(isSessionEnded: true));
   }
 
-  _onSessionSaved(_SessionSaved event, Emitter<ReviewState> emit) {
-    emit(state);
+  _onSessionSaved(_SessionSaved event, Emitter<ReviewState> emit) async {
+    final repo = ReviewRepository();
+    await repo.postReview(state.sessionAnswers);
+    emit(state.copyWith(
+      isSessionEnded: true,
+    ));
   }
 }

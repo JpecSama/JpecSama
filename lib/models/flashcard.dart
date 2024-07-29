@@ -7,11 +7,11 @@ part 'flashcard.freezed.dart';
 @freezed
 class Flashcard with _$Flashcard {
   const factory Flashcard({
-    required String id,
-    required String type,
-    required int level,
-    required DateTime createdAt,
-    required DateTime nextAvailableAt,
+    String? id,
+    @Default('vocabulary') String type,
+    @Default(0) int level,
+    DateTime? createdAt,
+    DateTime? nextAvailableAt,
     required String flashcardText,
     String? hint,
     String? answerInfos,

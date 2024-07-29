@@ -8,5 +8,12 @@
   "signInWithPassword": "Sign in with password",
   "password": "Password",
   "email": "Email",
-  "loading": "Loading..."
+  "answer": "Answer",
+  "yes": "Yes",
+  "no": "No",
+  "successfullyUpdated": "Mis à jour avec succès",
+  "endReviewSession": "End review session",
+  "requiredFieldError": "Please fill this field.",
+  "loading": "Loading...",
+  "authenticatedAction": "You must be authenticated to perform this action"
 }

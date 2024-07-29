@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/main.dart';
+import 'package:jpec_sama/pages/account/deepl_api_config_form.dart';
 import 'package:jpec_sama/router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -110,23 +111,51 @@ class _AccountPageState extends State<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-        children: [
-          TextFormField(
-            controller: _usernameController,
-            decoration: const InputDecoration(labelText: 'User Name'),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Profile'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                text: 'Infos',
+              ),
+              Tab(
+                text: 'APIs',
+              ),
+            ],
           ),
-          const SizedBox(height: 18),
-          ElevatedButton(
-            onPressed: _loading ? null : _updateProfile,
-            child: Text(_loading ? 'Saving...' : 'Update'),
-          ),
-          const SizedBox(height: 18),
-          TextButton(onPressed: _signOut, child: const Text('Sign Out')),
-        ],
+        ),
+        body: TabBarView(
+          children: [
+            ListView(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+              children: [
+                TextFormField(
+                  controller: _usernameController,
+                  decoration: const InputDecoration(labelText: 'User Name'),
+                ),
+                const SizedBox(height: 18),
+                ElevatedButton(
+                  onPressed: _loading ? null : _updateProfile,
+                  child: Text(_loading ? 'Saving...' : 'Update'),
+                ),
+                const SizedBox(height: 18),
+                TextButton(
+                    onPressed: _signOut, child: const Text('Sign Out')),
+              ],
+            ),
+            Column(
+              children: [
+                // setDeeplApiKey
+                Text("API config"),
+                DeeplApiConfigForm()
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -5,5 +5,12 @@
   "signInWithPassword": "Se connecter avec le mot de passe",
   "password": "Mot de passe",
   "email": "Email",
-  "loading": "Chargement..."
+  "yes": "Oui",
+  "no": "Non",
+  "successfullyUpdated": "Successfully updated",
+  "endReviewSession": "Finir la session",
+  "requiredFieldError": "Le champ ne peut pas être vide",
+  "answer": "Réponse",
+  "loading": "Chargement...",
+  "authenticatedAction": "Vous devez être identifié pour réaliser cette action."
 }

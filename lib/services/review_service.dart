@@ -1,4 +1,7 @@
+import 'package:jpec_sama/models/flashcard_session_answer.dart';
+
 class ReviewService {
+  static const maxLevel = 7;
 //   Apprentice 1 → 4 hours → Apprentice 2
 // Apprentice 2 → 8 hours → Apprentice 3
 // Apprentice 3 → 1 day → Apprentice 4
@@ -29,9 +32,11 @@ class ReviewService {
     if (level == 6) {
       return const Duration(days: 31);
     }
-    if (level == 7) {
+    if (level == maxLevel) {
       return const Duration(days: 4 * 31);
     }
     return const Duration(days: 365);
   }
+
+  Future<void> submitReview(List<FlashcardSessionAnswer> givenAnswer) async {}
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/pages/home/home_page.dart';
-import 'package:jpec_sama/router.dart';
 
 import 'bloc/review_bloc.dart';
 
@@ -23,20 +23,22 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
         builder: (dialogContext) {
           //https://api.flutter.dev/flutter/material/AlertDialog-class.html
           return AlertDialog(
-            title: const Text("Exit review?"),
+            title: Text(
+              context.translations.endReviewSession,
+            ),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(dialogContext).pop();
                   context.pushReplacementNamed(HomePage.routeName);
                 },
-                child: Text("Yes"),
+                child: Text(context.translations.yes),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(dialogContext).pop();
                 },
-                child: Text("No"),
+                child: Text(context.translations.no),
               ),
             ],
             elevation: 24.0,
@@ -47,32 +49,64 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      extendBody: true,
-      appBar: AppBar(
-        // title: Text('Review'),
-        leading: IconButton(
-          onPressed: _showExitReviewConfirmDialog,
-          icon: const Icon(Icons.exit_to_app),
+    return BlocListener<ReviewBloc, ReviewState>(
+      listenWhen: (previous, current) =>
+          previous.isSessionEnded != current.isSessionEnded,
+      listener: (context, state) {
+        if (state.isSessionEnded) {
+          context.pushReplacementNamed(HomePage.routeName);
+        }
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          title: const Text('Review'),
+          leading: IconButton(
+            onPressed: _showExitReviewConfirmDialog,
+            icon: const Icon(Icons.exit_to_app),
+          ),
+          elevation: 0,
         ),
-      ),
-      body: SafeArea(
-        child: BlocBuilder<ReviewBloc, ReviewState>(
-          buildWhen: (previous, current) =>
-              previous.currentCardIndex != current.currentCardIndex,
-          builder: (context, state) {
-            Flashcard? currentCard = state.currentCard;
+        body: SafeArea(
+          child: BlocBuilder<ReviewBloc, ReviewState>(
+            buildWhen: (previous, current) =>
+                previous.currentCardIndex != current.currentCardIndex,
+            builder: (context, state) {
+              Flashcard? currentCard = state.currentCard;
 
-            if (currentCard == null) {
-              return const Center(
-                child: Text('Nothing to do'),
+              if (currentCard == null) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Center(
+                      child: BlocBuilder<ReviewBloc, ReviewState>(
+                        buildWhen: (previous, current) =>
+                            previous.isSubmitting != current.isSubmitting ||
+                            previous.submissionError != current.submissionError,
+                        builder: (context, state) {
+                          return ElevatedButton(
+                            onPressed: () {
+                              //TODO
+                              if (state.isSubmitting) {
+                                return;
+                              }
+                              context.read<ReviewBloc>().add(
+                                    const ReviewEvent.sessionSaved(),
+                                  );
+                            },
+                            child: Text(context.translations.endReviewSession),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return CardReviewContent(
+                currentCard: currentCard,
               );
-            }
-            return CardReviewContent(
-              currentCard: currentCard,
-            );
-          },
+            },
+          ),
         ),
       ),
     );
@@ -93,6 +127,7 @@ class CardReviewContent extends StatefulWidget {
 
 class _CardReviewContentState extends State<CardReviewContent> {
   late final TextEditingController _answerController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   void dispose() {
@@ -102,12 +137,23 @@ class _CardReviewContentState extends State<CardReviewContent> {
 
   Flashcard get currentCard => widget.currentCard;
 
+  void _onAnswerSubmitted(String text) {
+    if (!(_formKey.currentState?.validate() ?? false)) {
+      return;
+    }
+    print('onFieldSubmitted $text');
+    context
+        .read<ReviewBloc>()
+        .add(ReviewEvent.cardReviewed(givenAnswer: text.trim()));
+    _answerController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          color: Colors.deepPurple,
+          color: Colors.grey.withAlpha(50),
           height: MediaQuery.of(context).size.height * 0.20,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -136,55 +182,92 @@ class _CardReviewContentState extends State<CardReviewContent> {
                 ),
               ),
               Container(
-                color: Colors.red,
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Center(child: Text('Flashcard')),
+                decoration: const BoxDecoration(
+                  color: Colors.lightBlue,
+                  border: Border.symmetric(
+                    vertical: BorderSide(color: Colors.black),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Center(
+                    child: Text(
+                      // context.translations.answer.toUpperCase(),
+                      "Level ${currentCard.level + 1}",
+                      style: context.textTheme.bodySmall,
+                    ),
+                  ),
                 ),
               )
             ],
           ),
         ),
-        TextFormField(
-          controller: _answerController,
-          enableSuggestions: false,
-          decoration: const InputDecoration(
-            labelText: 'Answer',
-            suffixIcon: Icon(Icons.arrow_circle_right_outlined),
-          ),
-          onFieldSubmitted: (value) {
-            print('onFieldSubmitted $value');
-            context
-                .read<ReviewBloc>()
-                .add(ReviewEvent.cardReviewed(givenAnswer: value.trim()));
-            _answerController.clear();
-          },
-        ),
-        Expanded(
+        Form(
+          key: _formKey,
           child: BlocBuilder<ReviewBloc, ReviewState>(
             buildWhen: (previous, current) =>
-                previous.hasReviewError != current.hasReviewError ||
-                previous.isAnswerVisible != current.isAnswerVisible,
+                previous.hasReviewError != current.hasReviewError,
             builder: (context, state) {
-              if (!state.isAnswerVisible) {
-                return Container();
-              }
-              return Column(
-                children: [
-                  Text(
-                    currentCard.flashcardAnswer
-                        .map(
-                          (f) => f.answer,
-                        )
-                        .join(','),
+              return TextFormField(
+                controller: _answerController,
+                enableSuggestions: false,
+                validator: (value) {
+                  if (state.hasReviewError) {
+                    return null;
+                  }
+                  if (value?.trim().isEmpty ?? true) {
+                    return context.translations.requiredFieldError;
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: context.translations.answer,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _onAnswerSubmitted(_answerController.text);
+                    },
+                    icon: const Icon(Icons.arrow_circle_right_outlined),
                   ),
-                  currentCard.answerInfos == null
-                      ? Container()
-                      : Text(currentCard.answerInfos!),
-                ],
+                ),
+                onFieldSubmitted: _onAnswerSubmitted,
               );
             },
           ),
+        ),
+        BlocBuilder<ReviewBloc, ReviewState>(
+          buildWhen: (previous, current) =>
+              previous.hasReviewError != current.hasReviewError ||
+              previous.isAnswerVisible != current.isAnswerVisible,
+          builder: (context, state) {
+            if (!state.isAnswerVisible) {
+              return Container();
+            }
+            return Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: state.hasReviewError ? Colors.red : Colors.green,
+                ),
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Text(
+                          currentCard.flashcardAnswer
+                              .map(
+                                (f) => f.answer,
+                              )
+                              .join(','),
+                        ),
+                        currentCard.answerInfos == null
+                            ? Container()
+                            : Text(currentCard.answerInfos!),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ],
     );

@@ -214,6 +214,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  country_code_picker:
+    dependency: "direct main"
+    description:
+      name: country_code_picker
+      sha256: "92818885f0e47486539f80463b66f649970506a91dd3c0731ca3ba5308324a4d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   cross_file:
     dependency: transitive
     description:
@@ -408,6 +416,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.20"
+  flutter_staggered_grid_view:
+    dependency: transitive
+    description:
+      name: flutter_staggered_grid_view
+      sha256: "19e7abb550c96fbfeb546b23f3ff356ee7c59a019a651f8f102a4ba9b7349395"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -594,6 +610,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  hydrated_bloc:
+    dependency: "direct main"
+    description:
+      name: hydrated_bloc
+      sha256: af35b357739fe41728df10bec03aad422cdc725a1e702e03af9d2a41ea05160c
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.1.5"
   image:
     dependency: transitive
     description:
@@ -666,6 +690,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
+  infinite_scroll_pagination:
+    dependency: "direct main"
+    description:
+      name: infinite_scroll_pagination
+      sha256: b68bce20752fcf36c7739e60de4175494f74e99e9a69b4dd2fe3a1dd07a7f16a
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   intl:
     dependency: "direct main"
     description:
@@ -819,7 +851,7 @@ packages:
     source: hosted
     version: "1.9.0"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: c9e7d3a4cd1410877472158bee69963a4579f78b68c65a2b7d40d1a7a88bb161
@@ -1055,6 +1087,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliver_tools:
+    dependency: transitive
+    description:
+      name: sliver_tools
+      sha256: eae28220badfb9d0559207badcbbc9ad5331aac829a88cb0964d330d2a4636a6
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.12"
   source_gen:
     dependency: transitive
     description:
@@ -1135,6 +1175,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.5.8"
+  synchronized:
+    dependency: transitive
+    description:
+      name: synchronized
+      sha256: "539ef412b170d65ecdafd780f924e5be3f60032a1128df156adad6c5b373d558"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0+1"
   term_glyph:
     dependency: transitive
     description:

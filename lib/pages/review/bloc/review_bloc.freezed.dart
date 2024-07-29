@@ -747,8 +747,15 @@ abstract class _SessionCanceled implements ReviewEvent {
   const factory _SessionCanceled() = _$SessionCanceledImpl;
 }
 
+ReviewState _$ReviewStateFromJson(Map<String, dynamic> json) {
+  return _ReviewState.fromJson(json);
+}
+
 /// @nodoc
 mixin _$ReviewState {
+  String? get submissionError => throw _privateConstructorUsedError;
+  bool get isSubmitting => throw _privateConstructorUsedError;
+  bool get isSessionEnded => throw _privateConstructorUsedError; //
   bool get hasReviewError => throw _privateConstructorUsedError;
   bool get isHintVisible => throw _privateConstructorUsedError;
   bool get isAnswerVisible => throw _privateConstructorUsedError;
@@ -756,6 +763,9 @@ mixin _$ReviewState {
   List<Flashcard> get flashcards => throw _privateConstructorUsedError;
   List<FlashcardSessionAnswer> get sessionAnswers =>
       throw _privateConstructorUsedError;
+
+  /// Serializes this ReviewState to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of ReviewState
   /// with the given fields replaced by the non-null parameter values.
@@ -771,7 +781,10 @@ abstract class $ReviewStateCopyWith<$Res> {
       _$ReviewStateCopyWithImpl<$Res, ReviewState>;
   @useResult
   $Res call(
-      {bool hasReviewError,
+      {String? submissionError,
+      bool isSubmitting,
+      bool isSessionEnded,
+      bool hasReviewError,
       bool isHintVisible,
       bool isAnswerVisible,
       int currentCardIndex,
@@ -794,6 +807,9 @@ class _$ReviewStateCopyWithImpl<$Res, $Val extends ReviewState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? submissionError = freezed,
+    Object? isSubmitting = null,
+    Object? isSessionEnded = null,
     Object? hasReviewError = null,
     Object? isHintVisible = null,
     Object? isAnswerVisible = null,
@@ -802,6 +818,18 @@ class _$ReviewStateCopyWithImpl<$Res, $Val extends ReviewState>
     Object? sessionAnswers = null,
   }) {
     return _then(_value.copyWith(
+      submissionError: freezed == submissionError
+          ? _value.submissionError
+          : submissionError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSubmitting: null == isSubmitting
+          ? _value.isSubmitting
+          : isSubmitting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSessionEnded: null == isSessionEnded
+          ? _value.isSessionEnded
+          : isSessionEnded // ignore: cast_nullable_to_non_nullable
+              as bool,
       hasReviewError: null == hasReviewError
           ? _value.hasReviewError
           : hasReviewError // ignore: cast_nullable_to_non_nullable
@@ -839,7 +867,10 @@ abstract class _$$ReviewStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {bool hasReviewError,
+      {String? submissionError,
+      bool isSubmitting,
+      bool isSessionEnded,
+      bool hasReviewError,
       bool isHintVisible,
       bool isAnswerVisible,
       int currentCardIndex,
@@ -860,6 +891,9 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? submissionError = freezed,
+    Object? isSubmitting = null,
+    Object? isSessionEnded = null,
     Object? hasReviewError = null,
     Object? isHintVisible = null,
     Object? isAnswerVisible = null,
@@ -868,6 +902,18 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
     Object? sessionAnswers = null,
   }) {
     return _then(_$ReviewStateImpl(
+      submissionError: freezed == submissionError
+          ? _value.submissionError
+          : submissionError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSubmitting: null == isSubmitting
+          ? _value.isSubmitting
+          : isSubmitting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSessionEnded: null == isSessionEnded
+          ? _value.isSessionEnded
+          : isSessionEnded // ignore: cast_nullable_to_non_nullable
+              as bool,
       hasReviewError: null == hasReviewError
           ? _value.hasReviewError
           : hasReviewError // ignore: cast_nullable_to_non_nullable
@@ -897,10 +943,13 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$ReviewStateImpl extends _ReviewState {
   const _$ReviewStateImpl(
-      {this.hasReviewError = false,
+      {this.submissionError,
+      this.isSubmitting = false,
+      this.isSessionEnded = false,
+      this.hasReviewError = false,
       this.isHintVisible = false,
       this.isAnswerVisible = false,
       this.currentCardIndex = 0,
@@ -910,6 +959,18 @@ class _$ReviewStateImpl extends _ReviewState {
         _sessionAnswers = sessionAnswers,
         super._();
 
+  factory _$ReviewStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ReviewStateImplFromJson(json);
+
+  @override
+  final String? submissionError;
+  @override
+  @JsonKey()
+  final bool isSubmitting;
+  @override
+  @JsonKey()
+  final bool isSessionEnded;
+//
   @override
   @JsonKey()
   final bool hasReviewError;
@@ -940,7 +1001,7 @@ class _$ReviewStateImpl extends _ReviewState {
 
   @override
   String toString() {
-    return 'ReviewState(hasReviewError: $hasReviewError, isHintVisible: $isHintVisible, isAnswerVisible: $isAnswerVisible, currentCardIndex: $currentCardIndex, flashcards: $flashcards, sessionAnswers: $sessionAnswers)';
+    return 'ReviewState(submissionError: $submissionError, isSubmitting: $isSubmitting, isSessionEnded: $isSessionEnded, hasReviewError: $hasReviewError, isHintVisible: $isHintVisible, isAnswerVisible: $isAnswerVisible, currentCardIndex: $currentCardIndex, flashcards: $flashcards, sessionAnswers: $sessionAnswers)';
   }
 
   @override
@@ -948,6 +1009,12 @@ class _$ReviewStateImpl extends _ReviewState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ReviewStateImpl &&
+            (identical(other.submissionError, submissionError) ||
+                other.submissionError == submissionError) &&
+            (identical(other.isSubmitting, isSubmitting) ||
+                other.isSubmitting == isSubmitting) &&
+            (identical(other.isSessionEnded, isSessionEnded) ||
+                other.isSessionEnded == isSessionEnded) &&
             (identical(other.hasReviewError, hasReviewError) ||
                 other.hasReviewError == hasReviewError) &&
             (identical(other.isHintVisible, isHintVisible) ||
@@ -962,9 +1029,13 @@ class _$ReviewStateImpl extends _ReviewState {
                 .equals(other._sessionAnswers, _sessionAnswers));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      submissionError,
+      isSubmitting,
+      isSessionEnded,
       hasReviewError,
       isHintVisible,
       isAnswerVisible,
@@ -979,11 +1050,21 @@ class _$ReviewStateImpl extends _ReviewState {
   @pragma('vm:prefer-inline')
   _$$ReviewStateImplCopyWith<_$ReviewStateImpl> get copyWith =>
       __$$ReviewStateImplCopyWithImpl<_$ReviewStateImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ReviewStateImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _ReviewState extends ReviewState {
   const factory _ReviewState(
-          {final bool hasReviewError,
+          {final String? submissionError,
+          final bool isSubmitting,
+          final bool isSessionEnded,
+          final bool hasReviewError,
           final bool isHintVisible,
           final bool isAnswerVisible,
           final int currentCardIndex,
@@ -992,6 +1073,15 @@ abstract class _ReviewState extends ReviewState {
       _$ReviewStateImpl;
   const _ReviewState._() : super._();
 
+  factory _ReviewState.fromJson(Map<String, dynamic> json) =
+      _$ReviewStateImpl.fromJson;
+
+  @override
+  String? get submissionError;
+  @override
+  bool get isSubmitting;
+  @override
+  bool get isSessionEnded; //
   @override
   bool get hasReviewError;
   @override

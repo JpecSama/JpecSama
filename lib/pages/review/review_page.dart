@@ -14,7 +14,14 @@ class ReviewPage extends StatefulWidget {
 }
 
 class _ReviewPageState extends State<ReviewPage> {
-  final _future = ReviewRepository.getCardsToReview();
+  final _repo = ReviewRepository();
+  late Future _future;
+
+  @override
+  void initState() {
+    _future = _repo.getCardsToReview();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +32,7 @@ class _ReviewPageState extends State<ReviewPage> {
           return const Center(child: CircularProgressIndicator());
         }
         final flashcards = snapshot.data!;
+        flashcards.shuffle();
         return BlocProvider(
           create: (context) => ReviewBloc(
             flashcards: flashcards,

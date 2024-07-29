@@ -22,6 +22,7 @@ FlashcardSessionAnswer _$FlashcardSessionAnswerFromJson(
 /// @nodoc
 mixin _$FlashcardSessionAnswer {
   String get givenAnswer => throw _privateConstructorUsedError;
+  Flashcard get flashCard => throw _privateConstructorUsedError;
   bool get isCorrect => throw _privateConstructorUsedError;
 
   /// Serializes this FlashcardSessionAnswer to a JSON map.
@@ -40,7 +41,9 @@ abstract class $FlashcardSessionAnswerCopyWith<$Res> {
           $Res Function(FlashcardSessionAnswer) then) =
       _$FlashcardSessionAnswerCopyWithImpl<$Res, FlashcardSessionAnswer>;
   @useResult
-  $Res call({String givenAnswer, bool isCorrect});
+  $Res call({String givenAnswer, Flashcard flashCard, bool isCorrect});
+
+  $FlashcardCopyWith<$Res> get flashCard;
 }
 
 /// @nodoc
@@ -60,6 +63,7 @@ class _$FlashcardSessionAnswerCopyWithImpl<$Res,
   @override
   $Res call({
     Object? givenAnswer = null,
+    Object? flashCard = null,
     Object? isCorrect = null,
   }) {
     return _then(_value.copyWith(
@@ -67,11 +71,25 @@ class _$FlashcardSessionAnswerCopyWithImpl<$Res,
           ? _value.givenAnswer
           : givenAnswer // ignore: cast_nullable_to_non_nullable
               as String,
+      flashCard: null == flashCard
+          ? _value.flashCard
+          : flashCard // ignore: cast_nullable_to_non_nullable
+              as Flashcard,
       isCorrect: null == isCorrect
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
+  }
+
+  /// Create a copy of FlashcardSessionAnswer
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FlashcardCopyWith<$Res> get flashCard {
+    return $FlashcardCopyWith<$Res>(_value.flashCard, (value) {
+      return _then(_value.copyWith(flashCard: value) as $Val);
+    });
   }
 }
 
@@ -84,7 +102,10 @@ abstract class _$$FlashcardSessionAnswerImplCopyWith<$Res>
       __$$FlashcardSessionAnswerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String givenAnswer, bool isCorrect});
+  $Res call({String givenAnswer, Flashcard flashCard, bool isCorrect});
+
+  @override
+  $FlashcardCopyWith<$Res> get flashCard;
 }
 
 /// @nodoc
@@ -103,6 +124,7 @@ class __$$FlashcardSessionAnswerImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? givenAnswer = null,
+    Object? flashCard = null,
     Object? isCorrect = null,
   }) {
     return _then(_$FlashcardSessionAnswerImpl(
@@ -110,6 +132,10 @@ class __$$FlashcardSessionAnswerImplCopyWithImpl<$Res>
           ? _value.givenAnswer
           : givenAnswer // ignore: cast_nullable_to_non_nullable
               as String,
+      flashCard: null == flashCard
+          ? _value.flashCard
+          : flashCard // ignore: cast_nullable_to_non_nullable
+              as Flashcard,
       isCorrect: null == isCorrect
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
@@ -122,7 +148,9 @@ class __$$FlashcardSessionAnswerImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FlashcardSessionAnswerImpl implements _FlashcardSessionAnswer {
   const _$FlashcardSessionAnswerImpl(
-      {required this.givenAnswer, required this.isCorrect});
+      {required this.givenAnswer,
+      required this.flashCard,
+      required this.isCorrect});
 
   factory _$FlashcardSessionAnswerImpl.fromJson(Map<String, dynamic> json) =>
       _$$FlashcardSessionAnswerImplFromJson(json);
@@ -130,11 +158,13 @@ class _$FlashcardSessionAnswerImpl implements _FlashcardSessionAnswer {
   @override
   final String givenAnswer;
   @override
+  final Flashcard flashCard;
+  @override
   final bool isCorrect;
 
   @override
   String toString() {
-    return 'FlashcardSessionAnswer(givenAnswer: $givenAnswer, isCorrect: $isCorrect)';
+    return 'FlashcardSessionAnswer(givenAnswer: $givenAnswer, flashCard: $flashCard, isCorrect: $isCorrect)';
   }
 
   @override
@@ -144,13 +174,16 @@ class _$FlashcardSessionAnswerImpl implements _FlashcardSessionAnswer {
             other is _$FlashcardSessionAnswerImpl &&
             (identical(other.givenAnswer, givenAnswer) ||
                 other.givenAnswer == givenAnswer) &&
+            (identical(other.flashCard, flashCard) ||
+                other.flashCard == flashCard) &&
             (identical(other.isCorrect, isCorrect) ||
                 other.isCorrect == isCorrect));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, givenAnswer, isCorrect);
+  int get hashCode =>
+      Object.hash(runtimeType, givenAnswer, flashCard, isCorrect);
 
   /// Create a copy of FlashcardSessionAnswer
   /// with the given fields replaced by the non-null parameter values.
@@ -172,6 +205,7 @@ class _$FlashcardSessionAnswerImpl implements _FlashcardSessionAnswer {
 abstract class _FlashcardSessionAnswer implements FlashcardSessionAnswer {
   const factory _FlashcardSessionAnswer(
       {required final String givenAnswer,
+      required final Flashcard flashCard,
       required final bool isCorrect}) = _$FlashcardSessionAnswerImpl;
 
   factory _FlashcardSessionAnswer.fromJson(Map<String, dynamic> json) =
@@ -179,6 +213,8 @@ abstract class _FlashcardSessionAnswer implements FlashcardSessionAnswer {
 
   @override
   String get givenAnswer;
+  @override
+  Flashcard get flashCard;
   @override
   bool get isCorrect;
 
