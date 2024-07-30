@@ -7,27 +7,33 @@ import '../models/flashcard_session_answer.dart';
 
 class ReviewRepository {
   Future<bool> createFlashcard(
-      String userId, Flashcard flashcard, Iterable<String> answers) async {
+    String userId,
+    Flashcard flashcard,
+    Iterable<String> answers,
+    bool isReversable,
+  ) async {
     final res = await supabase
         .from('flashcard')
-        .insert({
-          'type': 'vocabulary',
-          'flashcard_text': flashcard.flashcardText,
-          'hint': flashcard.hint,
-          'answer_infos': '',
-          'source_language': flashcard.sourceLanguage,
-          'dest_language': flashcard.destLanguage,
-          'user_id': userId
-        })
+        .insert(flashcard.copyWith(userId: userId).toInsertJson())
         .select('id')
         .single();
 
     final flashcardId = res['id'];
-    for (var answer in answers) {
-      await supabase.from('flashcard_answer').insert({
-        'flashcard_id': flashcardId,
-        'answer': answer,
-      });
+
+    await supabase.from('flashcard_answer').insert(answers.map((answer) {
+          return {
+            'flashcard_id': flashcardId,
+            'answer': answer,
+          };
+        }).toList());
+
+    if (isReversable) {
+      return await createFlashcard(
+        userId,
+        flashcard.copyWith(flashcardText: answers.first),
+        [flashcard.flashcardText],
+        false,
+      );
     }
     return flashcardId != null;
   }
@@ -88,8 +94,9 @@ class ReviewRepository {
     for (var i = 0; i < ReviewService.maxLevel; i++) {
       if (correctLevelMap[i]!.isNotEmpty) {
         await updateForGivenLevel(
-            correctLevelMap[i]!.map((entry) => entry.flashCard.id!).toList(),
-            i);
+          correctLevelMap[i]!.map((entry) => entry.flashCard.id!).toList(),
+          i,
+        );
       }
       if (incorrectLevelMap[i]!.isNotEmpty) {
         await updateForGivenLevel(
@@ -97,6 +104,27 @@ class ReviewRepository {
             i);
       }
     }
+
+    List<String> answerIds = answers
+        .map((answer) => answer.flashCardAnswer?.id)
+        .where(
+          (element) => element != null,
+        )
+        .toList() as List<String>;
+
+    await updateLastUsedAnswers(
+      answerIds,
+    );
+  }
+
+  Future<void> updateLastUsedAnswers(List<String> ids) async {
+    await supabase
+        .from('flashcard_answer')
+        .update({
+          'last_used_at': DateTime.now().toIso8601String(),
+        })
+        .inFilter('id', ids)
+        .select('*');
   }
 
   Future<void> updateForGivenLevel(List<String> ids, int level) async {

@@ -11,6 +11,10 @@ _$FlashcardSessionAnswerImpl _$$FlashcardSessionAnswerImplFromJson(
     _$FlashcardSessionAnswerImpl(
       givenAnswer: json['given_answer'] as String,
       flashCard: Flashcard.fromJson(json['flash_card'] as Map<String, dynamic>),
+      flashCardAnswer: json['flash_card_answer'] == null
+          ? null
+          : FlashcardAnswer.fromJson(
+              json['flash_card_answer'] as Map<String, dynamic>),
       isCorrect: json['is_correct'] as bool,
     );
 
@@ -19,5 +23,6 @@ Map<String, dynamic> _$$FlashcardSessionAnswerImplToJson(
     <String, dynamic>{
       'given_answer': instance.givenAnswer,
       'flash_card': instance.flashCard.toJson(),
+      'flash_card_answer': instance.flashCardAnswer?.toJson(),
       'is_correct': instance.isCorrect,
     };

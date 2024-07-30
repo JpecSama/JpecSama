@@ -48,11 +48,13 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     }
     List<FlashcardAnswer> possibleAnswers = state.currentCard!.flashcardAnswer;
     bool isCorrect = false;
+    FlashcardAnswer? usedAnswer;
     for (var possibleAnswer in possibleAnswers) {
       //todo add levenstein
       if (possibleAnswer.answer.toComparableString() ==
           event.givenAnswer.toComparableString()) {
         isCorrect = true;
+        usedAnswer = possibleAnswer;
       }
     }
     final currentCard = state.currentCard!;
@@ -68,6 +70,7 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
           FlashcardSessionAnswer(
             flashCard: currentCard.copyWith(
                 level: currentCard.level + (isCorrect ? 1 : -1)),
+            flashCardAnswer: usedAnswer,
             givenAnswer: event.givenAnswer,
             isCorrect: isCorrect,
           ),

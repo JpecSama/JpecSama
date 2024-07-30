@@ -6,6 +6,8 @@ part 'flashcard.freezed.dart';
 
 @freezed
 class Flashcard with _$Flashcard {
+  const Flashcard._();
+
   const factory Flashcard({
     String? id,
     @Default('vocabulary') String type,
@@ -17,9 +19,17 @@ class Flashcard with _$Flashcard {
     String? answerInfos,
     String? sourceLanguage,
     String? destLanguage,
+    String? userId,
     @Default([]) List<FlashcardAnswer> flashcardAnswer,
   }) = _Flashcard;
 
   factory Flashcard.fromJson(Map<String, Object?> json) =>
       _$FlashcardFromJson(json);
+
+  Map<String, dynamic> toInsertJson() {
+    final json = toJson();
+    json.remove('id');
+    json.remove('flashcard_answer');
+    return json;
+  }
 }

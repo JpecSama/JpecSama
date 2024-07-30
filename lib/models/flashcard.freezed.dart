@@ -30,6 +30,7 @@ mixin _$Flashcard {
   String? get answerInfos => throw _privateConstructorUsedError;
   String? get sourceLanguage => throw _privateConstructorUsedError;
   String? get destLanguage => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
   List<FlashcardAnswer> get flashcardAnswer =>
       throw _privateConstructorUsedError;
 
@@ -59,6 +60,7 @@ abstract class $FlashcardCopyWith<$Res> {
       String? answerInfos,
       String? sourceLanguage,
       String? destLanguage,
+      String? userId,
       List<FlashcardAnswer> flashcardAnswer});
 }
 
@@ -87,6 +89,7 @@ class _$FlashcardCopyWithImpl<$Res, $Val extends Flashcard>
     Object? answerInfos = freezed,
     Object? sourceLanguage = freezed,
     Object? destLanguage = freezed,
+    Object? userId = freezed,
     Object? flashcardAnswer = null,
   }) {
     return _then(_value.copyWith(
@@ -130,6 +133,10 @@ class _$FlashcardCopyWithImpl<$Res, $Val extends Flashcard>
           ? _value.destLanguage
           : destLanguage // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
       flashcardAnswer: null == flashcardAnswer
           ? _value.flashcardAnswer
           : flashcardAnswer // ignore: cast_nullable_to_non_nullable
@@ -157,6 +164,7 @@ abstract class _$$FlashcardImplCopyWith<$Res>
       String? answerInfos,
       String? sourceLanguage,
       String? destLanguage,
+      String? userId,
       List<FlashcardAnswer> flashcardAnswer});
 }
 
@@ -183,6 +191,7 @@ class __$$FlashcardImplCopyWithImpl<$Res>
     Object? answerInfos = freezed,
     Object? sourceLanguage = freezed,
     Object? destLanguage = freezed,
+    Object? userId = freezed,
     Object? flashcardAnswer = null,
   }) {
     return _then(_$FlashcardImpl(
@@ -226,6 +235,10 @@ class __$$FlashcardImplCopyWithImpl<$Res>
           ? _value.destLanguage
           : destLanguage // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
       flashcardAnswer: null == flashcardAnswer
           ? _value._flashcardAnswer
           : flashcardAnswer // ignore: cast_nullable_to_non_nullable
@@ -236,7 +249,7 @@ class __$$FlashcardImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FlashcardImpl implements _Flashcard {
+class _$FlashcardImpl extends _Flashcard {
   const _$FlashcardImpl(
       {this.id,
       this.type = 'vocabulary',
@@ -248,8 +261,10 @@ class _$FlashcardImpl implements _Flashcard {
       this.answerInfos,
       this.sourceLanguage,
       this.destLanguage,
+      this.userId,
       final List<FlashcardAnswer> flashcardAnswer = const []})
-      : _flashcardAnswer = flashcardAnswer;
+      : _flashcardAnswer = flashcardAnswer,
+        super._();
 
   factory _$FlashcardImpl.fromJson(Map<String, dynamic> json) =>
       _$$FlashcardImplFromJson(json);
@@ -276,6 +291,8 @@ class _$FlashcardImpl implements _Flashcard {
   final String? sourceLanguage;
   @override
   final String? destLanguage;
+  @override
+  final String? userId;
   final List<FlashcardAnswer> _flashcardAnswer;
   @override
   @JsonKey()
@@ -287,7 +304,7 @@ class _$FlashcardImpl implements _Flashcard {
 
   @override
   String toString() {
-    return 'Flashcard(id: $id, type: $type, level: $level, createdAt: $createdAt, nextAvailableAt: $nextAvailableAt, flashcardText: $flashcardText, hint: $hint, answerInfos: $answerInfos, sourceLanguage: $sourceLanguage, destLanguage: $destLanguage, flashcardAnswer: $flashcardAnswer)';
+    return 'Flashcard(id: $id, type: $type, level: $level, createdAt: $createdAt, nextAvailableAt: $nextAvailableAt, flashcardText: $flashcardText, hint: $hint, answerInfos: $answerInfos, sourceLanguage: $sourceLanguage, destLanguage: $destLanguage, userId: $userId, flashcardAnswer: $flashcardAnswer)';
   }
 
   @override
@@ -311,6 +328,7 @@ class _$FlashcardImpl implements _Flashcard {
                 other.sourceLanguage == sourceLanguage) &&
             (identical(other.destLanguage, destLanguage) ||
                 other.destLanguage == destLanguage) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             const DeepCollectionEquality()
                 .equals(other._flashcardAnswer, _flashcardAnswer));
   }
@@ -329,6 +347,7 @@ class _$FlashcardImpl implements _Flashcard {
       answerInfos,
       sourceLanguage,
       destLanguage,
+      userId,
       const DeepCollectionEquality().hash(_flashcardAnswer));
 
   /// Create a copy of Flashcard
@@ -347,7 +366,7 @@ class _$FlashcardImpl implements _Flashcard {
   }
 }
 
-abstract class _Flashcard implements Flashcard {
+abstract class _Flashcard extends Flashcard {
   const factory _Flashcard(
       {final String? id,
       final String type,
@@ -359,7 +378,9 @@ abstract class _Flashcard implements Flashcard {
       final String? answerInfos,
       final String? sourceLanguage,
       final String? destLanguage,
+      final String? userId,
       final List<FlashcardAnswer> flashcardAnswer}) = _$FlashcardImpl;
+  const _Flashcard._() : super._();
 
   factory _Flashcard.fromJson(Map<String, dynamic> json) =
       _$FlashcardImpl.fromJson;
@@ -384,6 +405,8 @@ abstract class _Flashcard implements Flashcard {
   String? get sourceLanguage;
   @override
   String? get destLanguage;
+  @override
+  String? get userId;
   @override
   List<FlashcardAnswer> get flashcardAnswer;
 

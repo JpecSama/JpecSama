@@ -1,11 +1,11 @@
 class LanguageService {
   static Map<String, String> countryToLanguageCode = {
     'US': 'EN', // United States
+    'GB': 'EN', // United Kingdom
     'CA': 'EN', // Canada (English is slightly more prevalent than French)
     'MX': 'ES', // Mexico
     'BR': 'PT', // Brazil
     'AR': 'ES', // Argentina
-    'GB': 'EN', // United Kingdom
     'FR': 'FR', // France
     'DE': 'DE', // Germany
     'IT': 'IT', // Italy

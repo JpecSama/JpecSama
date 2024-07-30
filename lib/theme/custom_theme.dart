@@ -92,7 +92,9 @@ final ThemeData japaneseTheme = ThemeData(
   dialogTheme: const DialogTheme(
     backgroundColor: Color(0xFFfef4f4), // Sakura
     titleTextStyle: TextStyle(color: Color(0xFFb5495b), fontSize: 20), // Ebicha
-    contentTextStyle: TextStyle(color: Color(0xFF26453D)), // Aonibi
+    contentTextStyle: TextStyle(
+      color: Color(0xFF26453D),
+    ), // Aonibi
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: Color(0xFF26453D), // Aonibi
@@ -104,7 +106,7 @@ final ThemeData japaneseTheme = ThemeData(
       // color: const Color(0xFF9e7b56), // Akakō
       borderRadius: BorderRadius.circular(5),
     ),
-    textStyle: const TextStyle(color: Color(0xFFFFFFFF)),
+    textStyle: const TextStyle(color: sumiIro),
   ),
   listTileTheme: const ListTileThemeData(
     textColor: sumiIro,

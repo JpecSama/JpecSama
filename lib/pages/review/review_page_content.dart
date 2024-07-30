@@ -86,7 +86,6 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
                         builder: (context, state) {
                           return ElevatedButton(
                             onPressed: () {
-                              //TODO
                               if (state.isSubmitting) {
                                 return;
                               }
@@ -208,28 +207,31 @@ class _CardReviewContentState extends State<CardReviewContent> {
             buildWhen: (previous, current) =>
                 previous.hasReviewError != current.hasReviewError,
             builder: (context, state) {
-              return TextFormField(
-                controller: _answerController,
-                enableSuggestions: false,
-                validator: (value) {
-                  if (state.hasReviewError) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: TextFormField(
+                  controller: _answerController,
+                  enableSuggestions: false,
+                  validator: (value) {
+                    if (state.hasReviewError) {
+                      return null;
+                    }
+                    if (value?.trim().isEmpty ?? true) {
+                      return context.translations.requiredFieldError;
+                    }
                     return null;
-                  }
-                  if (value?.trim().isEmpty ?? true) {
-                    return context.translations.requiredFieldError;
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  labelText: context.translations.answer,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      _onAnswerSubmitted(_answerController.text);
-                    },
-                    icon: const Icon(Icons.arrow_circle_right_outlined),
+                  },
+                  decoration: InputDecoration(
+                    labelText: context.translations.answer,
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        _onAnswerSubmitted(_answerController.text);
+                      },
+                      icon: const Icon(Icons.arrow_circle_right_outlined),
+                    ),
                   ),
+                  onFieldSubmitted: _onAnswerSubmitted,
                 ),
-                onFieldSubmitted: _onAnswerSubmitted,
               );
             },
           ),

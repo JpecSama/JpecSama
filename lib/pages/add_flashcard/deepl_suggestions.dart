@@ -18,11 +18,13 @@ class DeeplSuggestions extends StatefulWidget {
     required this.sourceLang,
     required this.targetLang,
     required this.onTranslationClicked,
+    this.suggestionScrollPhysics,
   });
   final String searchText;
   final String? sourceLang;
   final String targetLang;
   final OnTranslationClicked onTranslationClicked;
+  final ScrollPhysics? suggestionScrollPhysics;
 
   @override
   State<DeeplSuggestions> createState() => _DeeplSuggestionsState();
@@ -73,7 +75,6 @@ class _DeeplSuggestionsState extends State<DeeplSuggestions> {
 
   @override
   Widget build(BuildContext context) {
-    print("widget.searchText ${widget.searchText}");
     return Container(
       // constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size * hei),
       decoration: BoxDecoration(),
@@ -91,6 +92,7 @@ class _DeeplSuggestionsState extends State<DeeplSuggestions> {
               return ListView.builder(
                   padding: const EdgeInsets.symmetric(vertical: kPadding),
                   shrinkWrap: true,
+                  physics: widget.suggestionScrollPhysics,
                   itemCount: deeplTranslationAnswer.translations.length,
                   itemBuilder: (context, index) {
                     DeeplTranslation translation =
@@ -116,7 +118,10 @@ class _DeeplSuggestionsState extends State<DeeplSuggestions> {
             },
           ),
           ElevatedButton(
-            onPressed: _fetchDeeplTranslations,
+            onPressed:
+                widget.searchText.isNotEmpty && widget.targetLang.isNotEmpty
+                    ? _fetchDeeplTranslations
+                    : null,
             child: const Text('Search'),
           ),
         ],

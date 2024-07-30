@@ -23,6 +23,7 @@ FlashcardSessionAnswer _$FlashcardSessionAnswerFromJson(
 mixin _$FlashcardSessionAnswer {
   String get givenAnswer => throw _privateConstructorUsedError;
   Flashcard get flashCard => throw _privateConstructorUsedError;
+  FlashcardAnswer? get flashCardAnswer => throw _privateConstructorUsedError;
   bool get isCorrect => throw _privateConstructorUsedError;
 
   /// Serializes this FlashcardSessionAnswer to a JSON map.
@@ -41,9 +42,14 @@ abstract class $FlashcardSessionAnswerCopyWith<$Res> {
           $Res Function(FlashcardSessionAnswer) then) =
       _$FlashcardSessionAnswerCopyWithImpl<$Res, FlashcardSessionAnswer>;
   @useResult
-  $Res call({String givenAnswer, Flashcard flashCard, bool isCorrect});
+  $Res call(
+      {String givenAnswer,
+      Flashcard flashCard,
+      FlashcardAnswer? flashCardAnswer,
+      bool isCorrect});
 
   $FlashcardCopyWith<$Res> get flashCard;
+  $FlashcardAnswerCopyWith<$Res>? get flashCardAnswer;
 }
 
 /// @nodoc
@@ -64,6 +70,7 @@ class _$FlashcardSessionAnswerCopyWithImpl<$Res,
   $Res call({
     Object? givenAnswer = null,
     Object? flashCard = null,
+    Object? flashCardAnswer = freezed,
     Object? isCorrect = null,
   }) {
     return _then(_value.copyWith(
@@ -75,6 +82,10 @@ class _$FlashcardSessionAnswerCopyWithImpl<$Res,
           ? _value.flashCard
           : flashCard // ignore: cast_nullable_to_non_nullable
               as Flashcard,
+      flashCardAnswer: freezed == flashCardAnswer
+          ? _value.flashCardAnswer
+          : flashCardAnswer // ignore: cast_nullable_to_non_nullable
+              as FlashcardAnswer?,
       isCorrect: null == isCorrect
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
@@ -91,6 +102,20 @@ class _$FlashcardSessionAnswerCopyWithImpl<$Res,
       return _then(_value.copyWith(flashCard: value) as $Val);
     });
   }
+
+  /// Create a copy of FlashcardSessionAnswer
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FlashcardAnswerCopyWith<$Res>? get flashCardAnswer {
+    if (_value.flashCardAnswer == null) {
+      return null;
+    }
+
+    return $FlashcardAnswerCopyWith<$Res>(_value.flashCardAnswer!, (value) {
+      return _then(_value.copyWith(flashCardAnswer: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -102,10 +127,16 @@ abstract class _$$FlashcardSessionAnswerImplCopyWith<$Res>
       __$$FlashcardSessionAnswerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String givenAnswer, Flashcard flashCard, bool isCorrect});
+  $Res call(
+      {String givenAnswer,
+      Flashcard flashCard,
+      FlashcardAnswer? flashCardAnswer,
+      bool isCorrect});
 
   @override
   $FlashcardCopyWith<$Res> get flashCard;
+  @override
+  $FlashcardAnswerCopyWith<$Res>? get flashCardAnswer;
 }
 
 /// @nodoc
@@ -125,6 +156,7 @@ class __$$FlashcardSessionAnswerImplCopyWithImpl<$Res>
   $Res call({
     Object? givenAnswer = null,
     Object? flashCard = null,
+    Object? flashCardAnswer = freezed,
     Object? isCorrect = null,
   }) {
     return _then(_$FlashcardSessionAnswerImpl(
@@ -136,6 +168,10 @@ class __$$FlashcardSessionAnswerImplCopyWithImpl<$Res>
           ? _value.flashCard
           : flashCard // ignore: cast_nullable_to_non_nullable
               as Flashcard,
+      flashCardAnswer: freezed == flashCardAnswer
+          ? _value.flashCardAnswer
+          : flashCardAnswer // ignore: cast_nullable_to_non_nullable
+              as FlashcardAnswer?,
       isCorrect: null == isCorrect
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
@@ -150,6 +186,7 @@ class _$FlashcardSessionAnswerImpl implements _FlashcardSessionAnswer {
   const _$FlashcardSessionAnswerImpl(
       {required this.givenAnswer,
       required this.flashCard,
+      this.flashCardAnswer,
       required this.isCorrect});
 
   factory _$FlashcardSessionAnswerImpl.fromJson(Map<String, dynamic> json) =>
@@ -160,11 +197,13 @@ class _$FlashcardSessionAnswerImpl implements _FlashcardSessionAnswer {
   @override
   final Flashcard flashCard;
   @override
+  final FlashcardAnswer? flashCardAnswer;
+  @override
   final bool isCorrect;
 
   @override
   String toString() {
-    return 'FlashcardSessionAnswer(givenAnswer: $givenAnswer, flashCard: $flashCard, isCorrect: $isCorrect)';
+    return 'FlashcardSessionAnswer(givenAnswer: $givenAnswer, flashCard: $flashCard, flashCardAnswer: $flashCardAnswer, isCorrect: $isCorrect)';
   }
 
   @override
@@ -176,14 +215,16 @@ class _$FlashcardSessionAnswerImpl implements _FlashcardSessionAnswer {
                 other.givenAnswer == givenAnswer) &&
             (identical(other.flashCard, flashCard) ||
                 other.flashCard == flashCard) &&
+            (identical(other.flashCardAnswer, flashCardAnswer) ||
+                other.flashCardAnswer == flashCardAnswer) &&
             (identical(other.isCorrect, isCorrect) ||
                 other.isCorrect == isCorrect));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, givenAnswer, flashCard, isCorrect);
+  int get hashCode => Object.hash(
+      runtimeType, givenAnswer, flashCard, flashCardAnswer, isCorrect);
 
   /// Create a copy of FlashcardSessionAnswer
   /// with the given fields replaced by the non-null parameter values.
@@ -206,6 +247,7 @@ abstract class _FlashcardSessionAnswer implements FlashcardSessionAnswer {
   const factory _FlashcardSessionAnswer(
       {required final String givenAnswer,
       required final Flashcard flashCard,
+      final FlashcardAnswer? flashCardAnswer,
       required final bool isCorrect}) = _$FlashcardSessionAnswerImpl;
 
   factory _FlashcardSessionAnswer.fromJson(Map<String, dynamic> json) =
@@ -215,6 +257,8 @@ abstract class _FlashcardSessionAnswer implements FlashcardSessionAnswer {
   String get givenAnswer;
   @override
   Flashcard get flashCard;
+  @override
+  FlashcardAnswer? get flashCardAnswer;
   @override
   bool get isCorrect;
 
