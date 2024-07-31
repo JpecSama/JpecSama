@@ -38,6 +38,35 @@ class ReviewRepository {
     return flashcardId != null;
   }
 
+  Future<List<Flashcard>> getCardsToReviewCountPerHour() async {
+    // Future<Map<DateTime, int>> getCardsToReviewCountPerHour() async {
+    DateTime date = DateTime.now();
+    date = date.subtract(Duration(
+      minutes: date.minute,
+      seconds: date.second,
+      microseconds: date.microsecond,
+      milliseconds: date.millisecond,
+    ));
+    var res = await supabase
+        .from('flashcard')
+        .select('*')
+        .gte(
+          'next_available_at',
+          date.toIso8601String(),
+        )
+        .gte(
+          'next_available_at',
+          date.add(const Duration(days: 1)).toIso8601String(),
+        );
+    return res.map((el) => Flashcard.fromJson(el)).toList();
+    // Map<DateTime, int> res = {};
+    // for (var entry in data) {
+    //   var date = entry['next_available_at'];
+    //   res[date] = (res[date] ?? 0) + 1;
+    // }
+    // return res;
+  }
+
   PostgrestTransformBuilder<List<Map<String, dynamic>>>
       getCardsToReviewQuery() {
     return supabase
@@ -129,13 +158,22 @@ class ReviewRepository {
 
   Future<void> updateForGivenLevel(List<String> ids, int level) async {
     final service = ReviewService();
+    DateTime date =
+        DateTime.now().add(service.getDurationAccordingToLevel(level));
+    String dateStr = date
+        .subtract(Duration(
+          minutes: date.minute,
+          seconds: date.second,
+          microseconds: date.microsecond,
+          milliseconds: date.millisecond,
+        ))
+        .toIso8601String();
+
     List<Map<String, dynamic>> updatedCards = await supabase
         .from('flashcard')
         .update({
           'level': level,
-          'next_available_at': DateTime.now()
-              .add(service.getDurationAccordingToLevel(level))
-              .toIso8601String(),
+          'next_available_at': dateStr,
         })
         .inFilter('id', ids)
         .select('*');

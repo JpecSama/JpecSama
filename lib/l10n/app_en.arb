@@ -11,6 +11,20 @@
   "answer": "Answer",
   "yes": "Yes",
   "no": "No",
+  "hint": "Hint",
+  "isReversable": "Is reversable?",
+  "isReversableDescription": "If selected, a second card with the answer is switched with the word to search",
+  "hintDescription": "Optional hint to retrieve the word",
+  "optional": "Optional",
+  "optional_": "(Optional)",
+  "possibleAnswer": "Possible answer n°{index}",
+  "@possibleAnswer": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
   "successfullyUpdated": "Mis à jour avec succès",
   "endReviewSession": "End review session",
   "requiredFieldError": "Please fill this field.",

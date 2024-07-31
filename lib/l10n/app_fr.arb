@@ -7,6 +7,20 @@
   "email": "Email",
   "yes": "Oui",
   "no": "Non",
+  "hint": "Indice",
+  "hintDescription": "Indice optionnel pour retrouver le mot cherché",
+  "optional": "Optionnel",
+  "optional_": "(Optionnel)",
+  "possibleAnswer": "Réponse possible n°{index}",
+  "@possibleAnswer": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "isReversable": "Est reversible ?",
+  "isReversableDescription": "Si sélectionné, une autre carte sera créée avec la réponse à deviner",
   "successfullyUpdated": "Successfully updated",
   "endReviewSession": "Finir la session",
   "requiredFieldError": "Le champ ne peut pas être vide",

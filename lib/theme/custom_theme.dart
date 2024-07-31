@@ -17,6 +17,16 @@ final themeData = ThemeData(
 
 final ThemeData japaneseTheme = ThemeData(
   useMaterial3: true,
+  unselectedWidgetColor: sumiIro,
+  checkboxTheme: CheckboxThemeData(
+    side: const BorderSide(
+      width: 1,
+      color: sumiIro,
+    ),
+    fillColor: WidgetStateProperty.resolveWith(
+      (_) => sumiIro,
+    ),
+  ),
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
     primary: Color(0xFFfef4f4), // Sakura (cherry blossom)

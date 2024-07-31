@@ -170,10 +170,13 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: TextFormField(
                               controller: _hintController,
-                              decoration: const InputDecoration(
-                                label: Text("Hint"),
+                              decoration: InputDecoration(
+                                label: Text(
+                                    "${context.translations.hint} ${context.translations.optional_}"),
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
+                                helperText:
+                                    context.translations.hintDescription,
                               ),
                             ),
                           ),
@@ -201,20 +204,31 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
                               }
                             },
                           ),
-                          BlocBuilder<AddFlashcardBloc, AddFlashcardState>(
-                            buildWhen: (previous, current) =>
-                                previous.isReversable != current.isReversable,
-                            builder: (context, state) {
-                              return CheckboxListTile(
-                                value: state.isReversable,
-                                title: const Text('Is reversable?'),
-                                onChanged: (val) {
-                                  context.read<AddFlashcardBloc>().add(
-                                      const AddFlashcardEvent
-                                          .reversableToggled());
-                                },
-                              );
-                            },
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: BlocBuilder<AddFlashcardBloc,
+                                AddFlashcardState>(
+                              buildWhen: (previous, current) =>
+                                  previous.isReversable != current.isReversable,
+                              builder: (context, state) {
+                                return CheckboxListTile(
+                                  value: state.isReversable,
+                                  title: Text(
+                                    context.translations.isReversable,
+                                  ),
+                                  subtitle: Text(
+                                    context
+                                        .translations.isReversableDescription,
+                                    style: context.textTheme.labelMedium,
+                                  ),
+                                  onChanged: (val) {
+                                    context.read<AddFlashcardBloc>().add(
+                                        const AddFlashcardEvent
+                                            .reversableToggled());
+                                  },
+                                );
+                              },
+                            ),
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width,
@@ -240,8 +254,15 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
                                           child: TextFormField(
                                             controller:
                                                 _answerControllers[index],
-                                            decoration: const InputDecoration(
-                                              label: Text("Answer"),
+                                            decoration: InputDecoration(
+                                              label: Text(
+                                                context.translations
+                                                    .possibleAnswer(index + 1),
+                                                style: context
+                                                    .textTheme.labelMedium,
+                                              ),
+                                              floatingLabelBehavior:
+                                                  FloatingLabelBehavior.always,
                                             ),
                                           ),
                                         ),
