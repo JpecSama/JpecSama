@@ -14,9 +14,7 @@ _$FlashcardImpl _$$FlashcardImplFromJson(Map<String, dynamic> json) =>
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
-      nextAvailableAt: json['next_available_at'] == null
-          ? null
-          : DateTime.parse(json['next_available_at'] as String),
+      nextAvailableAt: DateTime.parse(json['next_available_at'] as String),
       flashcardText: json['flashcard_text'] as String,
       hint: json['hint'] as String?,
       answerInfos: json['answer_infos'] as String?,
@@ -35,7 +33,7 @@ Map<String, dynamic> _$$FlashcardImplToJson(_$FlashcardImpl instance) =>
       'type': instance.type,
       'level': instance.level,
       'created_at': instance.createdAt?.toIso8601String(),
-      'next_available_at': instance.nextAvailableAt?.toIso8601String(),
+      'next_available_at': instance.nextAvailableAt.toIso8601String(),
       'flashcard_text': instance.flashcardText,
       'hint': instance.hint,
       'answer_infos': instance.answerInfos,

@@ -13,7 +13,7 @@ class Flashcard with _$Flashcard {
     @Default('vocabulary') String type,
     @Default(0) int level,
     DateTime? createdAt,
-    DateTime? nextAvailableAt,
+    required DateTime nextAvailableAt,
     required String flashcardText,
     String? hint,
     String? answerInfos,

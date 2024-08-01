@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:jpec_sama/models/flashcard.dart';
@@ -8,24 +10,45 @@ class ReviewGraph extends StatelessWidget {
 
   const ReviewGraph({super.key, required this.flashcards});
 
+  Map<int, int> getHourlyCounts() {
+    Map<int, int> hourlyCounts = {};
+    DateTime now = DateTime.now();
+    int currentHour = now.hour;
+    for (int i = 0; i < 24; i++) {
+      hourlyCounts[(currentHour + i) % 24] =
+          (hourlyCounts[(currentHour + i) % 24] ?? 0);
+    }
+    for (var flashcard in flashcards) {
+      DateTime date = flashcard.nextAvailableAt;
+      if (date.isBefore(now)) {
+        hourlyCounts[currentHour] = (hourlyCounts[currentHour] ?? 0) + 1;
+      }
+      int hour = flashcard.nextAvailableAt.hour;
+      hourlyCounts[hour] = (hourlyCounts[hour] ?? 0) + 1;
+    }
+    return hourlyCounts;
+  }
+
   Widget bottomTitles(double value, TitleMeta meta) {
     const style = TextStyle(fontSize: 10);
+    int currentHour = DateTime.now().hour;
+    int val = currentHour - value.toInt();
     String text;
-    switch (value.toInt()) {
-      default:
-        text = '${value.toInt()}';
-        break;
+
+    if (val % 4 == 0) {
+      text = '${value.toInt()}';
+    } else {
+      text = '';
     }
+
     return SideTitleWidget(
+      angle: pi / 8,
       axisSide: meta.axisSide,
-      child: Text(text, style: style),
+      child: Text(text.isNotEmpty ? "$text:00" : '', style: style),
     );
   }
 
   Widget leftTitles(double value, TitleMeta meta) {
-    // if (value == meta.max) {
-    //   return Container();
-    // }
     const style = TextStyle(
       fontSize: 10,
     );
@@ -53,9 +76,10 @@ class ReviewGraph extends StatelessWidget {
           builder: (context, constraints) {
             final barsSpace = 4.0 * constraints.maxWidth / 400;
             final barsWidth = 8.0 * constraints.maxWidth / 400;
-
+            int maxY = getHourlyCounts().values.reduce(max);
             return BarChart(
               BarChartData(
+                maxY: maxY + 1,
                 borderData: FlBorderData(
                   border: Border.all(),
                 ),
@@ -69,6 +93,7 @@ class ReviewGraph extends StatelessWidget {
                     sideTitles: SideTitles(
                       showTitles: true,
                       reservedSize: 28,
+                      interval: 4.0,
                       getTitlesWidget: bottomTitles,
                     ),
                   ),
@@ -89,12 +114,12 @@ class ReviewGraph extends StatelessWidget {
                 ),
                 gridData: FlGridData(
                   show: true,
-                  checkToShowHorizontalLine: (value) => value % 10 == 0,
+                  checkToShowHorizontalLine: (value) => value % 1 == 0,
                   getDrawingHorizontalLine: (value) => FlLine(
                     color: sumiIro.withAlpha(50),
                     strokeWidth: 1,
                   ),
-                  drawVerticalLine: false,
+                  drawVerticalLine: true,
                 ),
                 barGroups: getData(barsWidth, barsSpace),
               ),
@@ -106,24 +131,24 @@ class ReviewGraph extends StatelessWidget {
   }
 
   List<BarChartGroupData> getData(double barsWidth, double barsSpace) {
-    Map<int, int> hourlyCounts = {};
-    for (int i = 0; i < 24; i++) {
-      hourlyCounts[i] = (hourlyCounts[i] ?? 0);
-    }
-    for (var flashcard in flashcards) {
-      int hour = flashcard.nextAvailableAt!.hour;
-      hourlyCounts[hour] = (hourlyCounts[hour] ?? 0) + 1;
-    }
+    Map<int, int> hourlyCounts = getHourlyCounts();
 
     List<BarChartGroupData> barGroups = [];
     hourlyCounts.forEach((hour, count) {
-      barGroups.add(BarChartGroupData(x: hour, barsSpace: barsSpace, barRods: [
-        BarChartRodData(
-          toY: count.toDouble(),
-          borderRadius: BorderRadius.zero,
-          width: barsWidth,
+      barGroups.add(
+        BarChartGroupData(
+          x: hour,
+          barsSpace: barsSpace,
+          barRods: [
+            BarChartRodData(
+              toY: count.toDouble(),
+              borderRadius: BorderRadius.zero,
+              width: barsWidth,
+              color: ebicha,
+            ),
+          ],
         ),
-      ]));
+      );
     });
 
     return barGroups;

@@ -24,7 +24,7 @@ mixin _$Flashcard {
   String get type => throw _privateConstructorUsedError;
   int get level => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
-  DateTime? get nextAvailableAt => throw _privateConstructorUsedError;
+  DateTime get nextAvailableAt => throw _privateConstructorUsedError;
   String get flashcardText => throw _privateConstructorUsedError;
   String? get hint => throw _privateConstructorUsedError;
   String? get answerInfos => throw _privateConstructorUsedError;
@@ -54,7 +54,7 @@ abstract class $FlashcardCopyWith<$Res> {
       String type,
       int level,
       DateTime? createdAt,
-      DateTime? nextAvailableAt,
+      DateTime nextAvailableAt,
       String flashcardText,
       String? hint,
       String? answerInfos,
@@ -83,7 +83,7 @@ class _$FlashcardCopyWithImpl<$Res, $Val extends Flashcard>
     Object? type = null,
     Object? level = null,
     Object? createdAt = freezed,
-    Object? nextAvailableAt = freezed,
+    Object? nextAvailableAt = null,
     Object? flashcardText = null,
     Object? hint = freezed,
     Object? answerInfos = freezed,
@@ -109,10 +109,10 @@ class _$FlashcardCopyWithImpl<$Res, $Val extends Flashcard>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      nextAvailableAt: freezed == nextAvailableAt
+      nextAvailableAt: null == nextAvailableAt
           ? _value.nextAvailableAt
           : nextAvailableAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       flashcardText: null == flashcardText
           ? _value.flashcardText
           : flashcardText // ignore: cast_nullable_to_non_nullable
@@ -158,7 +158,7 @@ abstract class _$$FlashcardImplCopyWith<$Res>
       String type,
       int level,
       DateTime? createdAt,
-      DateTime? nextAvailableAt,
+      DateTime nextAvailableAt,
       String flashcardText,
       String? hint,
       String? answerInfos,
@@ -185,7 +185,7 @@ class __$$FlashcardImplCopyWithImpl<$Res>
     Object? type = null,
     Object? level = null,
     Object? createdAt = freezed,
-    Object? nextAvailableAt = freezed,
+    Object? nextAvailableAt = null,
     Object? flashcardText = null,
     Object? hint = freezed,
     Object? answerInfos = freezed,
@@ -211,10 +211,10 @@ class __$$FlashcardImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      nextAvailableAt: freezed == nextAvailableAt
+      nextAvailableAt: null == nextAvailableAt
           ? _value.nextAvailableAt
           : nextAvailableAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as DateTime,
       flashcardText: null == flashcardText
           ? _value.flashcardText
           : flashcardText // ignore: cast_nullable_to_non_nullable
@@ -255,7 +255,7 @@ class _$FlashcardImpl extends _Flashcard {
       this.type = 'vocabulary',
       this.level = 0,
       this.createdAt,
-      this.nextAvailableAt,
+      required this.nextAvailableAt,
       required this.flashcardText,
       this.hint,
       this.answerInfos,
@@ -280,7 +280,7 @@ class _$FlashcardImpl extends _Flashcard {
   @override
   final DateTime? createdAt;
   @override
-  final DateTime? nextAvailableAt;
+  final DateTime nextAvailableAt;
   @override
   final String flashcardText;
   @override
@@ -372,7 +372,7 @@ abstract class _Flashcard extends Flashcard {
       final String type,
       final int level,
       final DateTime? createdAt,
-      final DateTime? nextAvailableAt,
+      required final DateTime nextAvailableAt,
       required final String flashcardText,
       final String? hint,
       final String? answerInfos,
@@ -394,7 +394,7 @@ abstract class _Flashcard extends Flashcard {
   @override
   DateTime? get createdAt;
   @override
-  DateTime? get nextAvailableAt;
+  DateTime get nextAvailableAt;
   @override
   String get flashcardText;
   @override

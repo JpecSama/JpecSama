@@ -39,7 +39,6 @@ class ReviewRepository {
   }
 
   Future<List<Flashcard>> getCardsToReviewCountPerHour() async {
-    // Future<Map<DateTime, int>> getCardsToReviewCountPerHour() async {
     DateTime date = DateTime.now();
     date = date.subtract(Duration(
       minutes: date.minute,
@@ -50,21 +49,15 @@ class ReviewRepository {
     var res = await supabase
         .from('flashcard')
         .select('*')
-        .gte(
-          'next_available_at',
-          date.toIso8601String(),
-        )
-        .gte(
+        // .gte(
+        //   'next_available_at',
+        //   date.toIso8601String(),
+        // )
+        .lte(
           'next_available_at',
           date.add(const Duration(days: 1)).toIso8601String(),
         );
     return res.map((el) => Flashcard.fromJson(el)).toList();
-    // Map<DateTime, int> res = {};
-    // for (var entry in data) {
-    //   var date = entry['next_available_at'];
-    //   res[date] = (res[date] ?? 0) + 1;
-    // }
-    // return res;
   }
 
   PostgrestTransformBuilder<List<Map<String, dynamic>>>

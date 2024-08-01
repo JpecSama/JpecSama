@@ -5,6 +5,7 @@ import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/pages/home/home_page.dart';
 
+import '../../theme/custom_theme.dart';
 import 'bloc/review_bloc.dart';
 
 class ReviewPageContent extends StatefulWidget {
@@ -25,7 +26,9 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
           return AlertDialog(
             title: Text(
               context.translations.endReviewSession,
+              textAlign: TextAlign.center,
             ),
+            actionsAlignment: MainAxisAlignment.center,
             actions: [
               TextButton(
                 onPressed: () {
@@ -42,7 +45,6 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
               ),
             ],
             elevation: 24.0,
-            // backgroundColor: Colors.red,
           );
         });
   }
@@ -182,7 +184,7 @@ class _CardReviewContentState extends State<CardReviewContent> {
               ),
               Container(
                 decoration: const BoxDecoration(
-                  color: Colors.lightBlue,
+                  color: tonocha,
                   border: Border.symmetric(
                     vertical: BorderSide(color: Colors.black),
                   ),
@@ -193,7 +195,8 @@ class _CardReviewContentState extends State<CardReviewContent> {
                     child: Text(
                       // context.translations.answer.toUpperCase(),
                       "Level ${currentCard.level + 1}",
-                      style: context.textTheme.bodySmall,
+                      style: context.textTheme.bodySmall!
+                          .copyWith(color: sakuraIro),
                     ),
                   ),
                 ),

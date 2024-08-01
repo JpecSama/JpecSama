@@ -22,13 +22,14 @@ class _DeeplApiConfigFormState extends State<DeeplApiConfigForm> {
     return Container(
       margin: const EdgeInsets.symmetric(
         vertical: kPadding,
+        horizontal: kPadding,
       ),
       padding: const EdgeInsets.symmetric(
         vertical: kPadding * 2,
+        horizontal: kPadding,
       ),
       decoration: BoxDecoration(
-        border: Border.all(),
-      ),
+          border: Border.all(), borderRadius: BorderRadius.circular(8)),
       child: Form(
         key: _formKey,
         child: Column(

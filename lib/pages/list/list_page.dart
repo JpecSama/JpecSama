@@ -99,25 +99,27 @@ class _ListPageState extends State<ListPage> {
                   onDismissed: (direction) {
                     context.showSnackBar('Successfully deleted');
                   },
-                  child: ListTile(
-                    title: Text.rich(
-                      TextSpan(
-                        children: ([
-                          TextSpan(
-                            text: flashcard.flashcardText,
-                          ),
-                          flashcard.hint != null
-                              ? TextSpan(text: flashcard.hint!)
-                              : null
-                        ]
-                            .where((span) => span != null)
-                            .map((span) => span as TextSpan)).toList(),
+                  child: Card(
+                    child: ListTile(
+                      title: Text.rich(
+                        TextSpan(
+                          children: ([
+                            TextSpan(
+                              text: flashcard.flashcardText,
+                            ),
+                            flashcard.hint != null
+                                ? TextSpan(text: flashcard.hint!)
+                                : null
+                          ]
+                              .where((span) => span != null)
+                              .map((span) => span as TextSpan)).toList(),
+                        ),
                       ),
-                    ),
-                    subtitle: Text(
-                      flashcard.flashcardAnswer
-                          .map((ans) => ans.answer)
-                          .join(', '),
+                      subtitle: Text(
+                        flashcard.flashcardAnswer
+                            .map((ans) => ans.answer)
+                            .join(', '),
+                      ),
                     ),
                   ),
                 ),

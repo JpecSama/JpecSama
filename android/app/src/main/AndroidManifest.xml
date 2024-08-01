@@ -2,7 +2,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="jpec_sama"
+        android:label="JpecSama"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

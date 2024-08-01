@@ -85,6 +85,7 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
       bool isSuccess = await repo.createFlashcard(
         userId,
         Flashcard(
+          nextAvailableAt: DateTime.now(),
           flashcardText: state.searchText,
           hint: hintText.isNotEmpty ? hintText : null,
           sourceLanguage: state.sourceLocale,
