@@ -67,9 +67,6 @@ class ReviewGraph extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(top: 8.0),
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-      // decoration: BoxDecoration(
-      //   border: Border.all(),
-      // ),
       child: AspectRatio(
         aspectRatio: 1.66,
         child: LayoutBuilder(

@@ -7,6 +7,18 @@ import 'package:jpec_sama/models/api/deepl_translation_request.dart';
 class DeeplService {
   final Dio _dio;
 
+  // static Future<void> testError() async {
+  //   try {
+  //     throw Exception('Test');
+  //   } catch (exception, stackTrace) {
+  //     print('exception');
+  //     await Sentry.captureException(
+  //       exception,
+  //       stackTrace: stackTrace,
+  //     );
+  //   }
+  // }
+
   DeeplService(String authKey)
       : _dio = Dio(BaseOptions(
           baseUrl: 'https://api-free.deepl.com/v2',

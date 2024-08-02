@@ -36,6 +36,7 @@ dependencies:
   country_code_picker: ^3.0.0
   infinite_scroll_pagination: ^4.0.0
   fl_chart: ^0.68.0
+  sentry_flutter: ^8.6.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

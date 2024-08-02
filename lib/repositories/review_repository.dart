@@ -30,7 +30,7 @@ class ReviewRepository {
     if (isReversable) {
       return await createFlashcard(
         userId,
-        flashcard.copyWith(flashcardText: answers.first),
+        flashcard.copyWith(flashcardText: answers.first, hint: null),
         [flashcard.flashcardText],
         false,
       );
