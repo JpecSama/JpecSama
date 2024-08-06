@@ -19,6 +19,7 @@
       }
     }
   },
+  "addFlashcard": "Ajouter une flashcard",
   "isReversable": "Est reversible ?",
   "isReversableDescription": "Si sélectionné, une autre carte sera créée avec la réponse à deviner",
   "successfullyUpdated": "Successfully updated",

@@ -11,8 +11,8 @@ import '../../models/api/deepl_translation.dart';
 import '../../services/deepl_service.dart';
 import '../../typedef.dart';
 
-class DeeplSuggestions extends StatefulWidget {
-  const DeeplSuggestions({
+class JishoSuggestions extends StatefulWidget {
+  const JishoSuggestions({
     super.key,
     required this.searchText,
     required this.sourceLang,
@@ -27,10 +27,10 @@ class DeeplSuggestions extends StatefulWidget {
   final ScrollPhysics? suggestionScrollPhysics;
 
   @override
-  State<DeeplSuggestions> createState() => _DeeplSuggestionsState();
+  State<JishoSuggestions> createState() => _JishoSuggestionsState();
 }
 
-class _DeeplSuggestionsState extends State<DeeplSuggestions> {
+class _JishoSuggestionsState extends State<JishoSuggestions> {
   late Future<DeeplTranslationAnswer?> _deeplTranslationAnswerFuture;
 
   @override

@@ -44,3 +44,8 @@ using (
   WHERE (f.id = flashcard_answer.flashcard_id)))
 );
 ```
+
+
+https://jisho.org/search/%23kanji%20%E8%8A%9D
+
+https://jisho.org/api/v1/search/words?keyword=jlpt-n5&page=2

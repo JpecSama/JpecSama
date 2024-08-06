@@ -5,10 +5,31 @@ import 'package:jpec_sama/typedef.dart';
 import '../../../theme/theme_title.dart';
 import '../bloc/add_flashcard_bloc.dart';
 import '../deepl_suggestions.dart';
+import '../jisho_suggestions.dart';
 
-class TranslationSuggestions extends StatelessWidget {
+class TranslationSuggestions extends StatefulWidget {
   const TranslationSuggestions({super.key, required this.onTranslationClicked});
   final OnTranslationClicked onTranslationClicked;
+
+  @override
+  State<TranslationSuggestions> createState() => _TranslationSuggestionsState();
+}
+
+class _TranslationSuggestionsState extends State<TranslationSuggestions>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,20 +48,53 @@ class TranslationSuggestions extends StatelessWidget {
               title: 'Translation suggestions',
             ),
           ),
-          BlocBuilder<AddFlashcardBloc, AddFlashcardState>(
-            buildWhen: (previous, current) =>
-                previous.sourceLocale != current.sourceLocale ||
-                previous.destLocale != current.destLocale ||
-                previous.searchText != current.searchText,
-            builder: (context, state) {
-              return DeeplSuggestions(
-                sourceLang: state.sourceLocale,
-                targetLang: state.destLocale,
-                searchText: state.searchText,
-                suggestionScrollPhysics: const NeverScrollableScrollPhysics(),
-                onTranslationClicked: onTranslationClicked,
-              );
-            },
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.5,
+            ),
+            child: BlocBuilder<AddFlashcardBloc, AddFlashcardState>(
+              buildWhen: (previous, current) =>
+                  previous.translatorApi != current.translatorApi ||
+                  previous.sourceLocale != current.sourceLocale ||
+                  previous.destLocale != current.destLocale ||
+                  previous.searchText != current.searchText,
+              builder: (context, state) {
+                return Column(
+                  children: [
+                    TabBar(
+                      controller: _tabController,
+                      tabs: const [
+                        Tab(text: 'DeepL'),
+                        Tab(text: 'Jisho'),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          DeeplSuggestions(
+                            sourceLang: state.sourceLocale,
+                            targetLang: state.destLocale,
+                            searchText: state.searchText,
+                            suggestionScrollPhysics:
+                                const NeverScrollableScrollPhysics(),
+                            onTranslationClicked: widget.onTranslationClicked,
+                          ),
+                          JishoSuggestions(
+                            sourceLang: state.sourceLocale,
+                            targetLang: state.destLocale,
+                            searchText: state.searchText,
+                            suggestionScrollPhysics:
+                                const NeverScrollableScrollPhysics(),
+                            onTranslationClicked: widget.onTranslationClicked,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ],
       ),

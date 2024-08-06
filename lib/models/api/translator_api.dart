@@ -1,0 +1,4 @@
+enum TranslatorApi {
+  deepl,
+  jisho
+}

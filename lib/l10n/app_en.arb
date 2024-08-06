@@ -25,6 +25,7 @@
       }
     }
   },
+  "addFlashcard": "Add a flashcard",
   "successfullyUpdated": "Mis à jour avec succès",
   "endReviewSession": "End review session",
   "requiredFieldError": "Please fill this field.",

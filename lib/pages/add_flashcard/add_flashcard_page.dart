@@ -117,11 +117,12 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
   void _resetForm() {
     _searchTextController.clear();
     _hintController.clear();
-    for (int i = _answerControllers.length - 1; i >= 0; i++) {
+    for (int i = 0; i < _answerControllers.length; i++) {
       var answerController = _answerControllers[i];
       _answerControllers.removeAt(i);
       answerController.dispose();
     }
+    _answerControllers.add(TextEditingController());
 
     _searchTextController.clear();
     context
@@ -133,8 +134,7 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add a flashcard'),
-        actions: [],
+        title: Text(context.translations.addFlashcard),
       ),
       body: SafeArea(
         child: Padding(
@@ -146,7 +146,7 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Column(
                   children: [
-                    //AutofillHitn
+                    //AutofillHint
                     Form(
                       key: _formKey,
                       child: Column(
@@ -262,6 +262,8 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
                                                 style: context
                                                     .textTheme.labelMedium,
                                               ),
+                                              hintText:
+                                                  'Answer (Optional hint)',
                                               floatingLabelBehavior:
                                                   FloatingLabelBehavior.always,
                                             ),

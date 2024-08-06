@@ -8,6 +8,7 @@ class AddFlashcardState with _$AddFlashcardState {
     required String sourceLocale,
     required String destLocale,
     required String searchText,
+    @Default(TranslatorApi.deepl) TranslatorApi translatorApi,
     @Default(true) bool isReversable,
     @Default(false) bool isSubmitting,
   }) = _AddFlashcardState;

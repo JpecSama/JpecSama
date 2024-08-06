@@ -8,6 +8,7 @@ import 'package:jpec_sama/pages/register/register_page.dart';
 import 'package:jpec_sama/pages/review/review_page.dart';
 
 import 'pages/add_flashcard/add_flashcard_page.dart';
+import 'pages/dashboard/dashboard.dart';
 import 'pages/not_found/not_found_page.dart';
 
 final router = GoRouter(
@@ -31,8 +32,8 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      name: HomePage.routeName,
-      builder: (context, state) => const HomePage(),
+      name: DashboardPage.routeName,
+      builder: (context, state) => const DashboardPage(),
     ),
     GoRoute(
       path: '/login',

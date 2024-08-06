@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:jpec_sama/models/api/translator_api.dart';
 
 part 'add_flashcard_event.dart';
 part 'add_flashcard_state.dart';

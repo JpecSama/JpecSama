@@ -16,6 +16,17 @@ class DeeplApiConfigForm extends StatefulWidget {
 class _DeeplApiConfigFormState extends State<DeeplApiConfigForm> {
   final TextEditingController _apiKeyTextController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
+  final UserCredRepository _userCredRepo = UserCredRepository();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final userId = supabase.auth.currentSession!.user.id;
+      _apiKeyTextController.text =
+          (await _userCredRepo.getDeeplApiKey(userId)) ?? '';
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

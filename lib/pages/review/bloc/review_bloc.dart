@@ -58,6 +58,7 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
       }
     }
     final currentCard = state.currentCard!;
+    int newLevel = currentCard.level + (isCorrect ? 1 : -1);
     emit(
       state.copyWith(
         hasReviewError: !isCorrect,
@@ -68,8 +69,8 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
         sessionAnswers: [
           ...state.sessionAnswers,
           FlashcardSessionAnswer(
-            flashCard: currentCard.copyWith(
-                level: currentCard.level + (isCorrect ? 1 : -1)),
+            flashCard:
+                currentCard.copyWith(level: newLevel >= 0 ? newLevel : 0),
             flashCardAnswer: usedAnswer,
             givenAnswer: event.givenAnswer,
             isCorrect: isCorrect,
@@ -84,8 +85,16 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
   }
 
   _onSessionSaved(_SessionSaved event, Emitter<ReviewState> emit) async {
+    print('_onSessionSaved');
     final repo = ReviewRepository();
-    await repo.postReview(state.sessionAnswers);
+    try {
+      await repo.postReview(state.sessionAnswers);
+    } catch (e) {
+      print(e);
+      emit(state.copyWith(
+        isSessionEnded: true,
+      ));
+    }
     emit(state.copyWith(
       isSessionEnded: true,
     ));

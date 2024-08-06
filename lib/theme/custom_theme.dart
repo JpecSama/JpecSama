@@ -69,6 +69,11 @@ final ThemeData japaneseTheme = ThemeData(
     iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
     titleTextStyle: TextStyle(color: Color(0xFFFFFFFF), fontSize: 20),
   ),
+  tabBarTheme: const TabBarTheme(
+    indicatorColor: ebicha,
+    labelColor: ebicha,
+    unselectedLabelColor: sumiIro,
+  ),
   textTheme: const TextTheme(
     headlineLarge: TextStyle(color: tonocha), // Ebicha
     headlineMedium: TextStyle(color: tonocha), // Aonibi

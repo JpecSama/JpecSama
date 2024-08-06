@@ -28,9 +28,16 @@ class ReviewRepository {
         }).toList());
 
     if (isReversable) {
+      String text = answers.first;
+      final regExp = RegExp(r'(\([^)]+\))');
+      RegExpMatch? hintMatch = regExp.firstMatch(text);
+      String? hint = hintMatch?[0];
+      text =
+          hintMatch != null ? text.substring(0, hintMatch.start).trim() : text;
+
       return await createFlashcard(
         userId,
-        flashcard.copyWith(flashcardText: answers.first, hint: null),
+        flashcard.copyWith(flashcardText: text, hint: hint),
         [flashcard.flashcardText],
         false,
       );
@@ -49,10 +56,6 @@ class ReviewRepository {
     var res = await supabase
         .from('flashcard')
         .select('*')
-        // .gte(
-        //   'next_available_at',
-        //   date.toIso8601String(),
-        // )
         .lte(
           'next_available_at',
           date.add(const Duration(days: 1)).toIso8601String(),
@@ -101,11 +104,14 @@ class ReviewRepository {
   Future<void> postReview(List<FlashcardSessionAnswer> answers) async {
     Map<int, List<FlashcardSessionAnswer>> correctLevelMap = {};
     Map<int, List<FlashcardSessionAnswer>> incorrectLevelMap = {};
-    for (int i = 0; i < ReviewService.maxLevel; i++) {
+    for (int i = 0; i <= ReviewService.maxLevel; i++) {
       correctLevelMap[i] = [];
       incorrectLevelMap[i] = [];
     }
     for (final answer in answers) {
+      print("level ${answer.flashCard.level}");
+      print(
+          "correctLevelMap[answer.flashCard.level] ${correctLevelMap[answer.flashCard.level]!}");
       if (answer.isCorrect) {
         correctLevelMap[answer.flashCard.level]!.add(answer);
       } else {
@@ -113,14 +119,14 @@ class ReviewRepository {
       }
     }
 
-    for (var i = 0; i < ReviewService.maxLevel; i++) {
-      if (correctLevelMap[i]!.isNotEmpty) {
+    for (var i = 0; i <= ReviewService.maxLevel; i++) {
+      if (correctLevelMap[i]?.isNotEmpty ?? false) {
         await updateForGivenLevel(
           correctLevelMap[i]!.map((entry) => entry.flashCard.id!).toList(),
           i,
         );
       }
-      if (incorrectLevelMap[i]!.isNotEmpty) {
+      if (incorrectLevelMap[i]?.isNotEmpty ?? false) {
         await updateForGivenLevel(
             incorrectLevelMap[i]!.map((entry) => entry.flashCard.id!).toList(),
             i);
@@ -129,10 +135,8 @@ class ReviewRepository {
 
     List<String> answerIds = answers
         .map((answer) => answer.flashCardAnswer?.id)
-        .where(
-          (element) => element != null,
-        )
-        .toList() as List<String>;
+        .whereType<String>()
+        .toList();
 
     await updateLastUsedAnswers(
       answerIds,

@@ -55,6 +55,7 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
       listenWhen: (previous, current) =>
           previous.isSessionEnded != current.isSessionEnded,
       listener: (context, state) {
+        print("state.isSessionEnded ${state.isSessionEnded}");
         if (state.isSessionEnded) {
           context.pushReplacementNamed(HomePage.routeName);
         }
@@ -215,6 +216,9 @@ class _CardReviewContentState extends State<CardReviewContent> {
                 child: TextFormField(
                   controller: _answerController,
                   enableSuggestions: false,
+                  textInputAction: TextInputAction.done,
+                  keyboardType: TextInputType.text,
+                  textCapitalization: TextCapitalization.none,
                   validator: (value) {
                     if (state.hasReviewError) {
                       return null;
@@ -250,7 +254,7 @@ class _CardReviewContentState extends State<CardReviewContent> {
             return Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: state.hasReviewError ? Colors.red : Colors.green,
+                  color: state.hasReviewError ? momoIro : mizuasagi,
                 ),
                 child: Center(
                   child: SingleChildScrollView(

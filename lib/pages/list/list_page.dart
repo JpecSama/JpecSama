@@ -4,7 +4,7 @@ import 'package:jpec_sama/extensions/context_extension.dart';
 
 import '../../models/flashcard.dart';
 import '../../repositories/review_repository.dart';
-import '../../theme/custom_bottom_nav_bar.dart';
+import '../../theme/custom_bottom_nav_bar/custom_bottom_nav_bar.dart';
 
 class ListPage extends StatefulWidget {
   const ListPage({super.key});
@@ -69,7 +69,6 @@ class _ListPageState extends State<ListPage> {
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              backgroundColor: Colors.amber,
                               title: const Text(
                                   "Are you sure you want to delete the item"),
                               actions: [
@@ -128,9 +127,7 @@ class _ListPageState extends State<ListPage> {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomBottomNavBar(
-        currentRouteName: ListPage.routeName,
-      ),
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 }
