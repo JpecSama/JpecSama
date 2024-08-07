@@ -8,4 +8,5 @@ class ReviewEvent with _$ReviewEvent {
   const factory ReviewEvent.nextCard() = _NextCard;
   const factory ReviewEvent.sessionSaved() = _SessionSaved;
   const factory ReviewEvent.sessionCanceled() = _SessionCanceled;
+  const factory ReviewEvent.hintToggled() = _HintToggled;
 }

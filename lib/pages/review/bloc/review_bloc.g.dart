@@ -9,6 +9,7 @@ part of 'review_bloc.dart';
 _$ReviewStateImpl _$$ReviewStateImplFromJson(Map<String, dynamic> json) =>
     _$ReviewStateImpl(
       submissionError: json['submission_error'] as String?,
+      isInitialising: json['is_initialising'] as bool? ?? false,
       isSubmitting: json['is_submitting'] as bool? ?? false,
       isSessionEnded: json['is_session_ended'] as bool? ?? false,
       hasReviewError: json['has_review_error'] as bool? ?? false,
@@ -27,6 +28,7 @@ _$ReviewStateImpl _$$ReviewStateImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$ReviewStateImplToJson(_$ReviewStateImpl instance) =>
     <String, dynamic>{
       'submission_error': instance.submissionError,
+      'is_initialising': instance.isInitialising,
       'is_submitting': instance.isSubmitting,
       'is_session_ended': instance.isSessionEnded,
       'has_review_error': instance.hasReviewError,

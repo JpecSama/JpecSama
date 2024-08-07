@@ -12,12 +12,12 @@ part 'review_bloc.freezed.dart';
 part 'review_bloc.g.dart';
 
 class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
-  final List<Flashcard> flashcards;
+  final _repo = ReviewRepository();
 
   @override
   ReviewState fromJson(Map<String, dynamic> json) => json['isSessionEnded']
-      ? ReviewState(
-          flashcards: flashcards,
+      ? const ReviewState(
+          flashcards: [],
           sessionAnswers: [],
         )
       : ReviewState.fromJson(json);
@@ -25,15 +25,23 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
   @override
   Map<String, dynamic> toJson(ReviewState state) => state.toJson();
 
-  ReviewBloc({
-    required this.flashcards,
-  }) : super(ReviewState(
-          flashcards: flashcards,
+  ReviewBloc()
+      : super(const ReviewState(
+          flashcards: [],
           sessionAnswers: [],
         )) {
     on<_CardReview>(_onCardReviewed);
+    on<_Started>(_onStarted);
     on<_SessionCanceled>(_onSessionCanceled);
     on<_SessionSaved>(_onSessionSaved);
+    on<_HintToggled>(_onHintToggled);
+  }
+
+  _onStarted(_Started event, Emitter<ReviewState> emit) async {
+    emit(state.copyWith(isInitialising: true));
+    List<Flashcard> flashcards = await _repo.getCardsToReview();
+    flashcards.shuffle();
+    emit(state.copyWith(flashcards: flashcards, isInitialising: false));
   }
 
   _onCardReviewed(_CardReview event, Emitter<ReviewState> emit) {
@@ -80,12 +88,15 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     );
   }
 
+  _onHintToggled(_HintToggled event, Emitter<ReviewState> emit) {
+    emit(state.copyWith(isHintVisible: true));
+  }
+
   _onSessionCanceled(_SessionCanceled event, Emitter<ReviewState> emit) {
     emit(state.copyWith(isSessionEnded: true));
   }
 
   _onSessionSaved(_SessionSaved event, Emitter<ReviewState> emit) async {
-    print('_onSessionSaved');
     final repo = ReviewRepository();
     try {
       await repo.postReview(state.sessionAnswers);
