@@ -30,5 +30,8 @@
   "endReviewSession": "End review session",
   "requiredFieldError": "Please fill this field.",
   "loading": "Loading...",
+  "answers": "Answers",
+  "submit": "Submit",
+  "editFlashcard": "Update card",
   "authenticatedAction": "You must be authenticated to perform this action"
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jpec_sama/pages/list/list_page.dart';
 
+import '../../services/notification_service.dart';
 import '../../theme/custom_bottom_nav_bar/bloc/custom_nav_bar_bloc.dart';
 import '../home/home_page.dart';
 
@@ -20,6 +21,7 @@ class _DashboardPageState extends State<DashboardPage>
   @override
   void initState() {
     super.initState();
+    NotificationService.askForNotificationPermissions(context);
     _tabController = TabController(length: 2, vsync: this);
   }
 

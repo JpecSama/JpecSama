@@ -6,6 +6,7 @@ import 'package:jpec_sama/pages/account/account_page.dart';
 import 'package:jpec_sama/pages/add_flashcard/add_flashcard_page.dart';
 import 'package:jpec_sama/pages/review/review_page.dart';
 import 'package:jpec_sama/repositories/review_repository.dart';
+import 'package:jpec_sama/services/notification_service.dart';
 import 'package:jpec_sama/theme/custom_bottom_nav_bar/custom_bottom_nav_bar.dart';
 
 import '../review_graph/review_graph.dart';
@@ -127,6 +128,11 @@ class _HomePageState extends State<HomePage> {
                       }),
                 ),
               ),
+              IconButton(
+                  onPressed: () {
+                    NotificationService.createReviewNotification();
+                  },
+                  icon: const Icon(Icons.textsms))
             ],
           ),
         ),

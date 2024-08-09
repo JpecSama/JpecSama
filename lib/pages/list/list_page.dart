@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 
+import '../../dialogs/edit_flashcard/edit_card_dialog.dart';
 import '../../models/flashcard.dart';
 import '../../repositories/review_repository.dart';
 import '../../theme/custom_bottom_nav_bar/custom_bottom_nav_bar.dart';
@@ -100,6 +101,15 @@ class _ListPageState extends State<ListPage> {
                   },
                   child: Card(
                     child: ListTile(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return EditCardDialog(
+                                flashcard: flashcard,
+                              );
+                            });
+                      },
                       title: Text.rich(
                         TextSpan(
                           children: ([
@@ -107,7 +117,10 @@ class _ListPageState extends State<ListPage> {
                               text: flashcard.flashcardText,
                             ),
                             flashcard.hint != null
-                                ? TextSpan(text: flashcard.hint!)
+                                ? TextSpan(
+                                    text: '- ${flashcard.hint!}',
+                                    style: context.textTheme.labelMedium,
+                                  )
                                 : null
                           ]
                               .where((span) => span != null)

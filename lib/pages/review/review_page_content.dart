@@ -266,7 +266,7 @@ class _CardReviewContentState extends State<CardReviewContent> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: TextFormField(
                     controller: _answerController,
-                    enableSuggestions: false,
+                    enableSuggestions: true,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.text,
                     textCapitalization: TextCapitalization.none,

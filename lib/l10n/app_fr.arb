@@ -26,6 +26,9 @@
   "endReviewSession": "Finir la session",
   "requiredFieldError": "Le champ ne peut pas être vide",
   "answer": "Réponse",
+  "answers": "Réponses",
+  "submit": "Envoyer",
+  "editFlashcard": "Mettre à jour la carte",
   "loading": "Chargement...",
   "authenticatedAction": "Vous devez être identifié pour réaliser cette action."
 }

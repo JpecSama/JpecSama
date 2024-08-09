@@ -49,3 +49,5 @@ using (
 https://jisho.org/search/%23kanji%20%E8%8A%9D
 
 https://jisho.org/api/v1/search/words?keyword=jlpt-n5&page=2
+
+https://tatoeba.org/fr/downloads
