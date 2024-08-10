@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -7,6 +8,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
+import 'firebase_options.dart';
 import 'services/notification_service.dart';
 
 const withSentry = true;
@@ -24,6 +26,9 @@ Future<void> main() async {
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR1dHNndHJiZnBkdnN4enlvcWtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE2NzA3OTksImV4cCI6MjAzNzI0Njc5OX0.tKn31L4GMM_x9qVGPCM-6KmAUmSdwyv9qFJF0vUnRSA',
     debug: true,
+  );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   await Hive.initFlutter();
   if (withSentry) {

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "326582914917",
+    "project_id": "jpecsama",
+    "storage_bucket": "jpecsama.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326582914917:android:ec713062214b5008e91b8c",
+        "android_client_info": {
+          "package_name": "com.jpec57.jpec_sama"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhSvAoV5Nka4M95csCWrpE_ot8L_M-C6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326582914917:android:fab35e455ab4dd74e91b8c",
+        "android_client_info": {
+          "package_name": "com.jpec57.jpec_same"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhSvAoV5Nka4M95csCWrpE_ot8L_M-C6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

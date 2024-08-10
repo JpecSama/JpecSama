@@ -4,6 +4,7 @@ import 'package:jpec_sama/services/review_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/flashcard_session_answer.dart';
+import '../services/notification_service.dart';
 
 class ReviewRepository {
   Future<bool> createFlashcard(
@@ -53,10 +54,7 @@ class ReviewRepository {
       microseconds: date.microsecond,
       milliseconds: date.millisecond,
     ));
-    var res = await supabase
-        .from('flashcard')
-        .select('*')
-        .lte(
+    var res = await supabase.from('flashcard').select('*').lte(
           'next_available_at',
           date.add(const Duration(days: 1)).toIso8601String(),
         );
@@ -141,6 +139,8 @@ class ReviewRepository {
     await updateLastUsedAnswers(
       answerIds,
     );
+
+    NotificationService.createReviewNotification();
   }
 
   Future<void> updateLastUsedAnswers(List<String> ids) async {

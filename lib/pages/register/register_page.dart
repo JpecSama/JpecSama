@@ -111,7 +111,9 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up'),
+        title: Text(
+          context.translations.signUp,
+        ),
         automaticallyImplyLeading: true,
       ),
       body: Align(
@@ -134,12 +136,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
+                  decoration: InputDecoration(
+                    labelText: context.translations.password,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return context.translations.pleaseEnterSomeText;
                     }
                     return null;
                   },
@@ -150,21 +152,23 @@ class _RegisterPageState extends State<RegisterPage> {
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return context.translations.pleaseEnterSomeText;
                     }
                     if (value == _passwordController.text) {
                       return null;
                     }
-                    return 'Passwords dont match.';
+                    return context.translations.passwordsDontMatch;
                   },
-                  decoration: const InputDecoration(
-                    labelText: 'Confirm password',
+                  decoration: InputDecoration(
+                    labelText: context.translations.confirmPassword,
                   ),
                 ),
                 const SizedBox(height: 18),
                 ElevatedButton(
                   onPressed: _isLoading ? null : _signUp,
-                  child: Text(_isLoading ? 'Registering...' : 'Register'),
+                  child: Text(_isLoading
+                      ? context.translations.loading
+                      : context.translations.signUp),
                 ),
               ],
             ),

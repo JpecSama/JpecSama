@@ -33,5 +33,10 @@
   "answers": "Answers",
   "submit": "Submit",
   "editFlashcard": "Update card",
+  "signIn": "Sign in",
+  "signUp": "Sign up",
+  "passwordsDontMatch": "Passwords dont match",
+  "confirmPassword": "Confirm password",
+  "pleaseEnterSomeText": "Please enter some text",
   "authenticatedAction": "You must be authenticated to perform this action"
 }

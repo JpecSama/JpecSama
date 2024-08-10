@@ -6,10 +6,12 @@ import 'package:go_router/go_router.dart';
 import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/main.dart';
+import 'package:jpec_sama/pages/dashboard/dashboard.dart';
 import 'package:jpec_sama/pages/home/home_page.dart';
 import 'package:jpec_sama/pages/register/register_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../theme/custom_theme.dart';
 import '../../theme/theme_dialog.dart';
 
 class LoginPage extends StatefulWidget {
@@ -78,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
         if (session != null) {
           _redirecting = true;
           context.pushReplacementNamed(
-            HomePage.routeName,
+            DashboardPage.routeName,
           );
         }
       },
@@ -128,7 +130,9 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign In'),
+        title: Text(
+          context.translations.signIn,
+        ),
         automaticallyImplyLeading: false,
       ),
       body: Align(
@@ -140,15 +144,18 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 2 * kPadding,
-                vertical: kPadding,
+                vertical: 2 * kPadding,
               ),
               decoration: const BoxDecoration(
-                color: Colors.lightGreen,
+                color: sakuraIro,
               ),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 2 * kPadding),
+                    padding: const EdgeInsets.only(
+                      bottom: 2 * kPadding,
+                      top: kPadding * 2,
+                    ),
                     child: TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(

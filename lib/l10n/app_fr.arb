@@ -28,6 +28,11 @@
   "answer": "Réponse",
   "answers": "Réponses",
   "submit": "Envoyer",
+  "signIn": "Se connecter",
+  "signUp": "S'inscrire",
+  "passwordsDontMatch": "Les mots de passe ne se correspondent pas",
+  "confirmPassword": "Confirmer le mot de passe",
+  "pleaseEnterSomeText": "Veuillez remplir ce champ",
   "editFlashcard": "Mettre à jour la carte",
   "loading": "Chargement...",
   "authenticatedAction": "Vous devez être identifié pour réaliser cette action."

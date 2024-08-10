@@ -4,6 +4,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:jpec_sama/main.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 
 class NotificationService {
@@ -75,6 +76,7 @@ class NotificationService {
         displayOnBackground: true,
         locked: false,
       ),
+      // schedule: NotificationAndroidCrontab.hourly(referenceDateTime: referenceDateTime)
     );
   }
 
@@ -82,13 +84,30 @@ class NotificationService {
     if (!(await AwesomeNotifications().isNotificationAllowed())) {
       return;
     }
+    final nextDateEntries = await supabase
+        .from('flashcard')
+        .select('id,next_available_at')
+        .gt('next_available_at', DateTime.now())
+        .limit(1);
+    int count = 0;
+
+    DateTime? nextDate =
+        DateTime.tryParse(nextDateEntries[0]['next_available_at']);
+    if (nextDate == null) {
+      return;
+    }
+    count = await supabase
+        .from('flashcard')
+        .count()
+        .eq('nextDate', nextDateEntries[0]['next_available_at']);
+
     AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: 57,
         category: NotificationCategory.Reminder,
         channelKey: 'main',
         title: "Jpec-Sama Review",
-        body: "You've got work to do",
+        body: "You've got work to do ($count reviews)",
         largeIcon: 'asset://assets/logo.png',
         bigPicture: 'asset://assets/logo.png',
         notificationLayout: Platform.isAndroid
@@ -98,6 +117,9 @@ class NotificationService {
         displayOnForeground: true,
         displayOnBackground: true,
         locked: false,
+      ),
+      schedule: NotificationCalendar.fromDate(
+        date: nextDate,
       ),
     );
   }

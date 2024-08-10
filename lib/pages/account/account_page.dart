@@ -19,7 +19,7 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   final _usernameController = TextEditingController();
 
-  String? _avatarUrl;
+  // String? _avatarUrl;
   var _loading = true;
 
   /// Called once a user id is received within `onAuthenticated()`
@@ -33,7 +33,7 @@ class _AccountPageState extends State<AccountPage> {
       final data =
           await supabase.from('profiles').select().eq('id', userId).single();
       _usernameController.text = (data['username'] ?? '') as String;
-      _avatarUrl = (data['avatar_url'] ?? '') as String;
+      // _avatarUrl = (data['avatar_url'] ?? '') as String;
     } on PostgrestException catch (error) {
       if (mounted) context.showSnackBar(error.message, isError: true);
     } catch (error) {
@@ -130,8 +130,7 @@ class _AccountPageState extends State<AccountPage> {
         body: TabBarView(
           children: [
             ListView(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
               children: [
                 TextFormField(
                   controller: _usernameController,
@@ -143,15 +142,18 @@ class _AccountPageState extends State<AccountPage> {
                   child: Text(_loading ? 'Saving...' : 'Update'),
                 ),
                 const SizedBox(height: 18),
-                TextButton(
-                    onPressed: _signOut, child: const Text('Sign Out')),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  onPressed: _signOut,
+                  child: const Text('Sign Out'),
+                ),
               ],
             ),
             Column(
               children: [
                 // setDeeplApiKey
                 Text("API config"),
-                DeeplApiConfigForm()
+                DeeplApiConfigForm(),
               ],
             )
           ],
