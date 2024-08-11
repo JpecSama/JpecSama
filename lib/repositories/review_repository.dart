@@ -7,6 +7,53 @@ import '../models/flashcard_session_answer.dart';
 import '../services/notification_service.dart';
 
 class ReviewRepository {
+  Future<void> updateFlashcard(Flashcard flashcard,
+      {Iterable<String>? answers}) async {
+    try {
+      await supabase
+          .from('flashcard')
+          .update(flashcard.toInsertJson())
+          .eq('id', flashcard.id!);
+    } catch (e) {
+      print(e);
+    }
+
+    if (answers != null) {
+      await deleteFlashcardAnswers(flashcard.id!);
+      await createFlashcardAnswers(flashcard.id!, answers);
+    }
+  }
+
+  Future<bool> addFlashcardAnswer(String flashcardId, String answer) async {
+    try {
+      await supabase.from('flashcard_answer').upsert({
+        'flashcard_id': flashcardId,
+        'answer': answer,
+      });
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<void> deleteFlashcardAnswers(String flashcardId) async {
+    await supabase
+        .from('flashcard_answer')
+        .delete()
+        .eq('flashcard_id', flashcardId);
+  }
+
+  Future<void> createFlashcardAnswers(
+      String flashcardId, Iterable<String> answers) async {
+    await supabase.from('flashcard_answer').insert(answers.map((answer) {
+          return {
+            'flashcard_id': flashcardId,
+            'answer': answer,
+          };
+        }).toList());
+  }
+
   Future<bool> createFlashcard(
     String userId,
     Flashcard flashcard,
@@ -15,18 +62,18 @@ class ReviewRepository {
   ) async {
     final res = await supabase
         .from('flashcard')
-        .insert(flashcard.copyWith(userId: userId).toInsertJson())
+        .insert(flashcard
+            .copyWith(
+                userId: userId,
+                sourceLanguage: flashcard.destLanguage,
+                destLanguage: flashcard.sourceLanguage)
+            .toInsertJson())
         .select('id')
         .single();
 
     final flashcardId = res['id'];
 
-    await supabase.from('flashcard_answer').insert(answers.map((answer) {
-          return {
-            'flashcard_id': flashcardId,
-            'answer': answer,
-          };
-        }).toList());
+    await createFlashcardAnswers(flashcard.id!, answers);
 
     if (isReversable) {
       String text = answers.first;
@@ -86,12 +133,33 @@ class ReviewRepository {
     return cards.map((card) => Flashcard.fromJson(card)).toList();
   }
 
-  Future<List<Flashcard>> getAllCards({int page = 0, int limit = 100}) async {
-    final cards = await supabase
-        .from('flashcard')
-        .select('*,flashcard_answer(*)')
-        .range(page * limit, (page + 1) * limit);
-    return cards.map((card) => Flashcard.fromJson(card)).toList();
+  Future<List<Flashcard>> getAllCards(
+      {int page = 0,
+      int limit = 100,
+      required String sourceLocale,
+      required String destLocale,
+      String? searchText}) async {
+    print("searchText $searchText");
+    if (searchText != null && searchText.isNotEmpty) {
+      return (await supabase
+              .from('flashcard')
+              .select('*,flashcard_answer(*)')
+              .textSearch('flashcard_text', searchText)
+              .eq('source_language', sourceLocale.toUpperCase())
+              .eq('dest_language', destLocale.toUpperCase())
+              .range(page * limit, (page + 1) * limit))
+          .map((card) => Flashcard.fromJson(card))
+          .toList();
+    } else {
+      return (await supabase
+              .from('flashcard')
+              .select('*,flashcard_answer(*)')
+              .eq('source_language', sourceLocale.toUpperCase())
+              .eq('dest_language', destLocale.toUpperCase())
+              .range(page * limit, (page + 1) * limit))
+          .map((card) => Flashcard.fromJson(card))
+          .toList();
+    }
   }
 
   Future<int> getCardsToReviewCount() async {

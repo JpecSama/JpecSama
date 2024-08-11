@@ -7,6 +7,7 @@ import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/pages/dashboard/dashboard.dart';
 import 'package:jpec_sama/pages/home/home_page.dart';
 
+import '../../repositories/review_repository.dart';
 import '../../theme/custom_theme.dart';
 import 'bloc/review_bloc.dart';
 
@@ -140,7 +141,7 @@ class CardReviewContent extends StatefulWidget {
 class _CardReviewContentState extends State<CardReviewContent> {
   late final TextEditingController _answerController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
-
+  final ReviewRepository _reviewRepository = ReviewRepository();
   @override
   void dispose() {
     _answerController.dispose();
@@ -339,23 +340,9 @@ class _CardReviewContentState extends State<CardReviewContent> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
                             decoration: BoxDecoration(),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 5.0),
-                                  child: Text(
-                                    "Add possible answer",
-                                    style: context.textTheme.titleMedium,
-                                  ),
-                                ),
-                                TextFormField(),
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  child: Text('Submit'),
-                                ),
-                              ],
-                            ),
+                            child: AddFlashcardAnswer(
+                                flashcardId: currentCard.id!,
+                                reviewRepository: _reviewRepository),
                           ),
                         ],
                       ),
@@ -367,6 +354,71 @@ class _CardReviewContentState extends State<CardReviewContent> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class AddFlashcardAnswer extends StatefulWidget {
+  const AddFlashcardAnswer({
+    super.key,
+    required ReviewRepository reviewRepository,
+    required this.flashcardId,
+  }) : _reviewRepository = reviewRepository;
+
+  final ReviewRepository _reviewRepository;
+  final String flashcardId;
+
+  @override
+  State<AddFlashcardAnswer> createState() => _AddFlashcardAnswerState();
+}
+
+class _AddFlashcardAnswerState extends State<AddFlashcardAnswer> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 5.0),
+          child: Text(
+            "Add possible answer",
+            style: context.textTheme.titleMedium,
+          ),
+        ),
+        TextFormField(
+          controller: _controller,
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            if (_controller.text.isEmpty) {
+              return;
+            }
+            final isSuccess = await widget._reviewRepository.addFlashcardAnswer(
+                widget.flashcardId, _controller.text.trim());
+            if (isSuccess) {
+              context.showSnackBar(context.translations.successfullyUpdated);
+              _controller.clear();
+            } else {
+              context.showSnackBar('Error', isError: true);
+            }
+          },
+          child: Text('Submit'),
+        ),
+      ],
     );
   }
 }

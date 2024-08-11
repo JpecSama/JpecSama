@@ -15,7 +15,9 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage>
-    with TickerProviderStateMixin {
+    with
+        TickerProviderStateMixin,
+        AutomaticKeepAliveClientMixin<DashboardPage> {
   late TabController _tabController;
 
   @override
@@ -44,6 +46,7 @@ class _DashboardPageState extends State<DashboardPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocListener<CustomNavBarBloc, CustomNavBarState>(
       listenWhen: (previous, current) =>
           previous.currentRoute != current.currentRoute,
@@ -59,4 +62,7 @@ class _DashboardPageState extends State<DashboardPage>
       ]),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

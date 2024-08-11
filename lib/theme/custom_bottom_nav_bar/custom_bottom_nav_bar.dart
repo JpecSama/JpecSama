@@ -20,29 +20,13 @@ class CustomBottomNavBarContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = [
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
         label: HomePage.routeName,
-        icon: IconButton(
-          icon: const Icon(Icons.home),
-          onPressed: () {
-            context.read<CustomNavBarBloc>().add(
-                const CustomNavBarEvent.navigate(
-                    routeName: HomePage.routeName));
-            // context.pushNamed(HomePage.routeName);
-          },
-        ),
+        icon: Icon(Icons.home),
       ),
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
         label: ListPage.routeName,
-        icon: IconButton(
-          icon: const Icon(Icons.list),
-          onPressed: () {
-            // context.pushNamed(ListPage.routeName);
-            context.read<CustomNavBarBloc>().add(
-                const CustomNavBarEvent.navigate(
-                    routeName: ListPage.routeName));
-          },
-        ),
+        icon: Icon(Icons.list),
       ),
     ];
 
@@ -56,6 +40,10 @@ class CustomBottomNavBarContent extends StatelessWidget {
           }
         }
         return BottomNavigationBar(
+          onTap: (index) {
+            context.read<CustomNavBarBloc>().add(
+                CustomNavBarEvent.navigate(routeName: items[index].label!));
+          },
           currentIndex: currentIndex,
           items: items,
         );

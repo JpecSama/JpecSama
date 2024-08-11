@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
+import 'package:jpec_sama/main.dart';
 import 'package:jpec_sama/models/flashcard.dart';
+import 'package:jpec_sama/repositories/review_repository.dart';
 import 'package:jpec_sama/theme/custom_theme.dart';
 
 import 'bloc/edit_flashcard_bloc.dart';
@@ -49,15 +51,43 @@ class EditCardDialogContent extends StatefulWidget {
 class _EditCardDialogContentState extends State<EditCardDialogContent> {
   late TextEditingController _textEditingController;
   late List<TextEditingController> _answerControllers;
+  late TextEditingController _hintController;
+  late Flashcard _flashcard;
+  late ReviewRepository _reviewRepository;
+  bool _withAnswers = false;
 
   @override
   void initState() {
     super.initState();
+    _reviewRepository = ReviewRepository();
     _textEditingController =
         TextEditingController(text: widget.flashcard.flashcardText);
+    _hintController = TextEditingController(text: widget.flashcard.hint);
     _answerControllers = widget.flashcard.flashcardAnswer
         .map((answer) => TextEditingController(text: answer.answer))
         .toList();
+    _flashcard = widget.flashcard;
+    _textEditingController.addListener(() {
+      setState(() {
+        _flashcard =
+            _flashcard.copyWith(flashcardText: _textEditingController.text);
+      });
+    });
+    _hintController.addListener(() {
+      setState(() {
+        _flashcard = _flashcard.copyWith(hint: _hintController.text);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    _hintController.dispose();
+    for (var controller in _answerControllers) {
+      controller.dispose();
+    }
+    super.dispose();
   }
 
   @override
@@ -103,6 +133,18 @@ class _EditCardDialogContentState extends State<EditCardDialogContent> {
                   controller: _textEditingController,
                 ),
                 Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: TextFormField(
+                    controller: _hintController,
+                    decoration: InputDecoration(
+                      label: Text(
+                          "${context.translations.hint} ${context.translations.optional_}"),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      helperText: context.translations.hintDescription,
+                    ),
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.only(
                       top: kPadding * 2, bottom: kPadding),
                   child: Text(
@@ -114,6 +156,11 @@ class _EditCardDialogContentState extends State<EditCardDialogContent> {
                       (entry) => Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: TextFormField(
+                          onChanged: (value) {
+                            setState(() {
+                              _withAnswers = true;
+                            });
+                          },
                           decoration: InputDecoration(
                             icon: IconButton(
                               onPressed: () {
@@ -166,7 +213,17 @@ class _EditCardDialogContentState extends State<EditCardDialogContent> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: ebicha,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      print('_withAnswers $_withAnswers');
+                      print(
+                          'test ${_answerControllers.map((controller) => controller.text.trim()).where((text) => text.isNotEmpty)}');
+                      await _reviewRepository.updateFlashcard(_flashcard,
+                          answers: _withAnswers
+                              ? _answerControllers
+                                  .map((controller) => controller.text.trim())
+                                  .where((text) => text.isNotEmpty)
+                              : null);
+                    },
                     child: Text(context.translations.submit),
                   ),
                 )

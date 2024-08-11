@@ -10,10 +10,10 @@ class Flashcard with _$Flashcard {
 
   const factory Flashcard({
     String? id,
-    @Default('vocabulary') String type,
     @Default(0) int level,
     DateTime? createdAt,
     required DateTime nextAvailableAt,
+    @Default('vocabulary') String type,
     required String flashcardText,
     String? hint,
     String? answerInfos,
