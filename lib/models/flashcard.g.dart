@@ -9,12 +9,12 @@ part of 'flashcard.dart';
 _$FlashcardImpl _$$FlashcardImplFromJson(Map<String, dynamic> json) =>
     _$FlashcardImpl(
       id: json['id'] as String?,
-      type: json['type'] as String? ?? 'vocabulary',
       level: (json['level'] as num?)?.toInt() ?? 0,
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
       nextAvailableAt: DateTime.parse(json['next_available_at'] as String),
+      type: json['type'] as String? ?? 'vocabulary',
       flashcardText: json['flashcard_text'] as String,
       hint: json['hint'] as String?,
       answerInfos: json['answer_infos'] as String?,
@@ -30,10 +30,10 @@ _$FlashcardImpl _$$FlashcardImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$FlashcardImplToJson(_$FlashcardImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'type': instance.type,
       'level': instance.level,
       'created_at': instance.createdAt?.toIso8601String(),
       'next_available_at': instance.nextAvailableAt.toIso8601String(),
+      'type': instance.type,
       'flashcard_text': instance.flashcardText,
       'hint': instance.hint,
       'answer_infos': instance.answerInfos,

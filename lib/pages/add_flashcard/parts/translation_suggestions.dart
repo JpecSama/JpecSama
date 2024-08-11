@@ -6,6 +6,7 @@ import '../../../theme/theme_title.dart';
 import '../bloc/add_flashcard_bloc.dart';
 import '../deepl_suggestions.dart';
 import '../jisho_suggestions.dart';
+import 'suggestion_api_widget.dart';
 
 class TranslationSuggestions extends StatefulWidget {
   const TranslationSuggestions({super.key, required this.onTranslationClicked});
@@ -18,6 +19,7 @@ class TranslationSuggestions extends StatefulWidget {
 class _TranslationSuggestionsState extends State<TranslationSuggestions>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  String _translatorApi = 'deepl';
 
   @override
   void initState() {
@@ -42,59 +44,62 @@ class _TranslationSuggestionsState extends State<TranslationSuggestions>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(bottom: 16),
-            child: ThemeTitle(
-              title: 'Translation suggestions',
-            ),
-          ),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height * 0.5,
-            ),
-            child: BlocBuilder<AddFlashcardBloc, AddFlashcardState>(
-              buildWhen: (previous, current) =>
-                  previous.translatorApi != current.translatorApi ||
-                  previous.sourceLocale != current.sourceLocale ||
-                  previous.destLocale != current.destLocale ||
-                  previous.searchText != current.searchText,
-              builder: (context, state) {
-                return Column(
-                  children: [
-                    TabBar(
-                      controller: _tabController,
-                      tabs: const [
-                        Tab(text: 'DeepL'),
-                        Tab(text: 'Jisho'),
+          BlocBuilder<AddFlashcardBloc, AddFlashcardState>(
+            buildWhen: (previous, current) =>
+                previous.translatorApi != current.translatorApi ||
+                previous.sourceLocale != current.sourceLocale ||
+                previous.destLocale != current.destLocale ||
+                previous.searchText != current.searchText,
+            builder: (context, state) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const ThemeTitle(
+                          title: 'Translation suggestions',
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        DropdownMenu(
+                          initialSelection: _translatorApi,
+                          onSelected: (label) {
+                            if (label != null) {
+                              setState(() {
+                                _translatorApi = label;
+                              });
+                            }
+                          },
+                          dropdownMenuEntries: const [
+                            DropdownMenuEntry(
+                              value: DeeplSuggestions.suggestionApiName,
+                              label: 'DeepL',
+                            ),
+                            DropdownMenuEntry(
+                              value: JishoSuggestions.suggestionApiName,
+                              label: 'Jisho',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                    Expanded(
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          DeeplSuggestions(
-                            sourceLang: state.sourceLocale,
-                            targetLang: state.destLocale,
-                            searchText: state.searchText,
-                            suggestionScrollPhysics:
-                                const NeverScrollableScrollPhysics(),
-                            onTranslationClicked: widget.onTranslationClicked,
-                          ),
-                          JishoSuggestions(
-                            sourceLang: state.sourceLocale,
-                            targetLang: state.destLocale,
-                            searchText: state.searchText,
-                            suggestionScrollPhysics:
-                                const NeverScrollableScrollPhysics(),
-                            onTranslationClicked: widget.onTranslationClicked,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                  SuggestionApiWidget(
+                    sourceLang: state.sourceLocale,
+                    targetLang: state.destLocale,
+                    searchText: state.searchText,
+                    translatorApi: _translatorApi,
+                    suggestionScrollPhysics:
+                        const NeverScrollableScrollPhysics(),
+                    onTranslationClicked: widget.onTranslationClicked,
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),

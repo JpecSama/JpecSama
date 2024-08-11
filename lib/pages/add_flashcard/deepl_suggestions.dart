@@ -20,8 +20,9 @@ class DeeplSuggestions extends StatefulWidget {
     required this.onTranslationClicked,
     this.suggestionScrollPhysics,
   });
+  static const suggestionApiName = 'deepl';
   final String searchText;
-  final String? sourceLang;
+  final String sourceLang;
   final String targetLang;
   final OnTranslationClicked onTranslationClicked;
   final ScrollPhysics? suggestionScrollPhysics;
@@ -85,7 +86,7 @@ class _DeeplSuggestionsState extends State<DeeplSuggestions> {
               return Container();
             }
             DeeplTranslationAnswer deeplTranslationAnswer = snapshot.data;
-    
+
             return ListView.builder(
                 padding: const EdgeInsets.symmetric(vertical: kPadding),
                 shrinkWrap: true,
@@ -94,7 +95,7 @@ class _DeeplSuggestionsState extends State<DeeplSuggestions> {
                 itemBuilder: (context, index) {
                   DeeplTranslation translation =
                       deeplTranslationAnswer.translations[index];
-    
+
                   return Container(
                     margin: const EdgeInsets.only(bottom: kPadding),
                     decoration: BoxDecoration(

@@ -9,10 +9,12 @@ part of 'api_translation.dart';
 _$ApiTranslationImpl _$$ApiTranslationImplFromJson(Map<String, dynamic> json) =>
     _$ApiTranslationImpl(
       text: json['text'] as String,
+      hint: json['hint'] as String?,
     );
 
 Map<String, dynamic> _$$ApiTranslationImplToJson(
         _$ApiTranslationImpl instance) =>
     <String, dynamic>{
       'text': instance.text,
+      'hint': instance.hint,
     };

@@ -21,10 +21,10 @@ Flashcard _$FlashcardFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Flashcard {
   String? get id => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
   int get level => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime get nextAvailableAt => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
   String get flashcardText => throw _privateConstructorUsedError;
   String? get hint => throw _privateConstructorUsedError;
   String? get answerInfos => throw _privateConstructorUsedError;
@@ -51,10 +51,10 @@ abstract class $FlashcardCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
-      String type,
       int level,
       DateTime? createdAt,
       DateTime nextAvailableAt,
+      String type,
       String flashcardText,
       String? hint,
       String? answerInfos,
@@ -80,10 +80,10 @@ class _$FlashcardCopyWithImpl<$Res, $Val extends Flashcard>
   @override
   $Res call({
     Object? id = freezed,
-    Object? type = null,
     Object? level = null,
     Object? createdAt = freezed,
     Object? nextAvailableAt = null,
+    Object? type = null,
     Object? flashcardText = null,
     Object? hint = freezed,
     Object? answerInfos = freezed,
@@ -97,10 +97,6 @@ class _$FlashcardCopyWithImpl<$Res, $Val extends Flashcard>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
       level: null == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -113,6 +109,10 @@ class _$FlashcardCopyWithImpl<$Res, $Val extends Flashcard>
           ? _value.nextAvailableAt
           : nextAvailableAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       flashcardText: null == flashcardText
           ? _value.flashcardText
           : flashcardText // ignore: cast_nullable_to_non_nullable
@@ -155,10 +155,10 @@ abstract class _$$FlashcardImplCopyWith<$Res>
   @useResult
   $Res call(
       {String? id,
-      String type,
       int level,
       DateTime? createdAt,
       DateTime nextAvailableAt,
+      String type,
       String flashcardText,
       String? hint,
       String? answerInfos,
@@ -182,10 +182,10 @@ class __$$FlashcardImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? type = null,
     Object? level = null,
     Object? createdAt = freezed,
     Object? nextAvailableAt = null,
+    Object? type = null,
     Object? flashcardText = null,
     Object? hint = freezed,
     Object? answerInfos = freezed,
@@ -199,10 +199,6 @@ class __$$FlashcardImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String,
       level: null == level
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
@@ -215,6 +211,10 @@ class __$$FlashcardImplCopyWithImpl<$Res>
           ? _value.nextAvailableAt
           : nextAvailableAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       flashcardText: null == flashcardText
           ? _value.flashcardText
           : flashcardText // ignore: cast_nullable_to_non_nullable
@@ -252,10 +252,10 @@ class __$$FlashcardImplCopyWithImpl<$Res>
 class _$FlashcardImpl extends _Flashcard {
   const _$FlashcardImpl(
       {this.id,
-      this.type = 'vocabulary',
       this.level = 0,
       this.createdAt,
       required this.nextAvailableAt,
+      this.type = 'vocabulary',
       required this.flashcardText,
       this.hint,
       this.answerInfos,
@@ -273,14 +273,14 @@ class _$FlashcardImpl extends _Flashcard {
   final String? id;
   @override
   @JsonKey()
-  final String type;
-  @override
-  @JsonKey()
   final int level;
   @override
   final DateTime? createdAt;
   @override
   final DateTime nextAvailableAt;
+  @override
+  @JsonKey()
+  final String type;
   @override
   final String flashcardText;
   @override
@@ -304,7 +304,7 @@ class _$FlashcardImpl extends _Flashcard {
 
   @override
   String toString() {
-    return 'Flashcard(id: $id, type: $type, level: $level, createdAt: $createdAt, nextAvailableAt: $nextAvailableAt, flashcardText: $flashcardText, hint: $hint, answerInfos: $answerInfos, sourceLanguage: $sourceLanguage, destLanguage: $destLanguage, userId: $userId, flashcardAnswer: $flashcardAnswer)';
+    return 'Flashcard(id: $id, level: $level, createdAt: $createdAt, nextAvailableAt: $nextAvailableAt, type: $type, flashcardText: $flashcardText, hint: $hint, answerInfos: $answerInfos, sourceLanguage: $sourceLanguage, destLanguage: $destLanguage, userId: $userId, flashcardAnswer: $flashcardAnswer)';
   }
 
   @override
@@ -313,12 +313,12 @@ class _$FlashcardImpl extends _Flashcard {
         (other.runtimeType == runtimeType &&
             other is _$FlashcardImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.type, type) || other.type == type) &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.nextAvailableAt, nextAvailableAt) ||
                 other.nextAvailableAt == nextAvailableAt) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.flashcardText, flashcardText) ||
                 other.flashcardText == flashcardText) &&
             (identical(other.hint, hint) || other.hint == hint) &&
@@ -338,10 +338,10 @@ class _$FlashcardImpl extends _Flashcard {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      type,
       level,
       createdAt,
       nextAvailableAt,
+      type,
       flashcardText,
       hint,
       answerInfos,
@@ -369,10 +369,10 @@ class _$FlashcardImpl extends _Flashcard {
 abstract class _Flashcard extends Flashcard {
   const factory _Flashcard(
       {final String? id,
-      final String type,
       final int level,
       final DateTime? createdAt,
       required final DateTime nextAvailableAt,
+      final String type,
       required final String flashcardText,
       final String? hint,
       final String? answerInfos,
@@ -388,13 +388,13 @@ abstract class _Flashcard extends Flashcard {
   @override
   String? get id;
   @override
-  String get type;
-  @override
   int get level;
   @override
   DateTime? get createdAt;
   @override
   DateTime get nextAvailableAt;
+  @override
+  String get type;
   @override
   String get flashcardText;
   @override

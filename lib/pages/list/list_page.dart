@@ -8,6 +8,7 @@ import '../../repositories/review_repository.dart';
 import '../../theme/custom_bottom_nav_bar/custom_bottom_nav_bar.dart';
 import '../../utils/debouncer.dart';
 import '../add_flashcard/parts/select_locale_direction.dart';
+import 'flashcard_fulltile.dart';
 
 class ListPage extends StatefulWidget {
   const ListPage({super.key});
@@ -155,39 +156,12 @@ class _ListPageState extends State<ListPage> {
                       context.showSnackBar('Successfully deleted');
                     },
                     child: Card(
-                      child: ListTile(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return EditCardDialog(
-                                  flashcard: flashcard,
-                                );
-                              });
-                        },
-                        title: Text.rich(
-                          TextSpan(
-                            children: ([
-                              TextSpan(
-                                text: flashcard.flashcardText,
-                              ),
-                              flashcard.hint != null
-                                  ? TextSpan(
-                                      text: '- ${flashcard.hint!}',
-                                      style: context.textTheme.labelMedium,
-                                    )
-                                  : null
-                            ]
-                                .where((span) => span != null)
-                                .map((span) => span as TextSpan)).toList(),
-                          ),
-                        ),
-                        subtitle: Text(
-                          flashcard.flashcardAnswer
-                              .map((ans) => ans.answer)
-                              .join(', '),
-                        ),
+                      child: FlashcardFulltile(
+                        flashcard: flashcard,
                       ),
+                      // child: FlashcardTile(
+                      //   flashcard: flashcard,
+                      // ),
                     ),
                   ),
                 ),
@@ -197,6 +171,48 @@ class _ListPageState extends State<ListPage> {
         ),
       ),
       bottomNavigationBar: const CustomBottomNavBar(),
+    );
+  }
+}
+
+class FlashcardTile extends StatelessWidget {
+  const FlashcardTile({
+    super.key,
+    required this.flashcard,
+  });
+  final Flashcard flashcard;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return EditCardDialog(
+                flashcard: flashcard,
+              );
+            });
+      },
+      title: Text.rich(
+        TextSpan(
+          children: ([
+            TextSpan(
+              text: flashcard.flashcardText,
+            ),
+            flashcard.hint != null
+                ? TextSpan(
+                    text: '- ${flashcard.hint!}',
+                    style: context.textTheme.labelMedium,
+                  )
+                : null
+          ].where((span) => span != null).map((span) => span as TextSpan))
+              .toList(),
+        ),
+      ),
+      subtitle: Text(
+        flashcard.flashcardAnswer.map((ans) => ans.answer).join(', '),
+      ),
     );
   }
 }

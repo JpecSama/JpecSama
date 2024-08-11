@@ -21,6 +21,7 @@ ApiTranslation _$ApiTranslationFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ApiTranslation {
   String get text => throw _privateConstructorUsedError;
+  String? get hint => throw _privateConstructorUsedError;
 
   /// Serializes this ApiTranslation to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +39,7 @@ abstract class $ApiTranslationCopyWith<$Res> {
           ApiTranslation value, $Res Function(ApiTranslation) then) =
       _$ApiTranslationCopyWithImpl<$Res, ApiTranslation>;
   @useResult
-  $Res call({String text});
+  $Res call({String text, String? hint});
 }
 
 /// @nodoc
@@ -57,12 +58,17 @@ class _$ApiTranslationCopyWithImpl<$Res, $Val extends ApiTranslation>
   @override
   $Res call({
     Object? text = null,
+    Object? hint = freezed,
   }) {
     return _then(_value.copyWith(
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      hint: freezed == hint
+          ? _value.hint
+          : hint // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -75,7 +81,7 @@ abstract class _$$ApiTranslationImplCopyWith<$Res>
       __$$ApiTranslationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String text});
+  $Res call({String text, String? hint});
 }
 
 /// @nodoc
@@ -92,12 +98,17 @@ class __$$ApiTranslationImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? text = null,
+    Object? hint = freezed,
   }) {
     return _then(_$ApiTranslationImpl(
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      hint: freezed == hint
+          ? _value.hint
+          : hint // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -105,17 +116,19 @@ class __$$ApiTranslationImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ApiTranslationImpl implements _ApiTranslation {
-  const _$ApiTranslationImpl({required this.text});
+  const _$ApiTranslationImpl({required this.text, this.hint});
 
   factory _$ApiTranslationImpl.fromJson(Map<String, dynamic> json) =>
       _$$ApiTranslationImplFromJson(json);
 
   @override
   final String text;
+  @override
+  final String? hint;
 
   @override
   String toString() {
-    return 'ApiTranslation(text: $text)';
+    return 'ApiTranslation(text: $text, hint: $hint)';
   }
 
   @override
@@ -123,12 +136,13 @@ class _$ApiTranslationImpl implements _ApiTranslation {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ApiTranslationImpl &&
-            (identical(other.text, text) || other.text == text));
+            (identical(other.text, text) || other.text == text) &&
+            (identical(other.hint, hint) || other.hint == hint));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, text);
+  int get hashCode => Object.hash(runtimeType, text, hint);
 
   /// Create a copy of ApiTranslation
   /// with the given fields replaced by the non-null parameter values.
@@ -148,14 +162,16 @@ class _$ApiTranslationImpl implements _ApiTranslation {
 }
 
 abstract class _ApiTranslation implements ApiTranslation {
-  const factory _ApiTranslation({required final String text}) =
-      _$ApiTranslationImpl;
+  const factory _ApiTranslation(
+      {required final String text, final String? hint}) = _$ApiTranslationImpl;
 
   factory _ApiTranslation.fromJson(Map<String, dynamic> json) =
       _$ApiTranslationImpl.fromJson;
 
   @override
   String get text;
+  @override
+  String? get hint;
 
   /// Create a copy of ApiTranslation
   /// with the given fields replaced by the non-null parameter values.
