@@ -1,19 +1,14 @@
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/pages/add_flashcard/bloc/add_flashcard_bloc.dart';
 import 'package:jpec_sama/pages/add_flashcard/parts/translation_suggestions.dart';
 import 'package:jpec_sama/repositories/review_repository.dart';
-import 'package:jpec_sama/theme/theme_title.dart';
 
 import '../../models/api/api_translation.dart';
 import '../../repositories/user_repository.dart';
-import '../../services/language_service.dart';
-import 'deepl_suggestions.dart';
 import 'parts/select_flashcard_locales_header.dart';
 
 class AddFlashcardPage extends StatelessWidget {
@@ -161,8 +156,10 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
                               }
                               return null;
                             },
-                            decoration: const InputDecoration(
-                              label: Text("To translate"),
+                            decoration: InputDecoration(
+                              label: Text(
+                                context.translations.toTranslate,
+                              ),
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                             ),

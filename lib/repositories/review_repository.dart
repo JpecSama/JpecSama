@@ -7,7 +7,7 @@ import '../models/flashcard_session_answer.dart';
 import '../services/notification_service.dart';
 
 class ReviewRepository {
-  Future<void> updateFlashcard(Flashcard flashcard,
+  Future<bool> updateFlashcard(Flashcard flashcard,
       {Iterable<String>? answers}) async {
     try {
       await supabase
@@ -16,12 +16,14 @@ class ReviewRepository {
           .eq('id', flashcard.id!);
     } catch (e) {
       print(e);
+      return false;
     }
 
     if (answers != null) {
       await deleteFlashcardAnswers(flashcard.id!);
       await createFlashcardAnswers(flashcard.id!, answers);
     }
+    return true;
   }
 
   Future<bool> addFlashcardAnswer(String flashcardId, String answer) async {
@@ -64,16 +66,17 @@ class ReviewRepository {
         .from('flashcard')
         .insert(flashcard
             .copyWith(
-                userId: userId,
-                sourceLanguage: flashcard.destLanguage,
-                destLanguage: flashcard.sourceLanguage)
+              userId: userId,
+              sourceLanguage: flashcard.destLanguage,
+              destLanguage: flashcard.sourceLanguage,
+            )
             .toInsertJson())
         .select('id')
         .single();
 
     final flashcardId = res['id'];
 
-    await createFlashcardAnswers(flashcard.id!, answers);
+    await createFlashcardAnswers(flashcardId, answers);
 
     if (isReversable) {
       String text = answers.first;
@@ -85,8 +88,13 @@ class ReviewRepository {
 
       return await createFlashcard(
         userId,
-        flashcard.copyWith(flashcardText: text, hint: hint),
-        [flashcard.flashcardText],
+        flashcard.copyWith(
+          flashcardText: text,
+          hint: hint,
+          sourceLanguage: flashcard.destLanguage,
+          destLanguage: flashcard.sourceLanguage,
+        ),
+        [flashcard.flashcardText, flashcard.hint].nonNulls.toList(),
         false,
       );
     }

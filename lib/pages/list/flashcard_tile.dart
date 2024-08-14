@@ -5,8 +5,8 @@ import 'package:jpec_sama/extensions/context_extension.dart';
 import '../../dialogs/edit_flashcard/edit_card_dialog.dart';
 import '../../models/flashcard.dart';
 
-class FlashcardFulltile extends StatelessWidget {
-  const FlashcardFulltile({
+class FlashcardTile extends StatelessWidget {
+  const FlashcardTile({
     super.key,
     required this.flashcard,
   });

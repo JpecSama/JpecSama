@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
-import 'package:jpec_sama/main.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/repositories/review_repository.dart';
 import 'package:jpec_sama/theme/custom_theme.dart';
@@ -101,133 +100,138 @@ class _EditCardDialogContentState extends State<EditCardDialogContent> {
           return Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: 2 * kPadding, vertical: 2 * kPadding),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: kPadding * 2),
-                  child: Text(
-                    context.translations.editFlashcard,
-                    style: context.textTheme.titleLarge,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: kPadding * 2),
+                    child: Text(
+                      context.translations.editFlashcard,
+                      style: context.textTheme.titleLarge,
+                    ),
                   ),
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: ebicha,
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: ebicha,
+                        ),
                       ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: ebicha,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: ebicha,
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: ebicha,
-                      ),
-                    ),
-                  ),
-                  controller: _textEditingController,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: TextFormField(
-                    controller: _hintController,
-                    decoration: InputDecoration(
-                      label: Text(
-                          "${context.translations.hint} ${context.translations.optional_}"),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      helperText: context.translations.hintDescription,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: kPadding * 2, bottom: kPadding),
-                  child: Text(
-                    context.translations.answers,
-                    style: context.textTheme.titleMedium,
-                  ),
-                ),
-                ..._answerControllers.asMap().entries.map(
-                      (entry) => Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: TextFormField(
-                          onChanged: (value) {
-                            setState(() {
-                              _withAnswers = true;
-                            });
-                          },
-                          decoration: InputDecoration(
-                            icon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  _answerControllers.removeAt(entry.key);
-                                });
-                              },
-                              icon: const Icon(
-                                Icons.delete,
-                                color: tonocha,
-                              ),
-                            ),
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ebicha,
-                              ),
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ebicha,
-                              ),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: ebicha,
-                              ),
-                            ),
-                          ),
-                          controller: entry.value,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: ebicha,
                         ),
                       ),
                     ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: tonocha,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _answerControllers.add(TextEditingController());
-                      });
-                    },
-                    child: const Icon(Icons.add),
+                    controller: _textEditingController,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 4 * kPadding),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ebicha,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: TextFormField(
+                      controller: _hintController,
+                      decoration: InputDecoration(
+                        label: Text(
+                            "${context.translations.hint} ${context.translations.optional_}"),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        helperText: context.translations.hintDescription,
+                      ),
                     ),
-                    onPressed: () async {
-                      print('_withAnswers $_withAnswers');
-                      print(
-                          'test ${_answerControllers.map((controller) => controller.text.trim()).where((text) => text.isNotEmpty)}');
-                      await _reviewRepository.updateFlashcard(_flashcard,
-                          answers: _withAnswers
-                              ? _answerControllers
-                                  .map((controller) => controller.text.trim())
-                                  .where((text) => text.isNotEmpty)
-                              : null);
-                    },
-                    child: Text(context.translations.submit),
                   ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: kPadding * 2, bottom: kPadding),
+                    child: Text(
+                      context.translations.answers,
+                      style: context.textTheme.titleMedium,
+                    ),
+                  ),
+                  ..._answerControllers.asMap().entries.map(
+                        (entry) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: TextFormField(
+                            onChanged: (value) {
+                              setState(() {
+                                _withAnswers = true;
+                              });
+                            },
+                            decoration: InputDecoration(
+                              icon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _answerControllers.removeAt(entry.key);
+                                  });
+                                },
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: tonocha,
+                                ),
+                              ),
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: ebicha,
+                                ),
+                              ),
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: ebicha,
+                                ),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: ebicha,
+                                ),
+                              ),
+                            ),
+                            controller: entry.value,
+                          ),
+                        ),
+                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: tonocha,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _withAnswers = true;
+                          _answerControllers.add(TextEditingController());
+                        });
+                      },
+                      child: const Icon(Icons.add),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4 * kPadding),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ebicha,
+                      ),
+                      onPressed: () async {
+                        bool isSuccess =
+                            await _reviewRepository.updateFlashcard(_flashcard,
+                                answers: _withAnswers
+                                    ? _answerControllers
+                                        .map((controller) =>
+                                            controller.text.trim())
+                                        .where((text) => text.isNotEmpty)
+                                    : null);
+                        if (isSuccess) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: Text(context.translations.submit),
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         },

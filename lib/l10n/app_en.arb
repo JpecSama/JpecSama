@@ -30,6 +30,7 @@
   "endReviewSession": "End review session",
   "requiredFieldError": "Please fill this field.",
   "loading": "Loading...",
+  "toTranslate": "To translate",
   "answers": "Answers",
   "submit": "Submit",
   "editFlashcard": "Update card",
