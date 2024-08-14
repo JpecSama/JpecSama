@@ -101,7 +101,7 @@ class NotificationService {
         .count()
         .eq('nextDate', nextDateEntries[0]['next_available_at']);
 
-    AwesomeNotifications().createNotification(
+    await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: 57,
         category: NotificationCategory.Reminder,

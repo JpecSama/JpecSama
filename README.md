@@ -54,3 +54,44 @@ https://tatoeba.org/fr/downloads
 
 
 https://www.tanoshiijapanese.com/dictionary/entry_details.cfm?entry_id=22293
+
+
+
+
+
+## Workmanager
+
+https://pub.dev/packages/workmanager
+
+To add in `main.dart`
+```
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: kDebugMode);
+  Workmanager().registerPeriodicTask(
+    "1",
+    "checkReviewsTask",
+    frequency: const Duration(hours: 1),
+  );
+```
+
+Create an entry point:
+```
+@pragma('vm:entry-point')
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    print('callbackDispatcher');
+    await Supabase.initialize(
+      url: supabaseUrl,
+      anonKey: supabaseKey,
+      debug: kDebugMode,
+    );
+    final supabaseClient = SupabaseClient(supabaseUrl, supabaseKey);
+
+      await NotificationService.initNotifications();
+      ...
+  });
+}
+
+```
+NB: The workmanager runs on a separate isolate from the main flutter isolate. Ensure to initialize all dependencies inside the Workmanager().executeTask.
+
+

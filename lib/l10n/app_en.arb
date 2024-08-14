@@ -36,6 +36,7 @@
   "editFlashcard": "Update card",
   "signIn": "Sign in",
   "signUp": "Sign up",
+  "nextAvailable": "Next available",
   "passwordsDontMatch": "Passwords dont match",
   "confirmPassword": "Confirm password",
   "pleaseEnterSomeText": "Please enter some text",

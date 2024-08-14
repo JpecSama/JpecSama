@@ -55,7 +55,7 @@ class FlashcardTile extends StatelessWidget {
               flashcard.flashcardAnswer.map((ans) => ans.answer).join(', '),
             ),
             Text(
-              flashcard.nextAvailableAt.toIso8601String(),
+              "${context.translations.nextAvailable}: ${flashcard.nextAvailableAt.toIso8601String()}",
               style: context.textTheme.labelMedium,
             ),
           ],
