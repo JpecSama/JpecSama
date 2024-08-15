@@ -4,20 +4,19 @@ import 'package:jpec_sama/extensions/context_extension.dart';
 
 import '../../models/flashcard.dart';
 import '../../repositories/review_repository.dart';
-import '../../theme/custom_bottom_nav_bar/custom_bottom_nav_bar.dart';
 import '../../utils/debouncer.dart';
 import '../add_flashcard/parts/select_locale_direction.dart';
 import 'flashcard_tile.dart';
 
-class ListPage extends StatefulWidget {
-  const ListPage({super.key});
-  static const routeName = 'List';
+class ListTab extends StatefulWidget {
+  const ListTab({super.key});
+  static const tabName = 'List';
 
   @override
-  State<ListPage> createState() => _ListPageState();
+  State<ListTab> createState() => _ListTabState();
 }
 
-class _ListPageState extends State<ListPage> {
+class _ListTabState extends State<ListTab> {
   static const _pageSize = 50;
   final PagingController<int, Flashcard> _pagingController =
       PagingController(firstPageKey: 0);
@@ -169,7 +168,6 @@ class _ListPageState extends State<ListPage> {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 }

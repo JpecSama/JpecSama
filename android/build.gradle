@@ -16,3 +16,7 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+// dependencies {
+//     // https://github.com/fluttercommunity/flutter_workmanager/issues/551#issuecomment-2180480982
+//     implementation("androidx.work:work-runtime-ktx:2.8.1")
+// }

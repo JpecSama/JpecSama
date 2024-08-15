@@ -40,6 +40,8 @@ void callbackDispatcher() {
 
     int count = response.count;
     print('count $count');
+    String? userId = supabaseClient.auth.currentUser?.id;
+    print('userId $userId');
 
     if (count > 0) {
       // Send a notification
@@ -110,7 +112,7 @@ Future<void> main() async {
   Workmanager().registerPeriodicTask(
     "1",
     "checkReviewsTask",
-    frequency: const Duration(hours: 1),
+    frequency: const Duration(minutes: 5),
   );
   //
 

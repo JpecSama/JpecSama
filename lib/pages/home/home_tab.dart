@@ -6,22 +6,23 @@ import 'package:jpec_sama/pages/account/account_page.dart';
 import 'package:jpec_sama/pages/add_flashcard/add_flashcard_page.dart';
 import 'package:jpec_sama/pages/review/review_page.dart';
 import 'package:jpec_sama/repositories/review_repository.dart';
-import 'package:jpec_sama/theme/custom_bottom_nav_bar/custom_bottom_nav_bar.dart';
-
+import 'package:jpec_sama/widgets/japanese_text_field.dart';
 import '../review_graph/review_graph.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-  static const routeName = 'Home';
+class HomeTab extends StatefulWidget {
+  const HomeTab({super.key});
+  static const tabName = 'Home';
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeTab> createState() => _HomeTabState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeTabState extends State<HomeTab> {
   final _repo = ReviewRepository();
   late Future<int> _countFuture;
   late Future<List<Flashcard>> _graphFuture;
+
+
 
   @override
   void initState() {
@@ -55,13 +56,13 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Column(
             children: [
+              //
+              const JapaneseTextField(),
               FutureBuilder<List<Flashcard>>(
                 future: _graphFuture,
                 initialData: const [],
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-
                   return ReviewGraph(
-
                     flashcards: snapshot.data ?? [],
                   );
                 },
@@ -106,7 +107,6 @@ class _HomePageState extends State<HomePage> {
         },
         label: const Icon(Icons.add),
       ),
-      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 }

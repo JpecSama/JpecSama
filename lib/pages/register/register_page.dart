@@ -6,7 +6,7 @@ import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../home/home_page.dart';
+import '../home/home_tab.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -42,7 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
         if (session != null) {
           _redirecting = true;
           context.pushReplacementNamed(
-            HomePage.routeName,
+            HomeTab.tabName,
           );
         }
       },
@@ -88,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
         if (authResponse.session != null) {
           print(authResponse.session);
           context.pushReplacementNamed(
-            HomePage.routeName,
+            HomeTab.tabName,
           );
         }
       }

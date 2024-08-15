@@ -47,6 +47,10 @@ dependencies:
     git:
       url: https://github.com/fluttercommunity/flutter_workmanager.git
       ref: b783000
+  kana_romaji_translator:
+    git:
+      # url: https://github.com/JpecSama/kana_romaji_translator.git
+      url: git@github.com:JpecSama/kana_romaji_translator.git
 dev_dependencies:
   flutter_test:
     sdk: flutter

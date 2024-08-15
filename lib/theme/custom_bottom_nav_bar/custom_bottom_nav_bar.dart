@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jpec_sama/theme/custom_bottom_nav_bar/bloc/custom_nav_bar_bloc.dart';
 
-import '../../pages/home/home_page.dart';
-import '../../pages/list/list_page.dart';
+import '../../pages/home/home_tab.dart';
+import '../../pages/list/list_tab.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({super.key});
@@ -21,11 +21,11 @@ class CustomBottomNavBarContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = [
       const BottomNavigationBarItem(
-        label: HomePage.routeName,
+        label: HomeTab.tabName,
         icon: Icon(Icons.home),
       ),
       const BottomNavigationBarItem(
-        label: ListPage.routeName,
+        label: ListTab.tabName,
         icon: Icon(Icons.list),
       ),
     ];

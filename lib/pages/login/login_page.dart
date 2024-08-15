@@ -7,7 +7,7 @@ import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/main.dart';
 import 'package:jpec_sama/pages/dashboard/dashboard.dart';
-import 'package:jpec_sama/pages/home/home_page.dart';
+import 'package:jpec_sama/pages/home/home_tab.dart';
 import 'package:jpec_sama/pages/register/register_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
         if (session != null) {
           _redirecting = true;
           context.pushReplacementNamed(
-            DashboardPage.routeName,
+            Dashboard.routeName,
           );
         }
       },

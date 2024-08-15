@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jpec_sama/pages/list/list_page.dart';
+import 'package:jpec_sama/pages/list/list_tab.dart';
 
 import '../../services/notification_service.dart';
 import '../../theme/custom_bottom_nav_bar/bloc/custom_nav_bar_bloc.dart';
-import '../home/home_page.dart';
+import '../../theme/custom_bottom_nav_bar/custom_bottom_nav_bar.dart';
+import '../home/home_tab.dart';
 
-class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+class Dashboard extends StatefulWidget {
+  const Dashboard({super.key});
   static const routeName = 'dashboard';
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  State<Dashboard> createState() => _DashboardState();
 }
 
-class _DashboardPageState extends State<DashboardPage>
-    with
-        TickerProviderStateMixin,
-        AutomaticKeepAliveClientMixin<DashboardPage> {
+class _DashboardState extends State<Dashboard>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin<Dashboard> {
   late TabController _tabController;
 
   @override
@@ -35,9 +34,9 @@ class _DashboardPageState extends State<DashboardPage>
 
   int? _getIndexFromRoute(String routeName) {
     switch (routeName) {
-      case HomePage.routeName:
+      case HomeTab.tabName:
         return 0;
-      case ListPage.routeName:
+      case ListTab.tabName:
         return 1;
       default:
         return null;
@@ -47,19 +46,22 @@ class _DashboardPageState extends State<DashboardPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return BlocListener<CustomNavBarBloc, CustomNavBarState>(
-      listenWhen: (previous, current) =>
-          previous.currentRoute != current.currentRoute,
-      listener: (context, state) {
-        int? index = _getIndexFromRoute(state.currentRoute);
-        if (index != null) {
-          _tabController.animateTo(index);
-        }
-      },
-      child: TabBarView(controller: _tabController, children: const [
-        HomePage(),
-        ListPage(),
-      ]),
+    return Scaffold(
+      body: BlocListener<CustomNavBarBloc, CustomNavBarState>(
+        listenWhen: (previous, current) =>
+            previous.currentRoute != current.currentRoute,
+        listener: (context, state) {
+          int? index = _getIndexFromRoute(state.currentRoute);
+          if (index != null) {
+            _tabController.animateTo(index);
+          }
+        },
+        child: TabBarView(controller: _tabController, children: const [
+          HomeTab(),
+          ListTab(),
+        ]),
+      ),
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 
