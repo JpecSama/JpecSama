@@ -5,6 +5,7 @@ import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/models/flashcard_answer.dart';
 import 'package:jpec_sama/models/flashcard_session_answer.dart';
 import 'package:jpec_sama/repositories/review_repository.dart';
+import 'package:kana_romaji_translator/japanese_text_translator.dart';
 
 part 'review_event.dart';
 part 'review_state.dart';
@@ -13,6 +14,8 @@ part 'review_bloc.g.dart';
 
 class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
   final _repo = ReviewRepository();
+  final JapaneseTextTranslator japaneseTextTranslator =
+      JapaneseTextTranslator();
 
   @override
   ReviewState fromJson(Map<String, dynamic> json) => json['isSessionEnded']
@@ -31,6 +34,7 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
           sessionAnswers: [],
         )) {
     on<_CardReview>(_onCardReviewed);
+    on<_CurrentCardEdited>(_onCurrentCardEdited);
     on<_Started>(_onStarted);
     on<_SessionCanceled>(_onSessionCanceled);
     on<_SessionSaved>(_onSessionSaved);
@@ -41,7 +45,39 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     emit(state.copyWith(isInitialising: true));
     List<Flashcard> flashcards = await _repo.getCardsToReview();
     flashcards.shuffle();
-    emit(state.copyWith(flashcards: flashcards, isInitialising: false));
+    emit(state.copyWith(
+      flashcards: flashcards,
+      isInitialising: false,
+    ));
+  }
+
+  _onCurrentCardEdited(_CurrentCardEdited event, Emitter<ReviewState> emit) {
+    List<Flashcard> flashcards = [...state.flashcards];
+    flashcards[state.currentCardIndex] = event.flashcard;
+    emit(state.copyWith(flashcards: flashcards));
+  }
+
+  FlashcardAnswer? getUsedAnswerIfCorrect(
+    String givenAnswer,
+    List<FlashcardAnswer> possibleAnswers, {
+    Flashcard? flashcard,
+  }) {
+    FlashcardAnswer? usedAnswer;
+    List<String> alternativeGivenAnswers = flashcard?.destLanguage == 'JA'
+        ? [
+            japaneseTextTranslator.getHiragana(givenAnswer),
+            japaneseTextTranslator.getKatakana(givenAnswer),
+          ]
+        : [];
+
+    for (var possibleAnswer in possibleAnswers) {
+      //todo add levenstein
+      if ([givenAnswer.toComparableString(), ...alternativeGivenAnswers]
+          .contains(possibleAnswer.answer.toComparableString())) {
+        usedAnswer = possibleAnswer;
+      }
+    }
+    return usedAnswer;
   }
 
   _onCardReviewed(_CardReview event, Emitter<ReviewState> emit) {
@@ -54,17 +90,11 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
       ));
       return;
     }
-    List<FlashcardAnswer> possibleAnswers = state.currentCard!.flashcardAnswer;
-    bool isCorrect = false;
-    FlashcardAnswer? usedAnswer;
-    for (var possibleAnswer in possibleAnswers) {
-      //todo add levenstein
-      if (possibleAnswer.answer.toComparableString() ==
-          event.givenAnswer.toComparableString()) {
-        isCorrect = true;
-        usedAnswer = possibleAnswer;
-      }
-    }
+
+    FlashcardAnswer? usedAnswer = getUsedAnswerIfCorrect(
+        event.givenAnswer, state.currentCard!.flashcardAnswer);
+    bool isCorrect = usedAnswer != null;
+
     final currentCard = state.currentCard!;
     int newLevel = currentCard.level + (isCorrect ? 1 : -1);
     emit(

@@ -25,49 +25,64 @@ const supabaseKey =
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
-    print('callbackDispatcher');
-    await Supabase.initialize(
-      url: supabaseUrl,
-      anonKey: supabaseKey,
-      debug: kDebugMode,
-    );
-    final supabaseClient = SupabaseClient(supabaseUrl, supabaseKey);
-    final response = await supabaseClient
-        .from('flashcard')
-        .select('*,flashcard_answer(*)')
-        .lte('next_available_at', DateTime.now())
-        .count();
-
-    int count = response.count;
-    print('count $count');
-    String? userId = supabaseClient.auth.currentUser?.id;
-    print('userId $userId');
-
-    if (count > 0) {
-      // Send a notification
-      FirebaseMessaging messaging = FirebaseMessaging.instance;
-      await messaging.subscribeToTopic("review_notification");
-
-      await NotificationService.initNotifications();
-
-      await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: 57,
-          category: NotificationCategory.Reminder,
-          channelKey: 'main',
-          title: "Jpec-Sama Review",
-          body: "You've got work to do ($count reviews)",
-          largeIcon: 'asset://assets/logo.png',
-          bigPicture: 'asset://assets/logo.png',
-          notificationLayout: Platform.isAndroid
-              ? NotificationLayout.BigPicture
-              : NotificationLayout.BigPicture,
-          wakeUpScreen: true,
-          displayOnForeground: true,
-          displayOnBackground: true,
-          locked: false,
-        ),
+    try {
+      print('callbackDispatcher');
+      HydratedBloc.storage = await HydratedStorage.build(
+        storageDirectory: kIsWeb
+            ? HydratedStorage.webStorageDirectory
+            : await getApplicationDocumentsDirectory(),
       );
+      await Hive.initFlutter();
+
+      await Supabase.initialize(
+        url: supabaseUrl,
+        anonKey: supabaseKey,
+        debug: kDebugMode,
+      );
+      final supabaseClient = SupabaseClient(supabaseUrl, supabaseKey);
+      final response = await supabaseClient
+          .from('flashcard')
+          .select('*,flashcard_answer(*)')
+          .lte('next_available_at', DateTime.now())
+          .count();
+
+      int count = response.count;
+      print('count $count');
+
+      final hiveBox = await Hive.openBox('supabase');
+
+      String? userId =
+          hiveBox.get('userId') ?? supabaseClient.auth.currentUser?.id;
+      print('userId $userId');
+
+      if (count > 0) {
+        // Send a notification
+        FirebaseMessaging messaging = FirebaseMessaging.instance;
+        await messaging.subscribeToTopic("review_notification");
+
+        await NotificationService.initNotifications();
+
+        await AwesomeNotifications().createNotification(
+          content: NotificationContent(
+            id: 57,
+            category: NotificationCategory.Reminder,
+            channelKey: 'main',
+            title: "Jpec-Sama Review",
+            body: "You've got work to do ($count reviews)",
+            largeIcon: 'asset://assets/logo.png',
+            bigPicture: 'asset://assets/logo.png',
+            notificationLayout: Platform.isAndroid
+                ? NotificationLayout.BigPicture
+                : NotificationLayout.BigPicture,
+            wakeUpScreen: true,
+            displayOnForeground: true,
+            displayOnBackground: true,
+            locked: false,
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
     }
 
     return Future.value(true);
@@ -110,9 +125,9 @@ Future<void> main() async {
   //
   Workmanager().initialize(callbackDispatcher, isInDebugMode: kDebugMode);
   Workmanager().registerPeriodicTask(
-    "1",
     "checkReviewsTask",
-    frequency: const Duration(minutes: 5),
+    "checkReviewsTask",
+    frequency: const Duration(hours: 1),
   );
   //
 

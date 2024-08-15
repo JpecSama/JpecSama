@@ -123,6 +123,7 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
     context
         .read<AddFlashcardBloc>()
         .add(const AddFlashcardEvent.searchTextChanged(searchText: ''));
+    setState(() {});
   }
 
   @override
@@ -259,8 +260,8 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
                                                 style: context
                                                     .textTheme.labelMedium,
                                               ),
-                                              hintText:
-                                                  'Answer (Optional hint)',
+                                              hintText: context
+                                                  .translations.answerOptional,
                                               floatingLabelBehavior:
                                                   FloatingLabelBehavior.always,
                                             ),
@@ -281,17 +282,24 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
                           ),
 
                           BlocBuilder<AddFlashcardBloc, AddFlashcardState>(
-                            buildWhen: (previous, current) => true,
+                            buildWhen: (previous, current) =>
+                                previous != current,
                             builder: (context, state) {
+                              print(
+                                  "${state.sourceLocale} => ${state.destLocale}");
                               return Padding(
                                 padding: const EdgeInsets.only(
-                                    top: kPadding, bottom: kPadding * 5),
+                                  top: kPadding,
+                                  bottom: kPadding * 5,
+                                ),
                                 child: ElevatedButton.icon(
                                   onPressed: () => _submitCard(state),
                                   icon: const Icon(
                                     Icons.create_outlined,
                                   ),
-                                  label: Text('Create'),
+                                  label: Text(
+                                    context.translations.create,
+                                  ),
                                 ),
                               );
                             },

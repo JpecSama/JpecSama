@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:kana_romaji_translator/japanese_text_translator.dart';
 
-//TODO
 class JapaneseDynamicTextField extends StatefulWidget {
   const JapaneseDynamicTextField({super.key});
 

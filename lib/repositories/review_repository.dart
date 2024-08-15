@@ -26,16 +26,19 @@ class ReviewRepository {
     return true;
   }
 
-  Future<bool> addFlashcardAnswer(String flashcardId, String answer) async {
+  Future<String?> addFlashcardAnswer(String flashcardId, String answer) async {
     try {
-      await supabase.from('flashcard_answer').upsert({
-        'flashcard_id': flashcardId,
-        'answer': answer,
-      });
-      return true;
+      return (await supabase
+          .from('flashcard_answer')
+          .upsert({
+            'flashcard_id': flashcardId,
+            'answer': answer,
+          })
+          .select('id')
+          .single())['id'];
     } catch (e) {
       print(e);
-      return false;
+      return null;
     }
   }
 
@@ -67,8 +70,6 @@ class ReviewRepository {
         .insert(flashcard
             .copyWith(
               userId: userId,
-              sourceLanguage: flashcard.destLanguage,
-              destLanguage: flashcard.sourceLanguage,
             )
             .toInsertJson())
         .select('id')

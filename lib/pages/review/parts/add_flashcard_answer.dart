@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
+import 'package:jpec_sama/models/flashcard.dart';
+import 'package:jpec_sama/models/flashcard_answer.dart';
+import 'package:jpec_sama/pages/review/bloc/review_bloc.dart';
 
 import '../../../repositories/review_repository.dart';
 
@@ -7,11 +11,11 @@ class AddFlashcardAnswer extends StatefulWidget {
   const AddFlashcardAnswer({
     super.key,
     required ReviewRepository reviewRepository,
-    required this.flashcardId,
+    required this.flashcard,
   }) : _reviewRepository = reviewRepository;
 
   final ReviewRepository _reviewRepository;
-  final String flashcardId;
+  final Flashcard flashcard;
 
   @override
   State<AddFlashcardAnswer> createState() => _AddFlashcardAnswerState();
@@ -40,7 +44,7 @@ class _AddFlashcardAnswerState extends State<AddFlashcardAnswer> {
         Padding(
           padding: const EdgeInsets.only(bottom: 5.0),
           child: Text(
-            "Add possible answer",
+            context.translations.addPossibleAnswer,
             style: context.textTheme.titleMedium,
           ),
         ),
@@ -52,16 +56,26 @@ class _AddFlashcardAnswerState extends State<AddFlashcardAnswer> {
             if (_controller.text.isEmpty) {
               return;
             }
-            final isSuccess = await widget._reviewRepository.addFlashcardAnswer(
-                widget.flashcardId, _controller.text.trim());
-            if (isSuccess) {
+            String newAnswer = _controller.text.trim();
+            final newAnswerId = await widget._reviewRepository
+                .addFlashcardAnswer(widget.flashcard.id!, newAnswer);
+            if (newAnswerId != null) {
               context.showSnackBar(context.translations.successfullyUpdated);
               _controller.clear();
+              context.read<ReviewBloc>().add(ReviewEvent.currentCardEdited(
+                    flashcard: widget.flashcard.copyWith(flashcardAnswer: [
+                      ...widget.flashcard.flashcardAnswer,
+                      FlashcardAnswer(id: newAnswerId, answer: newAnswer)
+                    ]),
+                  ));
             } else {
-              context.showSnackBar('Error', isError: true);
+              context.showSnackBar(context.translations.globalError,
+                  isError: true);
             }
           },
-          child: Text('Submit'),
+          child: Text(
+            context.translations.submit,
+          ),
         ),
       ],
     );

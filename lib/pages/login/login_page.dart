@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/main.dart';
@@ -11,6 +12,7 @@ import 'package:jpec_sama/pages/home/home_tab.dart';
 import 'package:jpec_sama/pages/register/register_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../repositories/user_repository.dart';
 import '../../theme/custom_theme.dart';
 import '../../theme/theme_dialog.dart';
 
@@ -69,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
     // await supabase.auth.getSessionFromUrl();
 //
     _authStateSubscription = supabase.auth.onAuthStateChange.listen(
-      (AuthState data) {
+      (AuthState data) async {
         // print(data);
         if (_redirecting) {
           return;
@@ -82,6 +84,9 @@ class _LoginPageState extends State<LoginPage> {
           context.pushReplacementNamed(
             Dashboard.routeName,
           );
+          final hiveBox = await Hive.openBox('supabase');
+          await hiveBox.put('userId',
+              data.session?.user.id ?? UserRepository.getCurrentUserId());
         }
       },
       onError: (error) {
