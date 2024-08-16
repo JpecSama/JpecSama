@@ -7,6 +7,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:jpec_sama/main.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 
+import '../controller/notification_controller.dart';
+
 class NotificationService {
   static ReceivedAction? initialAction;
 
@@ -39,17 +41,16 @@ class NotificationService {
       ],
       debug: kDebugMode,
     );
-    // AwesomeNotifications().setListeners(
-    //     onActionReceivedMethod: (receivedAction) async {
-    //   print('-------------------------------------');
-    //   print('onActionReceivedMethod');
-    //   var payload = receivedAction.payload;
 
-    //   print(payload.toString());
-    //   if (receivedAction.channelKey == 'normal_channel') {
-    //     //do something here
-    //   }
-    // });
+    AwesomeNotifications().setListeners(
+      onActionReceivedMethod: NotificationController.onActionReceivedMethod,
+      onNotificationCreatedMethod:
+          NotificationController.onNotificationCreatedMethod,
+      onNotificationDisplayedMethod:
+          NotificationController.onNotificationDisplayedMethod,
+      onDismissActionReceivedMethod:
+          NotificationController.onDismissActionReceivedMethod,
+    );
 
     initialAction = await AwesomeNotifications()
         .getInitialNotificationAction(removeFromActionEvents: false);

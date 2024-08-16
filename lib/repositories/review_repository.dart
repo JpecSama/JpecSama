@@ -117,8 +117,12 @@ class ReviewRepository {
     return res.map((el) => Flashcard.fromJson(el)).toList();
   }
 
-  PostgrestTransformBuilder<List<Map<String, dynamic>>>
+  PostgrestTransformBuilder<List<Map<String, dynamic>>>?
       getCardsToReviewQuery() {
+    String? userId = supabase.auth.currentUser?.id;
+    if (userId == null) {
+      return null;
+    }
     return supabase
         .from('flashcard')
         .select('*,flashcard_answer(*)')
@@ -126,6 +130,7 @@ class ReviewRepository {
           'next_available_at',
           DateTime.now(),
         )
+        .eq('user_id', userId)
         .limit(100);
   }
 
@@ -138,8 +143,7 @@ class ReviewRepository {
 
   Future<List<Flashcard>> getCardsToReview() async {
     final cards = await getCardsToReviewQuery();
-    print(cards);
-    return cards.map((card) => Flashcard.fromJson(card)).toList();
+    return cards?.map((card) => Flashcard.fromJson(card)).toList() ?? [];
   }
 
   Future<List<Flashcard>> getAllCards(
@@ -172,8 +176,7 @@ class ReviewRepository {
   }
 
   Future<int> getCardsToReviewCount() async {
-    return (await getCardsToReviewQuery().count()).count;
-    // return await getCardsToReviewQuery().count();
+    return (await getCardsToReviewQuery()?.count())?.count ?? 0;
   }
 
   Future<void> postReview(List<FlashcardSessionAnswer> answers) async {

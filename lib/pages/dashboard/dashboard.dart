@@ -1,7 +1,12 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jpec_sama/pages/list/list_tab.dart';
 
+import '../../controller/notification_controller.dart';
+import '../../services/logger_service.dart';
 import '../../services/notification_service.dart';
 import '../../theme/custom_bottom_nav_bar/bloc/custom_nav_bar_bloc.dart';
 import '../../theme/custom_bottom_nav_bar/custom_bottom_nav_bar.dart';
@@ -24,6 +29,26 @@ class _DashboardState extends State<Dashboard>
     super.initState();
     NotificationService.askForNotificationPermissions(context);
     _tabController = TabController(length: 2, vsync: this);
+
+    //Firebase
+    Stream<RemoteMessage> _stream = FirebaseMessaging.onMessageOpenedApp;
+    _stream.listen((RemoteMessage event) async {
+      LoggerService.debug('RemoteMessage in stream');
+      if (event.data.isNotEmpty) {
+        if (event.data.containsKey('routeName')) {
+          Map<String, String> pathParams = {};
+          event.data.forEach((key, value) {
+            if (key != 'routeName') {
+              pathParams[key] = value.toString();
+            }
+          });
+          context.pushNamed(
+            event.data['routeName'],
+            pathParameters: pathParams,
+          );
+        }
+      }
+    });
   }
 
   @override

@@ -58,12 +58,12 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
   }
 
   FlashcardAnswer? getUsedAnswerIfCorrect(
+    Flashcard flashcard,
     String givenAnswer,
-    List<FlashcardAnswer> possibleAnswers, {
-    Flashcard? flashcard,
-  }) {
+  ) {
     FlashcardAnswer? usedAnswer;
-    List<String> alternativeGivenAnswers = flashcard?.destLanguage == 'JA'
+    List<FlashcardAnswer> possibleAnswers = flashcard.flashcardAnswer;
+    List<String> alternativeGivenAnswers = flashcard.destLanguage == 'JA'
         ? [
             japaneseTextTranslator.getHiragana(givenAnswer),
             japaneseTextTranslator.getKatakana(givenAnswer),
@@ -71,9 +71,13 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
         : [];
 
     for (var possibleAnswer in possibleAnswers) {
+      List<String> givenAnswers = [
+        givenAnswer.toComparableString(),
+        ...alternativeGivenAnswers
+      ];
+      print(givenAnswers);
       //todo add levenstein
-      if ([givenAnswer.toComparableString(), ...alternativeGivenAnswers]
-          .contains(possibleAnswer.answer.toComparableString())) {
+      if (givenAnswers.contains(possibleAnswer.answer.toComparableString())) {
         usedAnswer = possibleAnswer;
       }
     }
@@ -91,8 +95,8 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
       return;
     }
 
-    FlashcardAnswer? usedAnswer = getUsedAnswerIfCorrect(
-        event.givenAnswer, state.currentCard!.flashcardAnswer);
+    FlashcardAnswer? usedAnswer =
+        getUsedAnswerIfCorrect(state.currentCard!, event.givenAnswer);
     bool isCorrect = usedAnswer != null;
 
     final currentCard = state.currentCard!;

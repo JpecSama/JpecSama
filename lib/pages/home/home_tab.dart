@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jpec_sama/constants.dart';
-import 'package:jpec_sama/extensions/context_extension.dart';
-import 'package:jpec_sama/main.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/pages/account/account_page.dart';
 import 'package:jpec_sama/pages/add_flashcard/add_flashcard_page.dart';
@@ -56,19 +54,7 @@ class _HomeTabState extends State<HomeTab> {
           ),
           child: Column(
             children: [
-              //
               const JapaneseTextField(),
-              //callbackDispatcher
-              TextButton(
-                onPressed: () {
-                  callbackDispatcher();
-                },
-                child: Text(
-                  'test',
-                  style: context.textTheme.bodyMedium!
-                      .copyWith(color: Colors.black),
-                ),
-              ),
               FutureBuilder<List<Flashcard>>(
                 future: _graphFuture,
                 initialData: const [],
