@@ -64,6 +64,8 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
             key: _formKey,
             child: BlocBuilder<ReviewBloc, ReviewState>(
               buildWhen: (previous, current) =>
+                  previous.currentCard?.destLanguage !=
+                      current.currentCard?.destLanguage ||
                   previous.hasReviewError != current.hasReviewError,
               builder: (context, state) {
                 return Padding(
@@ -85,6 +87,9 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
                     },
                     decoration: InputDecoration(
                       labelText: context.translations.answer,
+                      hintText: state.currentCard?.destLanguage == 'JA'
+                          ? '答え ${state.currentCard?.destLanguage}'
+                          : 'Answer ${state.currentCard?.destLanguage}',
                       prefixIcon: state.currentCard?.destLanguage == 'JA'
                           ? const Icon(Icons.translate)
                           : const Icon(Icons.language),

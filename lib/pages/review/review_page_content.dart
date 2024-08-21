@@ -75,6 +75,7 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
           child: BlocBuilder<ReviewBloc, ReviewState>(
             buildWhen: (previous, current) =>
                 previous.isInitialising != current.isInitialising ||
+                previous.currentCard != current.currentCard ||
                 previous.currentCardIndex != current.currentCardIndex,
             builder: (context, state) {
               if (state.isInitialising) {

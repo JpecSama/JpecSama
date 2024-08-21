@@ -87,11 +87,25 @@ class FlashcardHead extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Center(
-                child: Text(
-                  // context.translations.answer.toUpperCase(),
-                  "Level ${currentCard.level + 1}",
-                  style:
-                      context.textTheme.bodySmall!.copyWith(color: sakuraIro),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '${currentCard.sourceLanguage} => ${currentCard.destLanguage}',
+                      style: context.textTheme.bodySmall!
+                          .copyWith(color: sakuraIro),
+                    ),
+                    Text(
+                      ' - ',
+                      style: context.textTheme.bodySmall!
+                          .copyWith(color: sakuraIro),
+                    ),
+                    Text(
+                      "Level ${currentCard.level + 1}",
+                      style: context.textTheme.bodySmall!
+                          .copyWith(color: sakuraIro),
+                    ),
+                  ],
                 ),
               ),
             ),

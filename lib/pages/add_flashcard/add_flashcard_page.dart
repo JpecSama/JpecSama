@@ -6,6 +6,7 @@ import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/pages/add_flashcard/bloc/add_flashcard_bloc.dart';
 import 'package:jpec_sama/pages/add_flashcard/parts/translation_suggestions.dart';
 import 'package:jpec_sama/repositories/review_repository.dart';
+import 'package:jpec_sama/widgets/japanese_text_field/controller/japanese_dynamic_text_editing_controller.dart';
 
 import '../../models/api/api_translation.dart';
 import '../../repositories/user_repository.dart';
@@ -35,7 +36,8 @@ class AddFlashcardPageContent extends StatefulWidget {
 
 class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final TextEditingController _searchTextController = TextEditingController();
+  final JapaneseTextEditingController _searchTextController =
+      JapaneseTextEditingController();
   final TextEditingController _hintController = TextEditingController();
   final List<TextEditingController> _answerControllers = [
     TextEditingController()
@@ -54,7 +56,6 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
 
   @override
   void dispose() {
-    _searchTextController.removeListener(() {});
     _searchTextController.dispose();
     super.dispose();
   }
@@ -149,22 +150,42 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           const SelectFlashcardLocalesHeader(),
-                          TextFormField(
-                            controller: _searchTextController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return context.translations.requiredFieldError;
+                          BlocConsumer<AddFlashcardBloc, AddFlashcardState>(
+                            listener: (context, state) {
+                              if (state.sourceLocale == 'JA') {
+                                _searchTextController.activateTranslating();
+                              } else {
+                                _searchTextController.deactivateTranslating();
                               }
-                              return null;
                             },
-                            decoration: InputDecoration(
-                              label: Text(
-                                context.translations.toTranslate,
-                              ),
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                            ),
+                            builder: (context, state) {
+                              return Column(
+                                children: [
+                                  TextFormField(
+                                    controller: _searchTextController,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return context
+                                            .translations.requiredFieldError;
+                                      }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                      label: Text(
+                                        context.translations.toTranslate,
+                                      ),
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                    ),
+                                  ),
+                                  _searchTextController.isTranslatingToJapanese
+                                      ? Text(_searchTextController.japanese)
+                                      : Container(),
+                                ],
+                              );
+                            },
                           ),
+
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: TextFormField(
@@ -285,8 +306,6 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
                             buildWhen: (previous, current) =>
                                 previous != current,
                             builder: (context, state) {
-                              print(
-                                  "${state.sourceLocale} => ${state.destLocale}");
                               return Padding(
                                 padding: const EdgeInsets.only(
                                   top: kPadding,

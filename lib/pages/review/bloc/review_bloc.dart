@@ -65,8 +65,14 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     List<FlashcardAnswer> possibleAnswers = flashcard.flashcardAnswer;
     List<String> alternativeGivenAnswers = flashcard.destLanguage == 'JA'
         ? [
-            japaneseTextTranslator.getHiragana(givenAnswer),
-            japaneseTextTranslator.getKatakana(givenAnswer),
+            japaneseTextTranslator.getHiragana(
+              givenAnswer,
+              isStaticAnalysis: true,
+            ),
+            japaneseTextTranslator.getKatakana(
+              givenAnswer,
+              isStaticAnalysis: true,
+            ),
           ]
         : [];
 

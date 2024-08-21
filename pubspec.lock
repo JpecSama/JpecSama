@@ -791,7 +791,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: da1b6f3e68406f5800db8c102f6e7f1b796104c0
+      resolved-ref: "19413c494b03947c770b0eb996734cdaac69f263"
       url: "git@github.com:JpecSama/kana_romaji_translator.git"
     source: git
     version: "0.0.1"

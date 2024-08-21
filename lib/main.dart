@@ -54,7 +54,7 @@ Future<void> initApp() async {
     );
   }
   //
-  // Workmanager().cancelAll();
+  Workmanager().cancelAll();
   Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
   Workmanager().registerPeriodicTask(
     "checkReviewsTask",
