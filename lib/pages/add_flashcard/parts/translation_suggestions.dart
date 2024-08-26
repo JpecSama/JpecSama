@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/typedef.dart';
 
 import '../../../theme/theme_title.dart';
@@ -59,8 +60,8 @@ class _TranslationSuggestionsState extends State<TranslationSuggestions>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const ThemeTitle(
-                          title: 'Translation suggestions',
+                        ThemeTitle(
+                          title: context.translations.translationSuggestions,
                         ),
                         const SizedBox(
                           width: 10,

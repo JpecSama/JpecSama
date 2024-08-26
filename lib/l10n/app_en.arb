@@ -37,6 +37,7 @@
   "signIn": "Sign in",
   "signUp": "Sign up",
   "create": "Create",
+  "translationSuggestions": "Translation suggestions",
   "globalError": "An error occurred.",
   "addPossibleAnswer": "Add possible answer",
   "answerOptional": "Answer (optional hint)",

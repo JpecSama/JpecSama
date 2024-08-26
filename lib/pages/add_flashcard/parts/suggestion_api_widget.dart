@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jpec_sama/pages/add_flashcard/deepl_suggestions.dart';
 import 'package:jpec_sama/typedef.dart';
+import 'package:kana_romaji_translator/kana_romaji_translator.dart';
 
 import '../jisho_suggestions.dart';
 
@@ -25,8 +26,15 @@ class SuggestionApiWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (translatorApi) {
       case DeeplSuggestions.suggestionApiName:
+        JapaneseTextTranslator japaneseTextTranslator =
+            JapaneseTextTranslator();
+        String usedSearchText = sourceLang == 'JA' &&
+                !JapaneseCharacterMatcher.doesStringContainsJapaneseCharacters(
+                    searchText)
+            ? japaneseTextTranslator.getHiragana(searchText)
+            : searchText;
         return DeeplSuggestions(
-          searchText: searchText,
+          searchText: usedSearchText,
           sourceLang: sourceLang,
           targetLang: targetLang,
           onTranslationClicked: onTranslationClicked,

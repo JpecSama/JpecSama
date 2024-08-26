@@ -52,6 +52,17 @@ void callbackDispatcher() {
       if (count > 0) {
         await NotificationService.initNotifications();
 
+        bool isAlreadyActive = false;
+        try {
+          isAlreadyActive = await AwesomeNotifications()
+              .isNotificationActiveOnStatusBar(id: 57);
+        } catch (e) {
+          print(e);
+        }
+        if (isAlreadyActive) {
+          return Future.value(true);
+        }
+
         await AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: 57,
@@ -61,9 +72,10 @@ void callbackDispatcher() {
             body: "You've got work to do ($count reviews)",
             largeIcon: 'asset://assets/logo.png',
             bigPicture: 'asset://assets/logo.png',
-            notificationLayout: Platform.isAndroid
-                ? NotificationLayout.BigPicture
-                : NotificationLayout.BigPicture,
+            notificationLayout: NotificationLayout.Default,
+            // notificationLayout: Platform.isAndroid
+            //     ? NotificationLayout.BigPicture
+            //     : NotificationLayout.BigPicture,
             wakeUpScreen: true,
             displayOnForeground: true,
             displayOnBackground: true,

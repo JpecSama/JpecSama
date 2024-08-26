@@ -142,8 +142,14 @@ class ReviewRepository {
   }
 
   Future<List<Flashcard>> getCardsToReview() async {
-    final cards = await getCardsToReviewQuery();
-    return cards?.map((card) => Flashcard.fromJson(card)).toList() ?? [];
+    final jsonCards = await getCardsToReviewQuery();
+
+    final cards =
+        (jsonCards?.map((card) => Flashcard.fromJson(card)).toList() ?? []);
+    cards.sort((a, b) =>
+        (['JA'].contains(a.destLanguage) ? 0 : 1) -
+        (['JA'].contains(b.destLanguage) ? 0 : 1));
+    return cards;
   }
 
   Future<List<Flashcard>> getAllCards(
@@ -187,9 +193,6 @@ class ReviewRepository {
       incorrectLevelMap[i] = [];
     }
     for (final answer in answers) {
-      print("level ${answer.flashCard.level}");
-      print(
-          "correctLevelMap[answer.flashCard.level] ${correctLevelMap[answer.flashCard.level]!}");
       if (answer.isCorrect) {
         correctLevelMap[answer.flashCard.level]!.add(answer);
       } else {

@@ -73,6 +73,7 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
                   child: TextFormField(
                     controller: _answerController,
                     enableSuggestions: true,
+                    autofocus: true,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.text,
                     textCapitalization: TextCapitalization.none,
