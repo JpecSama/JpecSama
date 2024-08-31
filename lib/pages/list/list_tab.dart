@@ -89,7 +89,7 @@ class _ListTabState extends State<ListTab> {
                   setState(() {
                     _sourceLocale = locale;
                   });
-                  _fetchPage(0);
+                  _pagingController.refresh();
                 }
               },
               onDestLocaleChanged: (locale) {
@@ -97,7 +97,7 @@ class _ListTabState extends State<ListTab> {
                   setState(() {
                     _destLocale = locale;
                   });
-                  _fetchPage(0);
+                  _pagingController.refresh();
                 }
               },
             ),

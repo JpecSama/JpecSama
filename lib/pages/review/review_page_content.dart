@@ -76,14 +76,14 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
             buildWhen: (previous, current) =>
                 previous.isInitialising != current.isInitialising ||
                 previous.currentCard != current.currentCard ||
-                previous.currentCardIndex != current.currentCardIndex,
+                previous.currentCardId != current.currentCardId,
             builder: (context, state) {
               if (state.isInitialising) {
                 return const CircularProgressIndicator();
               }
               Flashcard? currentCard = state.currentCard;
 
-              if (currentCard == null) {
+              if (state.flashcards.isEmpty || currentCard == null) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

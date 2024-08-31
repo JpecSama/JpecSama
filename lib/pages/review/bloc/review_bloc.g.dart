@@ -15,7 +15,7 @@ _$ReviewStateImpl _$$ReviewStateImplFromJson(Map<String, dynamic> json) =>
       hasReviewError: json['has_review_error'] as bool? ?? false,
       isHintVisible: json['is_hint_visible'] as bool? ?? false,
       isAnswerVisible: json['is_answer_visible'] as bool? ?? false,
-      currentCardIndex: (json['current_card_index'] as num?)?.toInt() ?? 0,
+      currentCardId: json['current_card_id'] as String?,
       flashcards: (json['flashcards'] as List<dynamic>)
           .map((e) => Flashcard.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -34,7 +34,7 @@ Map<String, dynamic> _$$ReviewStateImplToJson(_$ReviewStateImpl instance) =>
       'has_review_error': instance.hasReviewError,
       'is_hint_visible': instance.isHintVisible,
       'is_answer_visible': instance.isAnswerVisible,
-      'current_card_index': instance.currentCardIndex,
+      'current_card_id': instance.currentCardId,
       'flashcards': instance.flashcards.map((e) => e.toJson()).toList(),
       'session_answers':
           instance.sessionAnswers.map((e) => e.toJson()).toList(),

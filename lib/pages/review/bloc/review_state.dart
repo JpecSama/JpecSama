@@ -13,13 +13,17 @@ class ReviewState with _$ReviewState {
     @Default(false) bool hasReviewError,
     @Default(false) bool isHintVisible,
     @Default(false) bool isAnswerVisible,
-    @Default(0) int currentCardIndex,
+    String? currentCardId,
     required List<Flashcard> flashcards,
     required List<FlashcardSessionAnswer> sessionAnswers,
   }) = _ReviewState;
 
-  Flashcard? get currentCard => currentCardIndex < flashcards.length
-      ? flashcards[currentCardIndex]
+  Flashcard? get currentCard => currentCardId != null
+      ? flashcards.where((card) => card.id == currentCardId).firstOrNull
+      : null;
+
+  int? get currentCardIndex => currentCardId != null
+      ? flashcards.indexWhere((card) => card.id == currentCardId)
       : null;
 
   factory ReviewState.fromJson(Map<String, Object?> json) =>

@@ -147,8 +147,8 @@ class ReviewRepository {
     final cards =
         (jsonCards?.map((card) => Flashcard.fromJson(card)).toList() ?? []);
     cards.sort((a, b) =>
-        (['JA'].contains(a.destLanguage) ? 0 : 1) -
-        (['JA'].contains(b.destLanguage) ? 0 : 1));
+        (['JA'].contains(a.destLanguage) ? 1 : 0) -
+        (['JA'].contains(b.destLanguage) ? 1 : 0));
     return cards;
   }
 

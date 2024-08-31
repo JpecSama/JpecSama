@@ -47,13 +47,14 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     flashcards.shuffle();
     emit(state.copyWith(
       flashcards: flashcards,
+      currentCardId: flashcards.firstOrNull?.id,
       isInitialising: false,
     ));
   }
 
   _onCurrentCardEdited(_CurrentCardEdited event, Emitter<ReviewState> emit) {
     List<Flashcard> flashcards = [...state.flashcards];
-    flashcards[state.currentCardIndex] = event.flashcard;
+    flashcards[state.currentCardIndex!] = event.flashcard;
     emit(state.copyWith(flashcards: flashcards));
   }
 
@@ -90,13 +91,22 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     return usedAnswer;
   }
 
+  String? _getRandomCardId() {
+    if (state.flashcards.isEmpty) {
+      return null;
+    }
+    List<String> cardIds = [...state.flashcards.map((card) => card.id!)];
+    cardIds.shuffle();
+    return cardIds.firstOrNull;
+  }
+
   _onCardReviewed(_CardReview event, Emitter<ReviewState> emit) {
     if (state.hasReviewError) {
       emit(state.copyWith(
         hasReviewError: false,
         isAnswerVisible: false,
         isHintVisible: false,
-        currentCardIndex: state.currentCardIndex + 1,
+        currentCardId: _getRandomCardId(),
       ));
       return;
     }
@@ -107,23 +117,36 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
 
     final currentCard = state.currentCard!;
     int newLevel = currentCard.level + (isCorrect ? 1 : -1);
+
+    List<Flashcard> newFlashcards = [...state.flashcards];
+    List<FlashcardSessionAnswer> answers = [
+      ...state.sessionAnswers,
+    ];
+
+    if (answers
+        .where((answer) => answer.flashCard.id == state.currentCardId)
+        .isEmpty) {
+      answers.add(FlashcardSessionAnswer(
+        flashCard: currentCard.copyWith(level: newLevel >= 0 ? newLevel : 0),
+        flashCardAnswer: usedAnswer,
+        givenAnswer: event.givenAnswer,
+        isCorrect: isCorrect,
+      ));
+    }
+    if (isCorrect) {
+      newFlashcards.removeAt(state.currentCardIndex!);
+    }
+    String? currentCardId =
+        (isCorrect) ? _getRandomCardId() : state.currentCardId;
+
     emit(
       state.copyWith(
+        flashcards: newFlashcards,
         hasReviewError: !isCorrect,
         isAnswerVisible: !isCorrect,
-        currentCardIndex:
-            isCorrect ? state.currentCardIndex + 1 : state.currentCardIndex,
+        currentCardId: currentCardId,
         isHintVisible: false,
-        sessionAnswers: [
-          ...state.sessionAnswers,
-          FlashcardSessionAnswer(
-            flashCard:
-                currentCard.copyWith(level: newLevel >= 0 ? newLevel : 0),
-            flashCardAnswer: usedAnswer,
-            givenAnswer: event.givenAnswer,
-            isCorrect: isCorrect,
-          ),
-        ],
+        sessionAnswers: answers,
       ),
     );
   }

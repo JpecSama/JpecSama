@@ -48,7 +48,7 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
       listenWhen: (previous, current) =>
           previous.currentCard?.destLanguage !=
               current.currentCard?.destLanguage ||
-          previous.currentCardIndex != current.currentCardIndex,
+          previous.currentCardId != current.currentCardId,
       listener: (context, state) {
         _answerController.clear();
         if (state.currentCard?.destLanguage == 'JA') {
@@ -89,8 +89,8 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
                     decoration: InputDecoration(
                       labelText: context.translations.answer,
                       hintText: state.currentCard?.destLanguage == 'JA'
-                          ? '答え ${state.currentCard?.destLanguage}'
-                          : 'Answer ${state.currentCard?.destLanguage}',
+                          ? '答え'
+                          : 'Answer',
                       prefixIcon: state.currentCard?.destLanguage == 'JA'
                           ? const Icon(Icons.translate)
                           : const Icon(Icons.language),
@@ -109,6 +109,7 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
           ),
           BlocBuilder<ReviewBloc, ReviewState>(
             buildWhen: (previous, current) =>
+                previous.currentCard != current.currentCard ||
                 previous.currentCardIndex != current.currentCardIndex,
             builder: (context, state) {
               return state.currentCard?.destLanguage == 'JA'

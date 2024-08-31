@@ -20,6 +20,8 @@ class Flashcard with _$Flashcard {
     String? sourceLanguage,
     String? destLanguage,
     String? userId,
+    //dynamic
+    @Default(false) bool isReviewDone,
     @Default([]) List<FlashcardAnswer> flashcardAnswer,
   }) = _Flashcard;
 

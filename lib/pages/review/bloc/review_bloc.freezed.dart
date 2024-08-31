@@ -1152,7 +1152,7 @@ mixin _$ReviewState {
   bool get hasReviewError => throw _privateConstructorUsedError;
   bool get isHintVisible => throw _privateConstructorUsedError;
   bool get isAnswerVisible => throw _privateConstructorUsedError;
-  int get currentCardIndex => throw _privateConstructorUsedError;
+  String? get currentCardId => throw _privateConstructorUsedError;
   List<Flashcard> get flashcards => throw _privateConstructorUsedError;
   List<FlashcardSessionAnswer> get sessionAnswers =>
       throw _privateConstructorUsedError;
@@ -1181,7 +1181,7 @@ abstract class $ReviewStateCopyWith<$Res> {
       bool hasReviewError,
       bool isHintVisible,
       bool isAnswerVisible,
-      int currentCardIndex,
+      String? currentCardId,
       List<Flashcard> flashcards,
       List<FlashcardSessionAnswer> sessionAnswers});
 }
@@ -1208,7 +1208,7 @@ class _$ReviewStateCopyWithImpl<$Res, $Val extends ReviewState>
     Object? hasReviewError = null,
     Object? isHintVisible = null,
     Object? isAnswerVisible = null,
-    Object? currentCardIndex = null,
+    Object? currentCardId = freezed,
     Object? flashcards = null,
     Object? sessionAnswers = null,
   }) {
@@ -1241,10 +1241,10 @@ class _$ReviewStateCopyWithImpl<$Res, $Val extends ReviewState>
           ? _value.isAnswerVisible
           : isAnswerVisible // ignore: cast_nullable_to_non_nullable
               as bool,
-      currentCardIndex: null == currentCardIndex
-          ? _value.currentCardIndex
-          : currentCardIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      currentCardId: freezed == currentCardId
+          ? _value.currentCardId
+          : currentCardId // ignore: cast_nullable_to_non_nullable
+              as String?,
       flashcards: null == flashcards
           ? _value.flashcards
           : flashcards // ignore: cast_nullable_to_non_nullable
@@ -1273,7 +1273,7 @@ abstract class _$$ReviewStateImplCopyWith<$Res>
       bool hasReviewError,
       bool isHintVisible,
       bool isAnswerVisible,
-      int currentCardIndex,
+      String? currentCardId,
       List<Flashcard> flashcards,
       List<FlashcardSessionAnswer> sessionAnswers});
 }
@@ -1298,7 +1298,7 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
     Object? hasReviewError = null,
     Object? isHintVisible = null,
     Object? isAnswerVisible = null,
-    Object? currentCardIndex = null,
+    Object? currentCardId = freezed,
     Object? flashcards = null,
     Object? sessionAnswers = null,
   }) {
@@ -1331,10 +1331,10 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
           ? _value.isAnswerVisible
           : isAnswerVisible // ignore: cast_nullable_to_non_nullable
               as bool,
-      currentCardIndex: null == currentCardIndex
-          ? _value.currentCardIndex
-          : currentCardIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      currentCardId: freezed == currentCardId
+          ? _value.currentCardId
+          : currentCardId // ignore: cast_nullable_to_non_nullable
+              as String?,
       flashcards: null == flashcards
           ? _value._flashcards
           : flashcards // ignore: cast_nullable_to_non_nullable
@@ -1358,7 +1358,7 @@ class _$ReviewStateImpl extends _ReviewState {
       this.hasReviewError = false,
       this.isHintVisible = false,
       this.isAnswerVisible = false,
-      this.currentCardIndex = 0,
+      this.currentCardId,
       required final List<Flashcard> flashcards,
       required final List<FlashcardSessionAnswer> sessionAnswers})
       : _flashcards = flashcards,
@@ -1390,8 +1390,7 @@ class _$ReviewStateImpl extends _ReviewState {
   @JsonKey()
   final bool isAnswerVisible;
   @override
-  @JsonKey()
-  final int currentCardIndex;
+  final String? currentCardId;
   final List<Flashcard> _flashcards;
   @override
   List<Flashcard> get flashcards {
@@ -1410,7 +1409,7 @@ class _$ReviewStateImpl extends _ReviewState {
 
   @override
   String toString() {
-    return 'ReviewState(submissionError: $submissionError, isInitialising: $isInitialising, isSubmitting: $isSubmitting, isSessionEnded: $isSessionEnded, hasReviewError: $hasReviewError, isHintVisible: $isHintVisible, isAnswerVisible: $isAnswerVisible, currentCardIndex: $currentCardIndex, flashcards: $flashcards, sessionAnswers: $sessionAnswers)';
+    return 'ReviewState(submissionError: $submissionError, isInitialising: $isInitialising, isSubmitting: $isSubmitting, isSessionEnded: $isSessionEnded, hasReviewError: $hasReviewError, isHintVisible: $isHintVisible, isAnswerVisible: $isAnswerVisible, currentCardId: $currentCardId, flashcards: $flashcards, sessionAnswers: $sessionAnswers)';
   }
 
   @override
@@ -1432,8 +1431,8 @@ class _$ReviewStateImpl extends _ReviewState {
                 other.isHintVisible == isHintVisible) &&
             (identical(other.isAnswerVisible, isAnswerVisible) ||
                 other.isAnswerVisible == isAnswerVisible) &&
-            (identical(other.currentCardIndex, currentCardIndex) ||
-                other.currentCardIndex == currentCardIndex) &&
+            (identical(other.currentCardId, currentCardId) ||
+                other.currentCardId == currentCardId) &&
             const DeepCollectionEquality()
                 .equals(other._flashcards, _flashcards) &&
             const DeepCollectionEquality()
@@ -1451,7 +1450,7 @@ class _$ReviewStateImpl extends _ReviewState {
       hasReviewError,
       isHintVisible,
       isAnswerVisible,
-      currentCardIndex,
+      currentCardId,
       const DeepCollectionEquality().hash(_flashcards),
       const DeepCollectionEquality().hash(_sessionAnswers));
 
@@ -1480,7 +1479,7 @@ abstract class _ReviewState extends ReviewState {
           final bool hasReviewError,
           final bool isHintVisible,
           final bool isAnswerVisible,
-          final int currentCardIndex,
+          final String? currentCardId,
           required final List<Flashcard> flashcards,
           required final List<FlashcardSessionAnswer> sessionAnswers}) =
       _$ReviewStateImpl;
@@ -1504,7 +1503,7 @@ abstract class _ReviewState extends ReviewState {
   @override
   bool get isAnswerVisible;
   @override
-  int get currentCardIndex;
+  String? get currentCardId;
   @override
   List<Flashcard> get flashcards;
   @override
