@@ -21,7 +21,7 @@ class Flashcard with _$Flashcard {
     String? destLanguage,
     String? userId,
     //dynamic
-    @Default(false) bool isReviewDone,
+    @JsonKey(includeFromJson: false) @Default(false) bool isReviewDone,
     @Default([]) List<FlashcardAnswer> flashcardAnswer,
   }) = _Flashcard;
 
@@ -34,4 +34,5 @@ class Flashcard with _$Flashcard {
     json.remove('flashcard_answer');
     return json;
   }
+  //[innyou, いんにょう, インニョウ]
 }

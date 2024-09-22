@@ -66,25 +66,27 @@ class _TranslationSuggestionsState extends State<TranslationSuggestions>
                         const SizedBox(
                           width: 10,
                         ),
-                        DropdownMenu(
-                          initialSelection: _translatorApi,
-                          onSelected: (label) {
-                            if (label != null) {
-                              setState(() {
-                                _translatorApi = label;
-                              });
-                            }
-                          },
-                          dropdownMenuEntries: const [
-                            DropdownMenuEntry(
-                              value: DeeplSuggestions.suggestionApiName,
-                              label: 'DeepL',
-                            ),
-                            DropdownMenuEntry(
-                              value: JishoSuggestions.suggestionApiName,
-                              label: 'Jisho',
-                            ),
-                          ],
+                        Flexible(
+                          child: DropdownMenu(
+                            initialSelection: _translatorApi,
+                            onSelected: (label) {
+                              if (label != null) {
+                                setState(() {
+                                  _translatorApi = label;
+                                });
+                              }
+                            },
+                            dropdownMenuEntries: const [
+                              DropdownMenuEntry(
+                                value: DeeplSuggestions.suggestionApiName,
+                                label: 'DeepL',
+                              ),
+                              DropdownMenuEntry(
+                                value: JishoSuggestions.suggestionApiName,
+                                label: 'Jisho',
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

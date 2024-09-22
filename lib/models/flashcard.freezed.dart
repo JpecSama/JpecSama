@@ -31,6 +31,7 @@ mixin _$Flashcard {
   String? get sourceLanguage => throw _privateConstructorUsedError;
   String? get destLanguage => throw _privateConstructorUsedError;
   String? get userId => throw _privateConstructorUsedError; //dynamic
+  @JsonKey(includeFromJson: false)
   bool get isReviewDone => throw _privateConstructorUsedError;
   List<FlashcardAnswer> get flashcardAnswer =>
       throw _privateConstructorUsedError;
@@ -62,7 +63,7 @@ abstract class $FlashcardCopyWith<$Res> {
       String? sourceLanguage,
       String? destLanguage,
       String? userId,
-      bool isReviewDone,
+      @JsonKey(includeFromJson: false) bool isReviewDone,
       List<FlashcardAnswer> flashcardAnswer});
 }
 
@@ -172,7 +173,7 @@ abstract class _$$FlashcardImplCopyWith<$Res>
       String? sourceLanguage,
       String? destLanguage,
       String? userId,
-      bool isReviewDone,
+      @JsonKey(includeFromJson: false) bool isReviewDone,
       List<FlashcardAnswer> flashcardAnswer});
 }
 
@@ -275,7 +276,7 @@ class _$FlashcardImpl extends _Flashcard {
       this.sourceLanguage,
       this.destLanguage,
       this.userId,
-      this.isReviewDone = false,
+      @JsonKey(includeFromJson: false) this.isReviewDone = false,
       final List<FlashcardAnswer> flashcardAnswer = const []})
       : _flashcardAnswer = flashcardAnswer,
         super._();
@@ -309,7 +310,7 @@ class _$FlashcardImpl extends _Flashcard {
   final String? userId;
 //dynamic
   @override
-  @JsonKey()
+  @JsonKey(includeFromJson: false)
   final bool isReviewDone;
   final List<FlashcardAnswer> _flashcardAnswer;
   @override
@@ -400,7 +401,7 @@ abstract class _Flashcard extends Flashcard {
       final String? sourceLanguage,
       final String? destLanguage,
       final String? userId,
-      final bool isReviewDone,
+      @JsonKey(includeFromJson: false) final bool isReviewDone,
       final List<FlashcardAnswer> flashcardAnswer}) = _$FlashcardImpl;
   const _Flashcard._() : super._();
 
@@ -430,6 +431,7 @@ abstract class _Flashcard extends Flashcard {
   @override
   String? get userId; //dynamic
   @override
+  @JsonKey(includeFromJson: false)
   bool get isReviewDone;
   @override
   List<FlashcardAnswer> get flashcardAnswer;

@@ -21,7 +21,6 @@ _$FlashcardImpl _$$FlashcardImplFromJson(Map<String, dynamic> json) =>
       sourceLanguage: json['source_language'] as String?,
       destLanguage: json['dest_language'] as String?,
       userId: json['user_id'] as String?,
-      isReviewDone: json['is_review_done'] as bool? ?? false,
       flashcardAnswer: (json['flashcard_answer'] as List<dynamic>?)
               ?.map((e) => FlashcardAnswer.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -41,7 +40,6 @@ Map<String, dynamic> _$$FlashcardImplToJson(_$FlashcardImpl instance) =>
       'source_language': instance.sourceLanguage,
       'dest_language': instance.destLanguage,
       'user_id': instance.userId,
-      'is_review_done': instance.isReviewDone,
       'flashcard_answer':
           instance.flashcardAnswer.map((e) => e.toJson()).toList(),
     };

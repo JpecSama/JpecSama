@@ -65,6 +65,8 @@ class ReviewRepository {
     Iterable<String> answers,
     bool isReversable,
   ) async {
+    print('createFlashcard');
+    print(flashcard.toJson());
     final res = await supabase
         .from('flashcard')
         .insert(flashcard

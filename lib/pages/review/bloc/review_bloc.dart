@@ -92,11 +92,14 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
   }
 
   String? _getRandomCardId() {
+    print('_getRandomCardId length ${state.flashcards.length}');
     if (state.flashcards.isEmpty) {
       return null;
     }
     List<String> cardIds = [...state.flashcards.map((card) => card.id!)];
     cardIds.shuffle();
+    print('${cardIds.firstOrNull}');
+
     return cardIds.firstOrNull;
   }
 
