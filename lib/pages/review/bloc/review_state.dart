@@ -18,9 +18,11 @@ class ReviewState with _$ReviewState {
     required List<FlashcardSessionAnswer> sessionAnswers,
   }) = _ReviewState;
 
-  Flashcard? get currentCard => currentCardId != null
-      ? flashcards.where((card) => card.id == currentCardId).firstOrNull
-      : null;
+  Flashcard? get currentCard {
+    return currentCardId != null
+        ? flashcards.where((card) => card.id == currentCardId).firstOrNull
+        : null;
+  }
 
   int? get currentCardIndex => currentCardId != null
       ? flashcards.indexWhere((card) => card.id == currentCardId)

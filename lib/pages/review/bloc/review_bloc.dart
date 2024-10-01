@@ -91,26 +91,26 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     return usedAnswer;
   }
 
-  String? _getRandomCardId() {
-    print('_getRandomCardId length ${state.flashcards.length}');
-    if (state.flashcards.isEmpty) {
+  String? _getRandomCardId(List<Flashcard> flashcards) {
+    if (flashcards.isEmpty) {
       return null;
     }
-    List<String> cardIds = [...state.flashcards.map((card) => card.id!)];
+    List<String> cardIds = [...flashcards.map((card) => card.id!)];
     cardIds.shuffle();
-    print('${cardIds.firstOrNull}');
 
     return cardIds.firstOrNull;
   }
 
   _onCardReviewed(_CardReview event, Emitter<ReviewState> emit) {
     if (state.hasReviewError) {
-      emit(state.copyWith(
-        hasReviewError: false,
-        isAnswerVisible: false,
-        isHintVisible: false,
-        currentCardId: _getRandomCardId(),
-      ));
+      emit(
+        state.copyWith(
+          hasReviewError: false,
+          isAnswerVisible: false,
+          isHintVisible: false,
+          currentCardId: _getRandomCardId(state.flashcards),
+        ),
+      );
       return;
     }
 
@@ -140,7 +140,7 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
       newFlashcards.removeAt(state.currentCardIndex!);
     }
     String? currentCardId =
-        (isCorrect) ? _getRandomCardId() : state.currentCardId;
+        isCorrect ? _getRandomCardId(newFlashcards) : state.currentCardId;
 
     emit(
       state.copyWith(
