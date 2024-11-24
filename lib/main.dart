@@ -54,12 +54,12 @@ Future<void> initApp() async {
     );
   }
   //
-  // Workmanager().cancelAll();
+  Workmanager().cancelAll();
   Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
   Workmanager().registerPeriodicTask(
     "checkReviewsTask",
     "checkReviewsTask",
-    frequency: const Duration(hours: 1),
+    frequency: const Duration(days: 1),
   );
   //
 }

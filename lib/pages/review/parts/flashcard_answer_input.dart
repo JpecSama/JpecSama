@@ -72,7 +72,8 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: TextFormField(
                     controller: _answerController,
-                    enableSuggestions: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
                     autofocus: true,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.text,

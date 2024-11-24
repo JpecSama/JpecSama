@@ -58,7 +58,12 @@ class FlashcardHead extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(currentCard.flashcardText),
+                      Text(
+                        currentCard.flashcardText,
+                        style: context.textTheme.titleLarge!.copyWith(
+                          color: Colors.black,
+                        ),
+                      ),
                       BlocBuilder<ReviewBloc, ReviewState>(
                         buildWhen: (previous, current) =>
                             previous.isHintVisible != current.isHintVisible,
@@ -66,7 +71,9 @@ class FlashcardHead extends StatelessWidget {
                           return state.isHintVisible && currentCard.hint != null
                               ? Text(
                                   currentCard.hint!,
-                                  style: context.textTheme.labelSmall,
+                                  style: context.textTheme.bodyMedium!.copyWith(
+                                    color: Colors.black,
+                                  ),
                                 )
                               : Container();
                         },
