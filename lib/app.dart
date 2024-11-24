@@ -1,4 +1,4 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
+// import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,15 +69,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
     // WidgetsBinding.instance.addPostFrameCallback((_) async {});
 
-    AwesomeNotifications().setListeners(
-      onActionReceivedMethod: NotificationController.onActionReceivedMethod,
-      onNotificationCreatedMethod:
-          NotificationController.onNotificationCreatedMethod,
-      onNotificationDisplayedMethod:
-          NotificationController.onNotificationDisplayedMethod,
-      onDismissActionReceivedMethod:
-          NotificationController.onDismissActionReceivedMethod,
-    );
+    // AwesomeNotifications().setListeners(
+    //   onActionReceivedMethod: NotificationController.onActionReceivedMethod,
+    //   onNotificationCreatedMethod:
+    //       NotificationController.onNotificationCreatedMethod,
+    //   onNotificationDisplayedMethod:
+    //       NotificationController.onNotificationDisplayedMethod,
+    //   onDismissActionReceivedMethod:
+    //       NotificationController.onDismissActionReceivedMethod,
+    // );
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -86,7 +86,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     switch (state) {
       case AppLifecycleState.resumed:
         //FOREGROUND
-        AwesomeNotifications().resetGlobalBadge();
+        // AwesomeNotifications().resetGlobalBadge();
         // AwesomeNotifications()
         //     .dismiss(57);
         break;

@@ -6,7 +6,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:workmanager/workmanager.dart';
+// import 'package:workmanager/workmanager.dart';
 
 import 'app.dart';
 import 'entry_points/callback_dispatcher.dart';
@@ -54,13 +54,13 @@ Future<void> initApp() async {
     );
   }
   //
-  Workmanager().cancelAll();
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
-  Workmanager().registerPeriodicTask(
-    "checkReviewsTask",
-    "checkReviewsTask",
-    frequency: const Duration(days: 1),
-  );
+  // Workmanager().cancelAll();
+  // Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
+  // Workmanager().registerPeriodicTask(
+  //   "checkReviewsTask",
+  //   "checkReviewsTask",
+  //   frequency: const Duration(days: 1),
+  // );
   //
 }
 

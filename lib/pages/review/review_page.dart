@@ -1,4 +1,4 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
+// import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jpec_sama/pages/review/review_page_content.dart';
@@ -17,7 +17,7 @@ class _ReviewPageState extends State<ReviewPage> {
   @override
   void initState() {
     super.initState();
-    AwesomeNotifications().cancel(57);
+    // AwesomeNotifications().cancel(57);
   }
 
   @override

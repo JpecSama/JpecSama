@@ -2,11 +2,11 @@ name: jpec_sama
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.5.0-180.3.beta <4.0.0'
+  sdk: ">=3.5.0-180.3.beta <4.0.0"
 dependencies:
   flutter:
     sdk: flutter
@@ -27,7 +27,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   # flutter_local_notifications: ^17.2.1+2
-  awesome_notifications: ^0.9.3+1
+  # awesome_notifications: ^0.10.0
   intl: any
   google_fonts: ^6.1.0
   freezed_annotation: ^2.4.4
@@ -44,10 +44,10 @@ dependencies:
   firebase_messaging: ^15.1.2
   # workmanager: ^0.5.2
   # https://github.com/fluttercommunity/flutter_workmanager/issues/551#issuecomment-2180480982
-  workmanager:
-    git:
-      url: https://github.com/fluttercommunity/flutter_workmanager.git
-      ref: b783000
+  # workmanager:
+  #   git:
+  #     url: https://github.com/fluttercommunity/flutter_workmanager.git
+  #     ref: b783000
   kana_romaji_translator:
     git:
       # url: https://github.com/JpecSama/kana_romaji_translator.git
@@ -69,7 +69,7 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/logo.png"
-  min_sdk_android: 21 
+  min_sdk_android: 21
   remove_alpha_ios: true
   adaptive_icon_background: "#000000"
   macos:

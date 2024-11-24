@@ -1,11 +1,11 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
+// import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jpec_sama/pages/list/list_tab.dart';
 
-import '../../controller/notification_controller.dart';
+// import '../../controller/notification_controller.dart';
 import '../../services/logger_service.dart';
 import '../../services/notification_service.dart';
 import '../../theme/custom_bottom_nav_bar/bloc/custom_nav_bar_bloc.dart';
