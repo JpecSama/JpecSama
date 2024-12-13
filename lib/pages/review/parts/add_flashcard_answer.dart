@@ -12,10 +12,12 @@ class AddFlashcardAnswer extends StatefulWidget {
     super.key,
     required ReviewRepository reviewRepository,
     required this.flashcard,
+    this.buttonBackgroundColor,
   }) : _reviewRepository = reviewRepository;
 
   final ReviewRepository _reviewRepository;
   final Flashcard flashcard;
+  final Color? buttonBackgroundColor;
 
   @override
   State<AddFlashcardAnswer> createState() => _AddFlashcardAnswerState();
@@ -52,6 +54,9 @@ class _AddFlashcardAnswerState extends State<AddFlashcardAnswer> {
           controller: _controller,
         ),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: widget.buttonBackgroundColor,
+          ),
           onPressed: () async {
             if (_controller.text.isEmpty) {
               return;

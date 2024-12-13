@@ -17,7 +17,6 @@ class _ReviewPageState extends State<ReviewPage> {
   @override
   void initState() {
     super.initState();
-    // AwesomeNotifications().cancel(57);
   }
 
   @override

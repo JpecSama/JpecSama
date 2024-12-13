@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
-import workmanager
+// import workmanager
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -12,7 +12,7 @@ import workmanager
     if #available(iOS 10.0, *) {
       UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
     }
-    WorkmanagerPlugin.registerBGProcessingTask(withIdentifier: "checkReviewsTask")
+    // WorkmanagerPlugin.registerBGProcessingTask(withIdentifier: "checkReviewsTask")
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     

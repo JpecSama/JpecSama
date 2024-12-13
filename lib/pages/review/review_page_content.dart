@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/pages/dashboard/dashboard.dart';
+import 'package:jpec_sama/theme/custom_theme.dart';
 
 import 'bloc/review_bloc.dart';
 import 'parts/card_review_content.dart';
@@ -62,6 +63,7 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
         }
       },
       child: Scaffold(
+        backgroundColor: momoIro,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           title: const Text('Review'),
@@ -72,48 +74,53 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
           elevation: 0,
         ),
         body: SafeArea(
-          child: BlocBuilder<ReviewBloc, ReviewState>(
-            buildWhen: (previous, current) =>
-                previous.isInitialising != current.isInitialising ||
-                previous.currentCard != current.currentCard ||
-                previous.currentCardId != current.currentCardId,
-            builder: (context, state) {
-              if (state.isInitialising) {
-                return const CircularProgressIndicator();
-              }
-              Flashcard? currentCard = state.currentCard;
+          child: Container(
+            color: Colors.white,
+            child: BlocBuilder<ReviewBloc, ReviewState>(
+              buildWhen: (previous, current) =>
+                  previous.isInitialising != current.isInitialising ||
+                  previous.currentCard != current.currentCard ||
+                  previous.currentCardId != current.currentCardId,
+              builder: (context, state) {
+                if (state.isInitialising) {
+                  return const CircularProgressIndicator();
+                }
+                Flashcard? currentCard = state.currentCard;
 
-              if (state.flashcards.isEmpty || currentCard == null) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Center(
-                      child: BlocBuilder<ReviewBloc, ReviewState>(
-                        buildWhen: (previous, current) =>
-                            previous.isSubmitting != current.isSubmitting ||
-                            previous.submissionError != current.submissionError,
-                        builder: (context, state) {
-                          return ElevatedButton(
-                            onPressed: () {
-                              if (state.isSubmitting) {
-                                return;
-                              }
-                              context.read<ReviewBloc>().add(
-                                    const ReviewEvent.sessionSaved(),
-                                  );
-                            },
-                            child: Text(context.translations.endReviewSession),
-                          );
-                        },
-                      ),
+                if (state.flashcards.isEmpty || currentCard == null) {
+                  return Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        BlocBuilder<ReviewBloc, ReviewState>(
+                          buildWhen: (previous, current) =>
+                              previous.isSubmitting != current.isSubmitting ||
+                              previous.submissionError !=
+                                  current.submissionError,
+                          builder: (context, state) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                if (state.isSubmitting) {
+                                  return;
+                                }
+                                context.read<ReviewBloc>().add(
+                                      const ReviewEvent.sessionSaved(),
+                                    );
+                              },
+                              child:
+                                  Text(context.translations.endReviewSession),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                  ],
+                  );
+                }
+                return CardReviewContent(
+                  currentCard: currentCard,
                 );
-              }
-              return CardReviewContent(
-                currentCard: currentCard,
-              );
-            },
+              },
+            ),
           ),
         ),
       ),

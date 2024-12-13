@@ -58,10 +58,17 @@ class FlashcardHead extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        currentCard.flashcardText,
-                        style: context.textTheme.titleLarge!.copyWith(
-                          color: Colors.black,
+                      InkWell(
+                        onTap: () {
+                          context
+                              .read<ReviewBloc>()
+                              .add(const ReviewEvent.hintToggled());
+                        },
+                        child: Text(
+                          currentCard.flashcardText,
+                          style: context.textTheme.titleLarge!.copyWith(
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       BlocBuilder<ReviewBloc, ReviewState>(
@@ -86,7 +93,7 @@ class FlashcardHead extends StatelessWidget {
           ),
           Container(
             decoration: const BoxDecoration(
-              color: tonocha,
+              color: mizuasagi,
               border: Border.symmetric(
                 vertical: BorderSide(color: Colors.black),
               ),

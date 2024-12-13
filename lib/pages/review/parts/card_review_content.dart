@@ -47,7 +47,8 @@ class _CardReviewContentState extends State<CardReviewContent> {
             return Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: state.hasReviewError ? momoIro : mizuasagi,
+                  color:
+                      state.hasReviewError ? momoIro.withAlpha(230) : mizuasagi,
                 ),
                 child: Center(
                   child: SingleChildScrollView(
@@ -82,6 +83,9 @@ class _CardReviewContentState extends State<CardReviewContent> {
                           child: AddFlashcardAnswer(
                             flashcard: currentCard,
                             reviewRepository: _reviewRepository,
+                            buttonBackgroundColor: state.hasReviewError
+                                ? mizuasagi
+                                : momoIro.withAlpha(230),
                           ),
                         ),
                       ],
