@@ -113,13 +113,9 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
   void _resetForm() {
     _searchTextController.clear();
     _hintController.clear();
-    for (int i = 0; i < _answerControllers.length; i++) {
-      var answerController = _answerControllers[i];
-      _answerControllers.removeAt(i);
-      answerController.dispose();
+    for (var answerController in _answerControllers) {
+      answerController.clear();
     }
-    _answerControllers.add(TextEditingController());
-
     _searchTextController.clear();
     context
         .read<AddFlashcardBloc>()

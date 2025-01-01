@@ -24,6 +24,9 @@ class SuggestionApiWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (searchText.isEmpty) {
+      return Container();
+    }
     switch (translatorApi) {
       case DeeplSuggestions.suggestionApiName:
         JapaneseTextTranslator japaneseTextTranslator =
