@@ -1,4 +1,5 @@
 {
+  "@@locale": "fr",
   "helloWorld": "Bonjour le monde !",
   "notMemberRegister": "Toujours pas membre ? Inscris toi ici",
   "passwordForgotten": "Mot de passe oublié ?",

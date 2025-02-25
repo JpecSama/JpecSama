@@ -55,7 +55,10 @@ class _CardReviewContentState extends State<CardReviewContent> {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(bottom: kPadding * 4),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: kPadding * 4,
+                            horizontal: kPadding,
+                          ),
                           child: Column(
                             children: [
                               Text(
@@ -77,9 +80,11 @@ class _CardReviewContentState extends State<CardReviewContent> {
                             ],
                           ),
                         ),
-                        Container(
+                        Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 8),
+                            horizontal: 8,
+                            vertical: 8,
+                          ),
                           child: AddFlashcardAnswer(
                             flashcard: currentCard,
                             reviewRepository: _reviewRepository,

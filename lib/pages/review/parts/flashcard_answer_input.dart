@@ -36,7 +36,6 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
     if (!(_formKey.currentState?.validate() ?? false)) {
       return;
     }
-    print('onFieldSubmitted $text');
     context
         .read<ReviewBloc>()
         .add(ReviewEvent.cardReviewed(givenAnswer: text.trim()));

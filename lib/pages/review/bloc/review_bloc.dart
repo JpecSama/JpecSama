@@ -82,7 +82,6 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
         givenAnswer.toComparableString(),
         ...alternativeGivenAnswers
       ];
-      print(givenAnswers);
       //todo add levenstein
       if (givenAnswers.contains(possibleAnswer.answer.toComparableString())) {
         usedAnswer = possibleAnswer;
