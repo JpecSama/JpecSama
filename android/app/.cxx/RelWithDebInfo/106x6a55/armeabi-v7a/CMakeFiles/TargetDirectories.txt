@@ -1,0 +1,2 @@
+/Users/jpec/Prog/JpecSama/android/app/.cxx/RelWithDebInfo/106x6a55/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/jpec/Prog/JpecSama/android/app/.cxx/RelWithDebInfo/106x6a55/armeabi-v7a/CMakeFiles/rebuild_cache.dir
