@@ -56,7 +56,16 @@ final router = GoRouter(
     GoRoute(
       path: '/review',
       name: ReviewPage.routeName,
-      builder: (context, state) => const ReviewPage(),
+      builder: (context, state) {
+        final maxCount =
+            int.tryParse(state.uri.queryParameters['maxCount'] ?? '100') ?? 100;
+
+        print('state.uri: ${state.uri}');
+        print('maxCount: $maxCount');
+        return ReviewPage(
+          maxCount: maxCount,
+        );
+      },
     ),
   ],
 );

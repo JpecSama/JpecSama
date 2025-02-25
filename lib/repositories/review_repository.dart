@@ -119,21 +119,24 @@ class ReviewRepository {
     return res.map((el) => Flashcard.fromJson(el)).toList();
   }
 
-  PostgrestTransformBuilder<List<Map<String, dynamic>>>?
-      getCardsToReviewQuery() {
+  PostgrestTransformBuilder<List<Map<String, dynamic>>>? getCardsToReviewQuery(
+      {int? maxCount}) {
     String? userId = supabase.auth.currentUser?.id;
     if (userId == null) {
       return null;
     }
-    return supabase
+    var query = supabase
         .from('flashcard')
         .select('*,flashcard_answer(*)')
         .lte(
           'next_available_at',
           DateTime.now(),
         )
-        .eq('user_id', userId)
-        .limit(100);
+        .eq('user_id', userId);
+    if (maxCount == null) {
+      return query;
+    }
+    return query.limit(maxCount);
   }
 
   Future<void> deleteCard(String cardId) async {
@@ -143,8 +146,10 @@ class ReviewRepository {
         );
   }
 
-  Future<List<Flashcard>> getCardsToReview() async {
-    final jsonCards = await getCardsToReviewQuery();
+  Future<List<Flashcard>> getCardsToReview(int maxCount) async {
+    final jsonCards = await getCardsToReviewQuery(
+      maxCount: maxCount,
+    );
 
     final cards =
         (jsonCards?.map((card) => Flashcard.fromJson(card)).toList() ?? []);

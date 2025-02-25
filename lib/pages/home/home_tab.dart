@@ -4,6 +4,7 @@ import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/pages/account/account_page.dart';
 import 'package:jpec_sama/pages/add_flashcard/add_flashcard_page.dart';
+import 'package:jpec_sama/pages/home/start_review_button.dart';
 import 'package:jpec_sama/pages/review/review_page.dart';
 import 'package:jpec_sama/repositories/review_repository.dart';
 import 'package:jpec_sama/widgets/japanese_text_field/japanese_text_field.dart';
@@ -78,19 +79,15 @@ class _HomeTabState extends State<HomeTab> {
                             child: const Text('? Review'),
                           );
                         }
-                        if (snap.hasData && snap.data != null) {
+                        if (snap.hasData &&
+                            snap.data != null &&
+                            snap.data != 0) {
                           final flashcardCount = snap.data!;
-                          return ElevatedButton(
-                            onPressed: flashcardCount == 0
-                                ? null
-                                : () {
-                                    context.pushNamed(ReviewPage.routeName);
-                                  },
-                            child: Text(
-                                "$flashcardCount Review${flashcardCount > 1 ? 's' : ''}"),
+                          return StartReviewButton(
+                            flashcardCount: flashcardCount,
                           );
                         }
-                        return Container();
+                        return SizedBox.shrink();
                       }),
                 ),
               ),

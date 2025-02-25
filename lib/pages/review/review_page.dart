@@ -5,24 +5,20 @@ import 'package:jpec_sama/pages/review/review_page_content.dart';
 
 import 'bloc/review_bloc.dart';
 
-class ReviewPage extends StatefulWidget {
-  const ReviewPage({super.key});
+class ReviewPage extends StatelessWidget {
+  const ReviewPage({
+    super.key,
+    required this.maxCount,
+  });
+  final int maxCount;
   static const routeName = 'review';
-
-  @override
-  State<ReviewPage> createState() => _ReviewPageState();
-}
-
-class _ReviewPageState extends State<ReviewPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ReviewBloc()..add(const ReviewEvent.started()),
+      create: (context) => ReviewBloc(
+        maxCount: maxCount,
+      )..add(const ReviewEvent.started()),
       child: const ReviewPageContent(),
     );
   }

@@ -16,6 +16,7 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
   final _repo = ReviewRepository();
   final JapaneseTextTranslator japaneseTextTranslator =
       JapaneseTextTranslator();
+  final int maxCount;
 
   @override
   ReviewState fromJson(Map<String, dynamic> json) => json['isSessionEnded']
@@ -28,22 +29,29 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
   @override
   Map<String, dynamic> toJson(ReviewState state) => state.toJson();
 
-  ReviewBloc()
-      : super(const ReviewState(
-          flashcards: [],
-          sessionAnswers: [],
-        )) {
+  ReviewBloc({
+    this.maxCount = 100,
+  }) : super(
+          const ReviewState(
+            flashcards: [],
+            sessionAnswers: [],
+          ),
+        ) {
+    on<_Started>(_onStarted);
     on<_CardReview>(_onCardReviewed);
     on<_CurrentCardEdited>(_onCurrentCardEdited);
-    on<_Started>(_onStarted);
     on<_SessionCanceled>(_onSessionCanceled);
     on<_SessionSaved>(_onSessionSaved);
     on<_HintToggled>(_onHintToggled);
   }
 
   _onStarted(_Started event, Emitter<ReviewState> emit) async {
-    emit(state.copyWith(isInitialising: true));
-    List<Flashcard> flashcards = await _repo.getCardsToReview();
+    emit(
+      state.copyWith(
+        isInitialising: true,
+      ),
+    );
+    List<Flashcard> flashcards = await _repo.getCardsToReview(maxCount);
     flashcards.shuffle();
     emit(state.copyWith(
       flashcards: flashcards,
