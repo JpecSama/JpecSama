@@ -43,7 +43,7 @@ class ReviewGraph extends StatelessWidget {
 
     return SideTitleWidget(
       angle: pi / 8,
-      axisSide: meta.axisSide,
+      meta: meta,
       child: Text(text.isNotEmpty ? "$text:00" : '', style: style),
     );
   }
@@ -53,7 +53,7 @@ class ReviewGraph extends StatelessWidget {
       fontSize: 10,
     );
     return SideTitleWidget(
-      axisSide: meta.axisSide,
+      meta: meta,
       child: Text(
         meta.formattedValue,
         style: style,

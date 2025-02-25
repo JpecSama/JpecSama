@@ -18,8 +18,7 @@ class ListTab extends StatefulWidget {
 
 class _ListTabState extends State<ListTab> {
   static const _pageSize = 50;
-  final PagingController<int, Flashcard> _pagingController =
-      PagingController(firstPageKey: 0);
+  late final PagingController<int, Flashcard> _pagingController;
   late TextEditingController _searchController;
   final _debouncer = Debouncer(duration: const Duration(seconds: 1));
 
@@ -29,9 +28,25 @@ class _ListTabState extends State<ListTab> {
 
   @override
   void initState() {
-    _pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
-    });
+    //   PagingController(
+    //   getNextPageKey: (state) => (state.keys?.last ?? 0) + 0,
+    //   fetchPage: (pageKey) => RemoteApi.getPhotos(pageKey),
+    // );
+    _pagingController = PagingController<int, Flashcard>(
+      getNextPageKey: (state) => (state.keys?.last ?? 0) + 0,
+      fetchPage: (pageKey) async {
+        return await _repo.getAllCards(
+          page: pageKey,
+          limit: _pageSize,
+          sourceLocale: _sourceLocale,
+          destLocale: _destLocale,
+          searchText: _searchController.text.trim(),
+        );
+      },
+    );
+    // _pagingController.addPageRequestListener((pageKey) {
+    //   _fetchPage(pageKey);
+    // });
     _searchController = TextEditingController();
     _searchController.addListener(() {
       _debouncer.run(() => _pagingController.refresh());
@@ -44,27 +59,6 @@ class _ListTabState extends State<ListTab> {
     _pagingController.dispose();
     _searchController.dispose();
     super.dispose();
-  }
-
-  Future<void> _fetchPage(int pageKey) async {
-    try {
-      final newItems = await _repo.getAllCards(
-        page: pageKey,
-        limit: _pageSize,
-        sourceLocale: _sourceLocale,
-        destLocale: _destLocale,
-        searchText: _searchController.text.trim(),
-      );
-      final isLastPage = newItems.length < _pageSize;
-      if (isLastPage) {
-        _pagingController.appendLastPage(newItems);
-      } else {
-        final nextPageKey = pageKey + newItems.length;
-        _pagingController.appendPage(newItems, nextPageKey);
-      }
-    } catch (error) {
-      _pagingController.error = error;
-    }
   }
 
   @override
@@ -112,58 +106,63 @@ class _ListTabState extends State<ListTab> {
             ),
             Expanded(
               child: RefreshIndicator(
-                onRefresh: () async => _pagingController.refresh(),
-                child: PagedListView<int, Flashcard>(
-                  pagingController: _pagingController,
-                  builderDelegate: PagedChildBuilderDelegate<Flashcard>(
-                    itemBuilder: (context, flashcard, index) => Dismissible(
-                      key: Key("flashcard_${flashcard.id}"),
-                      background: Container(color: Colors.red),
-                      confirmDismiss: (direction) async {
-                        if (direction == DismissDirection.startToEnd) {
-                          bool dismiss = false;
-                          await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text(
-                                      "Are you sure you want to delete the item"),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () async {
-                                          dismiss = true;
-                                          ReviewRepository _repo =
-                                              ReviewRepository();
+                  onRefresh: () async => _pagingController.refresh(),
+                  child: PagingListener(
+                    controller: _pagingController,
+                    builder: (context, state, fetchNextPage) =>
+                        PagedListView<int, Flashcard>(
+                      state: state,
+                      fetchNextPage: fetchNextPage,
+                      builderDelegate: PagedChildBuilderDelegate(
+                        itemBuilder: (context, flashcard, index) => Dismissible(
+                          key: Key("flashcard_${flashcard.id}"),
+                          background: Container(color: Colors.red),
+                          confirmDismiss: (direction) async {
+                            if (direction == DismissDirection.startToEnd) {
+                              bool dismiss = false;
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text(
+                                          "Are you sure you want to delete the item"),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () async {
+                                              dismiss = true;
+                                              ReviewRepository _repo =
+                                                  ReviewRepository();
 
-                                          await _repo.deleteCard(flashcard.id!);
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text("Yes")),
-                                    TextButton(
-                                        onPressed: () {
-                                          dismiss = false;
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text("No")),
-                                  ],
-                                );
-                              });
-                          return dismiss;
-                        }
-                        return false;
-                      },
-                      onDismissed: (direction) {
-                        context.showSnackBar('Successfully deleted');
-                      },
-                      child: Card(
-                        child: FlashcardTile(
-                          flashcard: flashcard,
+                                              await _repo
+                                                  .deleteCard(flashcard.id!);
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text("Yes")),
+                                        TextButton(
+                                            onPressed: () {
+                                              dismiss = false;
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text("No")),
+                                      ],
+                                    );
+                                  });
+                              return dismiss;
+                            }
+                            return false;
+                          },
+                          onDismissed: (direction) {
+                            context.showSnackBar('Successfully deleted');
+                          },
+                          child: Card(
+                            child: FlashcardTile(
+                              flashcard: flashcard,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ),
+                  )),
             ),
           ],
         ),
