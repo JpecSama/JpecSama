@@ -9,7 +9,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'package:workmanager/workmanager.dart';
 
 import 'app.dart';
-import 'entry_points/callback_dispatcher.dart';
 import 'firebase_options.dart';
 import 'services/notification_service.dart';
 

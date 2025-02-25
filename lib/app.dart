@@ -8,7 +8,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jpec_sama/services/notification_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'controller/notification_controller.dart';
 import 'theme/custom_bottom_nav_bar/bloc/custom_nav_bar_bloc.dart';
 import 'theme/custom_theme.dart';
 /*
