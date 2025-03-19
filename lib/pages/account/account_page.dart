@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
-import 'package:jpec_sama/main.dart';
 import 'package:jpec_sama/pages/account/deepl_api_config_form.dart';
+import 'package:jpec_sama/services/supabase/supabase_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../login/login_page.dart';

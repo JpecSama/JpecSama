@@ -1,18 +1,16 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
-import 'package:jpec_sama/main.dart';
 import 'package:jpec_sama/pages/dashboard/dashboard.dart';
-import 'package:jpec_sama/pages/home/home_tab.dart';
 import 'package:jpec_sama/pages/register/register_page.dart';
+import 'package:jpec_sama/services/supabase/supabase_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../repositories/user_repository.dart';
+import '../../services/supabase/repositories/user_repository.dart';
 import '../../theme/custom_theme.dart';
 import '../../theme/theme_dialog.dart';
 
@@ -27,9 +25,10 @@ class LoginPage extends StatefulWidget {
 //https://supabase.com/blog/flutter-authentication
 class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
+  bool _isPasswordVisible = false;
   bool _redirecting = false;
   late final TextEditingController _emailController =
-      TextEditingController(text: 'jpec.bella@gmail.com');
+      TextEditingController(text: '');
   late final TextEditingController _passwordController =
       TextEditingController();
 
@@ -68,8 +67,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    // await supabase.auth.getSessionFromUrl();
-//
     _authStateSubscription = supabase.auth.onAuthStateChange.listen(
       (AuthState data) async {
         // print(data);
@@ -113,10 +110,11 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                      await supabase.auth
-                          .resetPasswordForEmail(_emailController.text.trim());
+                      await UserRepository.resetPassword(_emailController.text);
                     },
-                    child: Text('Send a reset email'))
+                    child: Text(
+                      context.translations.sendResetPasswordByEmail,
+                    ))
               ],
             ),
           );
@@ -164,16 +162,27 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
-                          labelText: context.translations.email),
+                        labelText: context.translations.email,
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 2 * kPadding),
                     child: TextFormField(
                       controller: _passwordController,
-                      obscureText: true,
+                      obscureText: !_isPasswordVisible,
                       decoration: InputDecoration(
                         labelText: context.translations.password,
+                        suffixIcon: IconButton(
+                          icon: _isPasswordVisible
+                              ? const Icon(Icons.remove_red_eye)
+                              : const Icon(Icons.remove_red_eye_outlined),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                        ),
                       ),
                     ),
                   ),

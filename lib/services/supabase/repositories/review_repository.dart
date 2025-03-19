@@ -1,10 +1,10 @@
-import 'package:jpec_sama/main.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/services/review_service.dart';
+import 'package:jpec_sama/services/supabase/supabase_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../models/flashcard_session_answer.dart';
-import '../services/notification_service.dart';
+import '../../../models/flashcard_session_answer.dart';
+import '../../notification_service.dart';
 
 class ReviewRepository {
   Future<bool> updateFlashcard(Flashcard flashcard,
@@ -165,26 +165,29 @@ class ReviewRepository {
       required String sourceLocale,
       required String destLocale,
       String? searchText}) async {
-    print("searchText $searchText");
     if (searchText != null && searchText.isNotEmpty) {
-      return (await supabase
-              .from('flashcard')
-              .select('*,flashcard_answer(*)')
-              .textSearch('flashcard_text', searchText)
-              .eq('source_language', sourceLocale.toUpperCase())
-              .eq('dest_language', destLocale.toUpperCase())
-              .range(page * limit, (page + 1) * limit))
-          .map((card) => Flashcard.fromJson(card))
-          .toList();
+      return await SupabaseService.safeListQuery<Flashcard>(
+            () => supabase
+                .from('flashcard')
+                .select('*,flashcard_answer(*)')
+                .ilike('flashcard_text', "%${searchText.replaceAll("%", "")}%")
+                .eq('source_language', sourceLocale.toUpperCase())
+                .eq('dest_language', destLocale.toUpperCase())
+                .range(page * limit, (page + 1) * limit),
+            (data) => Flashcard.fromJson(data),
+          ) ??
+          [];
     } else {
-      return (await supabase
-              .from('flashcard')
-              .select('*,flashcard_answer(*)')
-              .eq('source_language', sourceLocale.toUpperCase())
-              .eq('dest_language', destLocale.toUpperCase())
-              .range(page * limit, (page + 1) * limit))
-          .map((card) => Flashcard.fromJson(card))
-          .toList();
+      return await SupabaseService.safeListQuery<Flashcard>(
+            () => supabase
+                .from('flashcard')
+                .select('*,flashcard_answer(*)')
+                .eq('source_language', sourceLocale.toUpperCase())
+                .eq('dest_language', destLocale.toUpperCase())
+                .range(page * limit, (page + 1) * limit),
+            (data) => Flashcard.fromJson(data),
+          ) ??
+          [];
     }
   }
 

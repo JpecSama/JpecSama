@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+  "sendResetPasswordByEmail": "Send reset password email",
   "helloWorld": "Hello World!",
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"

@@ -1,4 +1,4 @@
-import '../main.dart';
+import 'package:jpec_sama/services/supabase/supabase_service.dart';
 
 class UserCredRepository {
   Future<void> setDeeplApiKey(String userId, String apiKey) async {

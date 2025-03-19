@@ -3,8 +3,8 @@ import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/models/api/deepl_translation_answer.dart';
 import 'package:jpec_sama/models/api/deepl_translation_request.dart';
-import 'package:jpec_sama/repositories/user_cred_repository.dart';
-import 'package:jpec_sama/repositories/user_repository.dart';
+import 'package:jpec_sama/services/supabase/repositories/user_cred_repository.dart';
+import 'package:jpec_sama/services/supabase/repositories/user_repository.dart';
 
 import '../../models/api/api_translation.dart';
 import '../../models/api/deepl_translation.dart';

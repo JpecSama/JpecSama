@@ -2,10 +2,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jpec_sama/main.dart';
 import 'package:jpec_sama/router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:jpec_sama/services/notification_service.dart';
+import 'package:jpec_sama/services/supabase/supabase_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'theme/custom_bottom_nav_bar/bloc/custom_nav_bar_bloc.dart';

@@ -4,7 +4,7 @@ import 'package:jpec_sama/extensions/string_extension.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/models/flashcard_answer.dart';
 import 'package:jpec_sama/models/flashcard_session_answer.dart';
-import 'package:jpec_sama/repositories/review_repository.dart';
+import 'package:jpec_sama/services/supabase/repositories/review_repository.dart';
 import 'package:kana_romaji_translator/japanese_text_translator.dart';
 
 part 'review_event.dart';

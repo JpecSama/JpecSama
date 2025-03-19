@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/models/flashcard.dart';
-import 'package:jpec_sama/repositories/review_repository.dart';
+import 'package:jpec_sama/services/supabase/repositories/review_repository.dart';
 import 'package:jpec_sama/theme/custom_theme.dart';
 
 import 'bloc/edit_flashcard_bloc.dart';

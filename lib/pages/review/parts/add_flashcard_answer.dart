@@ -5,7 +5,7 @@ import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/models/flashcard_answer.dart';
 import 'package:jpec_sama/pages/review/bloc/review_bloc.dart';
 
-import '../../../repositories/review_repository.dart';
+import '../../../services/supabase/repositories/review_repository.dart';
 
 class AddFlashcardAnswer extends StatefulWidget {
   const AddFlashcardAnswer({

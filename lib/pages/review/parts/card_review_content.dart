@@ -5,7 +5,7 @@ import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/pages/review/parts/flashcard_answer_input.dart';
 
 import '../../../models/flashcard.dart';
-import '../../../repositories/review_repository.dart';
+import '../../../services/supabase/repositories/review_repository.dart';
 import '../../../theme/custom_theme.dart';
 import '../bloc/review_bloc.dart';
 import 'add_flashcard_answer.dart';

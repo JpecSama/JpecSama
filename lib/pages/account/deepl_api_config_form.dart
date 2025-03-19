@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
-import 'package:jpec_sama/main.dart';
-import 'package:jpec_sama/repositories/user_cred_repository.dart';
+import 'package:jpec_sama/services/supabase/repositories/user_cred_repository.dart';
+import 'package:jpec_sama/services/supabase/supabase_service.dart';
 
 class DeeplApiConfigForm extends StatefulWidget {
   const DeeplApiConfigForm({
@@ -17,6 +17,7 @@ class _DeeplApiConfigFormState extends State<DeeplApiConfigForm> {
   final TextEditingController _apiKeyTextController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
   final UserCredRepository _userCredRepo = UserCredRepository();
+  bool _isVisible = false;
 
   @override
   void initState() {
@@ -57,7 +58,19 @@ class _DeeplApiConfigFormState extends State<DeeplApiConfigForm> {
               padding: const EdgeInsets.only(bottom: 8.0),
               child: TextFormField(
                 controller: _apiKeyTextController,
-                obscureText: true,
+                obscureText: !_isVisible,
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: _isVisible
+                        ? Icon(Icons.remove_red_eye)
+                        : Icon(Icons.remove_red_eye_outlined),
+                    onPressed: () {
+                      setState(() {
+                        _isVisible = !_isVisible;
+                      });
+                    },
+                  ),
+                ),
               ),
             ),
             Padding(

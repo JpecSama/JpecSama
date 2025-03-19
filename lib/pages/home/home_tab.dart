@@ -6,7 +6,7 @@ import 'package:jpec_sama/pages/account/account_page.dart';
 import 'package:jpec_sama/pages/add_flashcard/add_flashcard_page.dart';
 import 'package:jpec_sama/pages/home/start_review_button.dart';
 import 'package:jpec_sama/pages/review/review_page.dart';
-import 'package:jpec_sama/repositories/review_repository.dart';
+import 'package:jpec_sama/services/supabase/repositories/review_repository.dart';
 import 'package:jpec_sama/widgets/japanese_text_field/japanese_text_field.dart';
 import '../review_graph/review_graph.dart';
 

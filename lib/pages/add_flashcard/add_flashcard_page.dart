@@ -5,11 +5,11 @@ import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/pages/add_flashcard/bloc/add_flashcard_bloc.dart';
 import 'package:jpec_sama/pages/add_flashcard/parts/translation_suggestions.dart';
-import 'package:jpec_sama/repositories/review_repository.dart';
+import 'package:jpec_sama/services/supabase/repositories/review_repository.dart';
 import 'package:jpec_sama/widgets/japanese_text_field/controller/japanese_dynamic_text_editing_controller.dart';
 
 import '../../models/api/api_translation.dart';
-import '../../repositories/user_repository.dart';
+import '../../services/supabase/repositories/user_repository.dart';
 import 'parts/select_flashcard_locales_header.dart';
 
 class AddFlashcardPage extends StatelessWidget {

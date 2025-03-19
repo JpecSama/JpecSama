@@ -3,7 +3,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 
 import '../../models/flashcard.dart';
-import '../../repositories/review_repository.dart';
+import '../../services/supabase/repositories/review_repository.dart';
 import '../../utils/debouncer.dart';
 import '../add_flashcard/parts/select_locale_direction.dart';
 import 'flashcard_tile.dart';
@@ -28,10 +28,6 @@ class _ListTabState extends State<ListTab> {
 
   @override
   void initState() {
-    //   PagingController(
-    //   getNextPageKey: (state) => (state.keys?.last ?? 0) + 0,
-    //   fetchPage: (pageKey) => RemoteApi.getPhotos(pageKey),
-    // );
     _pagingController = PagingController<int, Flashcard>(
       getNextPageKey: (state) => (state.keys?.last ?? 0) + 0,
       fetchPage: (pageKey) async {
@@ -44,9 +40,6 @@ class _ListTabState extends State<ListTab> {
         );
       },
     );
-    // _pagingController.addPageRequestListener((pageKey) {
-    //   _fetchPage(pageKey);
-    // });
     _searchController = TextEditingController();
     _searchController.addListener(() {
       _debouncer.run(() => _pagingController.refresh());
