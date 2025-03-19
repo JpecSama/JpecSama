@@ -1,7 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:jpec_sama/models/api/translator_api.dart';
+import 'package:jpec_sama/services/supabase/repositories/user_cred_repository.dart';
+import 'package:jpec_sama/services/supabase/repositories/user_repository.dart';
+
+import '../api/api_translator.dart';
 
 part 'add_flashcard_event.dart';
 part 'add_flashcard_state.dart';
@@ -10,11 +13,14 @@ part 'add_flashcard_bloc.g.dart';
 
 class AddFlashcardBloc extends Bloc<AddFlashcardEvent, AddFlashcardState> {
   AddFlashcardBloc()
-      : super(const AddFlashcardState(
-          sourceLocale: 'JA',
-          destLocale: 'EN',
-          searchText: '',
-        )) {
+      : super(
+          const AddFlashcardState(
+            sourceLocale: 'JA',
+            destLocale: 'EN',
+            searchText: '',
+            possibleTranslatorApis: [],
+          ),
+        ) {
     on<_Started>(_onStarted);
     on<_SourceLocaleChanged>(_onSourceLocaleChanged);
     on<_DestLocaleChanged>(_onDestLocaleChanged);
@@ -29,7 +35,24 @@ class AddFlashcardBloc extends Bloc<AddFlashcardEvent, AddFlashcardState> {
     String sourceLocale = hiveBox.get('source_locale', defaultValue: 'JA');
     String destLocale = hiveBox.get('dest_locale', defaultValue: 'EN');
 
-    emit(state.copyWith(sourceLocale: sourceLocale, destLocale: destLocale));
+    String? userId = UserRepository.getCurrentUserId();
+    UserCredRepository userCredRepo = UserCredRepository();
+    bool hasDeeplApiKey = userId != null
+        ? ((await userCredRepo.getDeeplApiKey(userId))?.isNotEmpty ?? false)
+        : false;
+
+    List<ApiTranslator> possibleTranslatorApis = [
+      ApiTranslator.jisho,
+      if (hasDeeplApiKey) ApiTranslator.deepl
+    ];
+
+    emit(
+      state.copyWith(
+        sourceLocale: sourceLocale,
+        destLocale: destLocale,
+        possibleTranslatorApis: possibleTranslatorApis,
+      ),
+    );
   }
 
   _onReversableToggled(

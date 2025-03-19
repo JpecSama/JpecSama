@@ -11,7 +11,6 @@ import 'package:jpec_sama/services/supabase/supabase_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../services/supabase/repositories/user_repository.dart';
-import '../../theme/custom_theme.dart';
 import '../../theme/theme_dialog.dart';
 
 class LoginPage extends StatefulWidget {
@@ -144,13 +143,10 @@ class _LoginPageState extends State<LoginPage> {
           shrinkWrap: true,
           padding: const EdgeInsets.symmetric(vertical: 2 * kPadding),
           children: [
-            Container(
+            Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 2 * kPadding,
                 vertical: 2 * kPadding,
-              ),
-              decoration: const BoxDecoration(
-                color: sakuraIro,
               ),
               child: Column(
                 children: [

@@ -6,10 +6,10 @@ import 'package:jpec_sama/models/api/deepl_translation_request.dart';
 import 'package:jpec_sama/services/supabase/repositories/user_cred_repository.dart';
 import 'package:jpec_sama/services/supabase/repositories/user_repository.dart';
 
-import '../../models/api/api_translation.dart';
-import '../../models/api/deepl_translation.dart';
-import '../../services/deepl_service.dart';
-import '../../typedef.dart';
+import '../../../models/api/api_translation.dart';
+import '../../../models/api/deepl_translation.dart';
+import '../../../services/deepl_service.dart';
+import '../../../typedef.dart';
 
 class DeeplSuggestions extends StatefulWidget {
   const DeeplSuggestions({
@@ -109,7 +109,6 @@ class _DeeplSuggestionsState extends State<DeeplSuggestions> {
                         );
                       },
                       title: Text(translation.text),
-                      // subtitle: Text(''),
                     ),
                   );
                 });

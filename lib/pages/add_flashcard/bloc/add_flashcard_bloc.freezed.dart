@@ -1175,7 +1175,9 @@ mixin _$AddFlashcardState {
   String get sourceLocale => throw _privateConstructorUsedError;
   String get destLocale => throw _privateConstructorUsedError;
   String get searchText => throw _privateConstructorUsedError;
-  TranslatorApi get translatorApi => throw _privateConstructorUsedError;
+  ApiTranslator get translatorApi => throw _privateConstructorUsedError;
+  List<ApiTranslator> get possibleTranslatorApis =>
+      throw _privateConstructorUsedError;
   bool get isReversable => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
 
@@ -1199,7 +1201,8 @@ abstract class $AddFlashcardStateCopyWith<$Res> {
       {String sourceLocale,
       String destLocale,
       String searchText,
-      TranslatorApi translatorApi,
+      ApiTranslator translatorApi,
+      List<ApiTranslator> possibleTranslatorApis,
       bool isReversable,
       bool isSubmitting});
 }
@@ -1223,6 +1226,7 @@ class _$AddFlashcardStateCopyWithImpl<$Res, $Val extends AddFlashcardState>
     Object? destLocale = null,
     Object? searchText = null,
     Object? translatorApi = null,
+    Object? possibleTranslatorApis = null,
     Object? isReversable = null,
     Object? isSubmitting = null,
   }) {
@@ -1242,7 +1246,11 @@ class _$AddFlashcardStateCopyWithImpl<$Res, $Val extends AddFlashcardState>
       translatorApi: null == translatorApi
           ? _value.translatorApi
           : translatorApi // ignore: cast_nullable_to_non_nullable
-              as TranslatorApi,
+              as ApiTranslator,
+      possibleTranslatorApis: null == possibleTranslatorApis
+          ? _value.possibleTranslatorApis
+          : possibleTranslatorApis // ignore: cast_nullable_to_non_nullable
+              as List<ApiTranslator>,
       isReversable: null == isReversable
           ? _value.isReversable
           : isReversable // ignore: cast_nullable_to_non_nullable
@@ -1267,7 +1275,8 @@ abstract class _$$AddFlashcardStateImplCopyWith<$Res>
       {String sourceLocale,
       String destLocale,
       String searchText,
-      TranslatorApi translatorApi,
+      ApiTranslator translatorApi,
+      List<ApiTranslator> possibleTranslatorApis,
       bool isReversable,
       bool isSubmitting});
 }
@@ -1289,6 +1298,7 @@ class __$$AddFlashcardStateImplCopyWithImpl<$Res>
     Object? destLocale = null,
     Object? searchText = null,
     Object? translatorApi = null,
+    Object? possibleTranslatorApis = null,
     Object? isReversable = null,
     Object? isSubmitting = null,
   }) {
@@ -1308,7 +1318,11 @@ class __$$AddFlashcardStateImplCopyWithImpl<$Res>
       translatorApi: null == translatorApi
           ? _value.translatorApi
           : translatorApi // ignore: cast_nullable_to_non_nullable
-              as TranslatorApi,
+              as ApiTranslator,
+      possibleTranslatorApis: null == possibleTranslatorApis
+          ? _value._possibleTranslatorApis
+          : possibleTranslatorApis // ignore: cast_nullable_to_non_nullable
+              as List<ApiTranslator>,
       isReversable: null == isReversable
           ? _value.isReversable
           : isReversable // ignore: cast_nullable_to_non_nullable
@@ -1328,10 +1342,12 @@ class _$AddFlashcardStateImpl extends _AddFlashcardState {
       {required this.sourceLocale,
       required this.destLocale,
       required this.searchText,
-      this.translatorApi = TranslatorApi.deepl,
+      this.translatorApi = ApiTranslator.deepl,
+      final List<ApiTranslator> possibleTranslatorApis = const [],
       this.isReversable = true,
       this.isSubmitting = false})
-      : super._();
+      : _possibleTranslatorApis = possibleTranslatorApis,
+        super._();
 
   factory _$AddFlashcardStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$AddFlashcardStateImplFromJson(json);
@@ -1344,7 +1360,17 @@ class _$AddFlashcardStateImpl extends _AddFlashcardState {
   final String searchText;
   @override
   @JsonKey()
-  final TranslatorApi translatorApi;
+  final ApiTranslator translatorApi;
+  final List<ApiTranslator> _possibleTranslatorApis;
+  @override
+  @JsonKey()
+  List<ApiTranslator> get possibleTranslatorApis {
+    if (_possibleTranslatorApis is EqualUnmodifiableListView)
+      return _possibleTranslatorApis;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_possibleTranslatorApis);
+  }
+
   @override
   @JsonKey()
   final bool isReversable;
@@ -1354,7 +1380,7 @@ class _$AddFlashcardStateImpl extends _AddFlashcardState {
 
   @override
   String toString() {
-    return 'AddFlashcardState(sourceLocale: $sourceLocale, destLocale: $destLocale, searchText: $searchText, translatorApi: $translatorApi, isReversable: $isReversable, isSubmitting: $isSubmitting)';
+    return 'AddFlashcardState(sourceLocale: $sourceLocale, destLocale: $destLocale, searchText: $searchText, translatorApi: $translatorApi, possibleTranslatorApis: $possibleTranslatorApis, isReversable: $isReversable, isSubmitting: $isSubmitting)';
   }
 
   @override
@@ -1370,6 +1396,8 @@ class _$AddFlashcardStateImpl extends _AddFlashcardState {
                 other.searchText == searchText) &&
             (identical(other.translatorApi, translatorApi) ||
                 other.translatorApi == translatorApi) &&
+            const DeepCollectionEquality().equals(
+                other._possibleTranslatorApis, _possibleTranslatorApis) &&
             (identical(other.isReversable, isReversable) ||
                 other.isReversable == isReversable) &&
             (identical(other.isSubmitting, isSubmitting) ||
@@ -1378,8 +1406,15 @@ class _$AddFlashcardStateImpl extends _AddFlashcardState {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, sourceLocale, destLocale,
-      searchText, translatorApi, isReversable, isSubmitting);
+  int get hashCode => Object.hash(
+      runtimeType,
+      sourceLocale,
+      destLocale,
+      searchText,
+      translatorApi,
+      const DeepCollectionEquality().hash(_possibleTranslatorApis),
+      isReversable,
+      isSubmitting);
 
   /// Create a copy of AddFlashcardState
   /// with the given fields replaced by the non-null parameter values.
@@ -1403,7 +1438,8 @@ abstract class _AddFlashcardState extends AddFlashcardState {
       {required final String sourceLocale,
       required final String destLocale,
       required final String searchText,
-      final TranslatorApi translatorApi,
+      final ApiTranslator translatorApi,
+      final List<ApiTranslator> possibleTranslatorApis,
       final bool isReversable,
       final bool isSubmitting}) = _$AddFlashcardStateImpl;
   const _AddFlashcardState._() : super._();
@@ -1418,7 +1454,9 @@ abstract class _AddFlashcardState extends AddFlashcardState {
   @override
   String get searchText;
   @override
-  TranslatorApi get translatorApi;
+  ApiTranslator get translatorApi;
+  @override
+  List<ApiTranslator> get possibleTranslatorApis;
   @override
   bool get isReversable;
   @override

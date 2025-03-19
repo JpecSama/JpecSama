@@ -13,8 +13,13 @@ _$AddFlashcardStateImpl _$$AddFlashcardStateImplFromJson(
       destLocale: json['dest_locale'] as String,
       searchText: json['search_text'] as String,
       translatorApi:
-          $enumDecodeNullable(_$TranslatorApiEnumMap, json['translator_api']) ??
-              TranslatorApi.deepl,
+          $enumDecodeNullable(_$ApiTranslatorEnumMap, json['translator_api']) ??
+              ApiTranslator.deepl,
+      possibleTranslatorApis:
+          (json['possible_translator_apis'] as List<dynamic>?)
+                  ?.map((e) => $enumDecode(_$ApiTranslatorEnumMap, e))
+                  .toList() ??
+              const [],
       isReversable: json['is_reversable'] as bool? ?? true,
       isSubmitting: json['is_submitting'] as bool? ?? false,
     );
@@ -25,12 +30,15 @@ Map<String, dynamic> _$$AddFlashcardStateImplToJson(
       'source_locale': instance.sourceLocale,
       'dest_locale': instance.destLocale,
       'search_text': instance.searchText,
-      'translator_api': _$TranslatorApiEnumMap[instance.translatorApi]!,
+      'translator_api': _$ApiTranslatorEnumMap[instance.translatorApi]!,
+      'possible_translator_apis': instance.possibleTranslatorApis
+          .map((e) => _$ApiTranslatorEnumMap[e]!)
+          .toList(),
       'is_reversable': instance.isReversable,
       'is_submitting': instance.isSubmitting,
     };
 
-const _$TranslatorApiEnumMap = {
-  TranslatorApi.deepl: 'deepl',
-  TranslatorApi.jisho: 'jisho',
+const _$ApiTranslatorEnumMap = {
+  ApiTranslator.deepl: 'deepl',
+  ApiTranslator.jisho: 'jisho',
 };

@@ -4,9 +4,8 @@ import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/typedef.dart';
 
 import '../../../theme/theme_title.dart';
+import '../api/api_translator.dart';
 import '../bloc/add_flashcard_bloc.dart';
-import '../deepl_suggestions.dart';
-import '../jisho_suggestions.dart';
 import 'suggestion_api_widget.dart';
 
 class TranslationSuggestions extends StatefulWidget {
@@ -20,7 +19,7 @@ class TranslationSuggestions extends StatefulWidget {
 class _TranslationSuggestionsState extends State<TranslationSuggestions>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  String _translatorApi = 'deepl';
+  ApiTranslator _translatorApi = ApiTranslator.jisho;
 
   @override
   void initState() {
@@ -49,9 +48,14 @@ class _TranslationSuggestionsState extends State<TranslationSuggestions>
             buildWhen: (previous, current) =>
                 previous.translatorApi != current.translatorApi ||
                 previous.sourceLocale != current.sourceLocale ||
+                previous.possibleTranslatorApis !=
+                    current.possibleTranslatorApis ||
                 previous.destLocale != current.destLocale ||
                 previous.searchText != current.searchText,
             builder: (context, state) {
+              if (state.possibleTranslatorApis.isEmpty) {
+                return SizedBox.shrink();
+              }
               return Column(
                 children: [
                   Padding(
@@ -76,16 +80,14 @@ class _TranslationSuggestionsState extends State<TranslationSuggestions>
                                 });
                               }
                             },
-                            dropdownMenuEntries: const [
-                              DropdownMenuEntry(
-                                value: DeeplSuggestions.suggestionApiName,
-                                label: 'DeepL',
-                              ),
-                              DropdownMenuEntry(
-                                value: JishoSuggestions.suggestionApiName,
-                                label: 'Jisho',
-                              ),
-                            ],
+                            dropdownMenuEntries: state.possibleTranslatorApis
+                                .map(
+                                  (api) => DropdownMenuEntry(
+                                    value: api,
+                                    label: api.toString().split('.').last,
+                                  ),
+                                )
+                                .toList(),
                           ),
                         ),
                       ],

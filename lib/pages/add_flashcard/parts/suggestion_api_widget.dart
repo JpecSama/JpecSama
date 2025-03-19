@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jpec_sama/pages/add_flashcard/deepl_suggestions.dart';
+import 'package:jpec_sama/pages/add_flashcard/api/deepl_suggestions.dart';
 import 'package:jpec_sama/typedef.dart';
 import 'package:kana_romaji_translator/kana_romaji_translator.dart';
 
-import '../jisho_suggestions.dart';
+import '../api/api_translator.dart';
+import '../api/jisho_suggestions.dart';
 
 class SuggestionApiWidget extends StatelessWidget {
   const SuggestionApiWidget({
@@ -15,7 +16,7 @@ class SuggestionApiWidget extends StatelessWidget {
     required this.onTranslationClicked,
     this.suggestionScrollPhysics,
   });
-  final String translatorApi;
+  final ApiTranslator translatorApi;
   final String searchText;
   final String sourceLang;
   final String targetLang;
@@ -28,7 +29,7 @@ class SuggestionApiWidget extends StatelessWidget {
       return Container();
     }
     switch (translatorApi) {
-      case DeeplSuggestions.suggestionApiName:
+      case ApiTranslator.deepl:
         JapaneseTextTranslator japaneseTextTranslator =
             JapaneseTextTranslator();
         String usedSearchText = sourceLang == 'JA' &&
@@ -43,7 +44,7 @@ class SuggestionApiWidget extends StatelessWidget {
           onTranslationClicked: onTranslationClicked,
           suggestionScrollPhysics: suggestionScrollPhysics,
         );
-      case JishoSuggestions.suggestionApiName:
+      case ApiTranslator.jisho:
         return JishoSuggestions(
           searchText: searchText,
           sourceLang: sourceLang,
@@ -52,6 +53,5 @@ class SuggestionApiWidget extends StatelessWidget {
           suggestionScrollPhysics: suggestionScrollPhysics,
         );
     }
-    return Container();
   }
 }

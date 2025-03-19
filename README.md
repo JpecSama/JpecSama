@@ -8,6 +8,10 @@ https://kanjivg.tagaini.net/
 
 `filename=unicode` => 0f9a8.svg => 令 (Unicode U+0F9A8)
 
+### Tests
+
+https://japanesetest4you.com/category/jlpt-n3/jlpt-n3-listening-test/
+
 ### Dictionnary
 
 - https://takoboto.jp/?q=%e3%81%95%e3%81%88

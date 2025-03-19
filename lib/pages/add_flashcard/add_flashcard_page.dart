@@ -48,8 +48,11 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
   @override
   void initState() {
     _searchTextController.addListener(() {
-      context.read<AddFlashcardBloc>().add(AddFlashcardEvent.searchTextChanged(
-          searchText: _searchTextController.text.trim()));
+      context.read<AddFlashcardBloc>().add(
+            AddFlashcardEvent.searchTextChanged(
+              searchText: _searchTextController.text.trim(),
+            ),
+          );
     });
     super.initState();
   }
@@ -94,6 +97,7 @@ class _AddFlashcardPageContentState extends State<AddFlashcardPageContent> {
             .toList(),
         state.isReversable,
       );
+      //TODO
       if (isSuccess) {
         _resetForm();
       }

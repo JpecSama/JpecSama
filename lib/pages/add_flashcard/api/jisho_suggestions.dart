@@ -5,12 +5,10 @@ import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/models/api/jisho/jisho_translation.dart';
 import 'package:jpec_sama/models/api/jisho/jisho_translation_answer.dart';
-import 'package:jpec_sama/services/supabase/repositories/user_cred_repository.dart';
-import 'package:jpec_sama/services/supabase/repositories/user_repository.dart';
 import 'package:jpec_sama/services/jisho_service.dart';
 
-import '../../models/api/api_translation.dart';
-import '../../typedef.dart';
+import '../../../models/api/api_translation.dart';
+import '../../../typedef.dart';
 
 class JishoSuggestions extends StatefulWidget {
   const JishoSuggestions({
@@ -41,26 +39,12 @@ class _JishoSuggestionsState extends State<JishoSuggestions> {
     super.initState();
   }
 
-  Future<void> _fetchDeeplTranslations() async {
+  Future<void> _fetchJishoTranslations() async {
     if (widget.searchText.isEmpty) {
       setState(() {
         _jishoTranslationAnswerFuture = Future.value(null);
       });
       context.showSnackBar("Nothing to search.", isError: true);
-      return;
-    }
-    String? userId = UserRepository.getCurrentUserId();
-    if (userId == null) {
-      context.showSnackBar("You must be authenticated to perform this action",
-          isError: true);
-      return;
-    }
-    UserCredRepository userCredRepo = UserCredRepository();
-    String? deeplApiKey = await userCredRepo.getDeeplApiKey(userId);
-    if (deeplApiKey == null) {
-      context.showSnackBar(
-          "You must be have configured a deepl API key to perform this action",
-          isError: true);
       return;
     }
     JishoService jishoService = JishoService();
@@ -136,7 +120,7 @@ class _JishoSuggestionsState extends State<JishoSuggestions> {
         ElevatedButton(
           onPressed:
               widget.searchText.isNotEmpty && widget.targetLang.isNotEmpty
-                  ? _fetchDeeplTranslations
+                  ? _fetchJishoTranslations
                   : null,
           child: const Text('Search'),
         ),

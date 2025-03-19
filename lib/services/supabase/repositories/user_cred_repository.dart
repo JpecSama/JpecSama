@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:jpec_sama/services/supabase/supabase_service.dart';
 
 class UserCredRepository {
@@ -8,13 +9,20 @@ class UserCredRepository {
   }
 
   Future<String?> getDeeplApiKey(String userId) async {
-    final res = await supabase
-        .from('user_cred')
-        .select(
-          'deepl_api_key',
-        )
-        .eq('user_id', userId)
-        .single();
-    return res.keys.contains('deepl_api_key') ? res['deepl_api_key'] : null;
+    try {
+      final res = await supabase
+          .from('user_cred')
+          .select(
+            'deepl_api_key',
+          )
+          .eq('user_id', userId)
+          .maybeSingle();
+      return res != null && res.keys.contains('deepl_api_key')
+          ? res['deepl_api_key']
+          : null;
+    } catch (e) {
+      debugPrint(e.toString());
+      return null;
+    }
   }
 }
