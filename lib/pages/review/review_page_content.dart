@@ -7,6 +7,7 @@ import 'package:jpec_sama/pages/dashboard/dashboard.dart';
 import 'package:jpec_sama/theme/custom_theme.dart';
 
 import 'bloc/review_bloc.dart';
+import 'dialog/review_settings_dialog.dart';
 import 'parts/card_review_content.dart';
 
 class ReviewPageContent extends StatefulWidget {
@@ -72,6 +73,20 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
             icon: const Icon(Icons.exit_to_app),
           ),
           elevation: 0,
+          actions: [
+            IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (dialogContext) {
+                      return ReviewSettingsDialog();
+                    });
+              },
+              icon: const Icon(
+                Icons.settings,
+              ),
+            ),
+          ],
         ),
         body: SafeArea(
           child: Container(

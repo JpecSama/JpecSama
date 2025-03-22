@@ -47,6 +47,7 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
       listenWhen: (previous, current) =>
           previous.currentCard?.destLanguage !=
               current.currentCard?.destLanguage ||
+          previous.answerCount != current.answerCount ||
           previous.currentCardId != current.currentCardId,
       listener: (context, state) {
         _answerController.clear();
@@ -71,7 +72,7 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: TextFormField(
                     controller: _answerController,
-                    enableSuggestions: false,
+                    enableSuggestions: true,
                     autocorrect: false,
                     autofocus: true,
                     textInputAction: TextInputAction.done,

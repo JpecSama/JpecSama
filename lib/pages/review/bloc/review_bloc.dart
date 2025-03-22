@@ -66,6 +66,45 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     emit(state.copyWith(flashcards: flashcards));
   }
 
+  int levenshtein(String a, String b) {
+    int aLen = a.length;
+    int bLen = b.length;
+
+    if (aLen == 0) return bLen;
+    if (bLen == 0) return aLen;
+
+    List<List<int>> dp = List.generate(
+      aLen + 1,
+      (i) => List.filled(bLen + 1, 0),
+    );
+
+    for (int i = 0; i <= aLen; i++) {
+      for (int j = 0; j <= bLen; j++) {
+        if (i == 0) {
+          dp[i][j] = j;
+        } else if (j == 0) {
+          dp[i][j] = i;
+        } else {
+          int cost = a[i - 1] == b[j - 1] ? 0 : 1;
+          dp[i][j] = [
+            dp[i - 1][j] + 1, // Deletion
+            dp[i][j - 1] + 1, // Insertion
+            dp[i - 1][j - 1] + cost // Substitution
+          ].reduce((a, b) => a < b ? a : b);
+        }
+      }
+    }
+
+    return dp[aLen][bLen];
+  }
+
+  bool isAcceptableAnswer(String expected, String given) {
+    int length = expected.length;
+    int threshold = length <= 4 ? 0 : (length <= 7 ? 1 : 2);
+
+    return levenshtein(expected, given) <= threshold;
+  }
+
   FlashcardAnswer? getUsedAnswerIfCorrect(
     Flashcard flashcard,
     String givenAnswer,
@@ -85,14 +124,17 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
           ]
         : [];
 
+    String comparableGivenAnswer = givenAnswer.toComparableString();
     for (var possibleAnswer in possibleAnswers) {
-      List<String> givenAnswers = [
-        givenAnswer.toComparableString(),
-        ...alternativeGivenAnswers
-      ];
-      //todo add levenstein
-      if (givenAnswers.contains(possibleAnswer.answer.toComparableString())) {
+      if (isAcceptableAnswer(
+          possibleAnswer.answer.toComparableString(), comparableGivenAnswer)) {
         usedAnswer = possibleAnswer;
+        break;
+      }
+      if (alternativeGivenAnswers
+          .contains(possibleAnswer.answer.toComparableString())) {
+        usedAnswer = possibleAnswer;
+        break;
       }
     }
     return usedAnswer;
@@ -136,12 +178,14 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     if (answers
         .where((answer) => answer.flashCard.id == state.currentCardId)
         .isEmpty) {
-      answers.add(FlashcardSessionAnswer(
-        flashCard: currentCard.copyWith(level: newLevel >= 0 ? newLevel : 0),
-        flashCardAnswer: usedAnswer,
-        givenAnswer: event.givenAnswer,
-        isCorrect: isCorrect,
-      ));
+      answers.add(
+        FlashcardSessionAnswer(
+          flashCard: currentCard.copyWith(level: newLevel >= 0 ? newLevel : 0),
+          flashCardAnswer: usedAnswer,
+          givenAnswer: event.givenAnswer,
+          isCorrect: isCorrect,
+        ),
+      );
     }
     if (isCorrect) {
       newFlashcards.removeAt(state.currentCardIndex!);
@@ -155,6 +199,7 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
         hasReviewError: !isCorrect,
         isAnswerVisible: !isCorrect,
         currentCardId: currentCardId,
+        answerCount: state.answerCount + 1,
         isHintVisible: false,
         sessionAnswers: answers,
       ),

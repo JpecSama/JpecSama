@@ -117,8 +117,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           ...AppLocalizations.localizationsDelegates
         ],
         supportedLocales: AppLocalizations.supportedLocales,
-        // theme: themeData,
-        theme: japaneseTheme,
+        // theme: japaneseTheme,
+        theme: customTheme,
         routerConfig: router,
       ),
     );

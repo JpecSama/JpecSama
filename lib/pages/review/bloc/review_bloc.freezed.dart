@@ -1146,6 +1146,7 @@ ReviewState _$ReviewStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ReviewState {
   String? get submissionError => throw _privateConstructorUsedError;
+  int get answerCount => throw _privateConstructorUsedError;
   bool get isInitialising => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
   bool get isSessionEnded => throw _privateConstructorUsedError; //
@@ -1175,6 +1176,7 @@ abstract class $ReviewStateCopyWith<$Res> {
   @useResult
   $Res call(
       {String? submissionError,
+      int answerCount,
       bool isInitialising,
       bool isSubmitting,
       bool isSessionEnded,
@@ -1202,6 +1204,7 @@ class _$ReviewStateCopyWithImpl<$Res, $Val extends ReviewState>
   @override
   $Res call({
     Object? submissionError = freezed,
+    Object? answerCount = null,
     Object? isInitialising = null,
     Object? isSubmitting = null,
     Object? isSessionEnded = null,
@@ -1217,6 +1220,10 @@ class _$ReviewStateCopyWithImpl<$Res, $Val extends ReviewState>
           ? _value.submissionError
           : submissionError // ignore: cast_nullable_to_non_nullable
               as String?,
+      answerCount: null == answerCount
+          ? _value.answerCount
+          : answerCount // ignore: cast_nullable_to_non_nullable
+              as int,
       isInitialising: null == isInitialising
           ? _value.isInitialising
           : isInitialising // ignore: cast_nullable_to_non_nullable
@@ -1267,6 +1274,7 @@ abstract class _$$ReviewStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {String? submissionError,
+      int answerCount,
       bool isInitialising,
       bool isSubmitting,
       bool isSessionEnded,
@@ -1292,6 +1300,7 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? submissionError = freezed,
+    Object? answerCount = null,
     Object? isInitialising = null,
     Object? isSubmitting = null,
     Object? isSessionEnded = null,
@@ -1307,6 +1316,10 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
           ? _value.submissionError
           : submissionError // ignore: cast_nullable_to_non_nullable
               as String?,
+      answerCount: null == answerCount
+          ? _value.answerCount
+          : answerCount // ignore: cast_nullable_to_non_nullable
+              as int,
       isInitialising: null == isInitialising
           ? _value.isInitialising
           : isInitialising // ignore: cast_nullable_to_non_nullable
@@ -1352,6 +1365,7 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
 class _$ReviewStateImpl extends _ReviewState {
   const _$ReviewStateImpl(
       {this.submissionError,
+      this.answerCount = 0,
       this.isInitialising = false,
       this.isSubmitting = false,
       this.isSessionEnded = false,
@@ -1370,6 +1384,9 @@ class _$ReviewStateImpl extends _ReviewState {
 
   @override
   final String? submissionError;
+  @override
+  @JsonKey()
+  final int answerCount;
   @override
   @JsonKey()
   final bool isInitialising;
@@ -1409,7 +1426,7 @@ class _$ReviewStateImpl extends _ReviewState {
 
   @override
   String toString() {
-    return 'ReviewState(submissionError: $submissionError, isInitialising: $isInitialising, isSubmitting: $isSubmitting, isSessionEnded: $isSessionEnded, hasReviewError: $hasReviewError, isHintVisible: $isHintVisible, isAnswerVisible: $isAnswerVisible, currentCardId: $currentCardId, flashcards: $flashcards, sessionAnswers: $sessionAnswers)';
+    return 'ReviewState(submissionError: $submissionError, answerCount: $answerCount, isInitialising: $isInitialising, isSubmitting: $isSubmitting, isSessionEnded: $isSessionEnded, hasReviewError: $hasReviewError, isHintVisible: $isHintVisible, isAnswerVisible: $isAnswerVisible, currentCardId: $currentCardId, flashcards: $flashcards, sessionAnswers: $sessionAnswers)';
   }
 
   @override
@@ -1419,6 +1436,8 @@ class _$ReviewStateImpl extends _ReviewState {
             other is _$ReviewStateImpl &&
             (identical(other.submissionError, submissionError) ||
                 other.submissionError == submissionError) &&
+            (identical(other.answerCount, answerCount) ||
+                other.answerCount == answerCount) &&
             (identical(other.isInitialising, isInitialising) ||
                 other.isInitialising == isInitialising) &&
             (identical(other.isSubmitting, isSubmitting) ||
@@ -1444,6 +1463,7 @@ class _$ReviewStateImpl extends _ReviewState {
   int get hashCode => Object.hash(
       runtimeType,
       submissionError,
+      answerCount,
       isInitialising,
       isSubmitting,
       isSessionEnded,
@@ -1473,6 +1493,7 @@ class _$ReviewStateImpl extends _ReviewState {
 abstract class _ReviewState extends ReviewState {
   const factory _ReviewState(
           {final String? submissionError,
+          final int answerCount,
           final bool isInitialising,
           final bool isSubmitting,
           final bool isSessionEnded,
@@ -1490,6 +1511,8 @@ abstract class _ReviewState extends ReviewState {
 
   @override
   String? get submissionError;
+  @override
+  int get answerCount;
   @override
   bool get isInitialising;
   @override

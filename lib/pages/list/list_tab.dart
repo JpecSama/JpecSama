@@ -29,15 +29,16 @@ class _ListTabState extends State<ListTab> {
   @override
   void initState() {
     _pagingController = PagingController<int, Flashcard>(
-      getNextPageKey: (state) => (state.keys?.last ?? 0) + 0,
+      getNextPageKey: (state) => (state.keys?.last ?? 0) + 1,
       fetchPage: (pageKey) async {
-        return await _repo.getAllCards(
-          page: pageKey,
+        List<Flashcard> flashcards = await _repo.getAllCards(
+          page: (pageKey - 1),
           limit: _pageSize,
           sourceLocale: _sourceLocale,
           destLocale: _destLocale,
           searchText: _searchController.text.trim(),
         );
+        return flashcards;
       },
     );
     _searchController = TextEditingController();

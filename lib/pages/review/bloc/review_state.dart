@@ -6,6 +6,7 @@ class ReviewState with _$ReviewState {
 
   const factory ReviewState({
     String? submissionError,
+    @Default(0) int answerCount,
     @Default(false) bool isInitialising,
     @Default(false) bool isSubmitting,
     @Default(false) bool isSessionEnded,

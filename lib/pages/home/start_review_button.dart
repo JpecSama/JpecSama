@@ -19,11 +19,13 @@ class StartReviewButton extends StatefulWidget {
 
 class _StartReviewButtonState extends State<StartReviewButton> {
   late int maxCount;
+  late int count;
 
   @override
   void initState() {
     super.initState();
-    maxCount = 10;
+    maxCount = min(100, widget.flashcardCount);
+    count = maxCount;
   }
 
   @override
@@ -32,10 +34,10 @@ class _StartReviewButtonState extends State<StartReviewButton> {
       mainAxisSize: MainAxisSize.min,
       children: [
         DropdownSelector(
-          flashcardCount: widget.flashcardCount,
+          flashcardCount: maxCount,
           onChanged: (int newValue) {
             setState(() {
-              maxCount = newValue;
+              count = newValue;
             });
           },
         ),
@@ -44,12 +46,12 @@ class _StartReviewButtonState extends State<StartReviewButton> {
             context.pushNamed(
               ReviewPage.routeName,
               queryParameters: {
-                'maxCount': maxCount.toString(),
+                'maxCount': count.toString(),
               },
             );
           },
           child: Text(
-              "${widget.flashcardCount} Review${widget.flashcardCount > 1 ? 's' : ''} ($maxCount)"),
+              "${widget.flashcardCount} Review${widget.flashcardCount > 1 ? 's' : ''}"),
         ),
       ],
     );
@@ -76,14 +78,15 @@ class _DropdownSelectorState extends State<DropdownSelector> {
   @override
   void initState() {
     super.initState();
-    selectedValue = 0; // Default selection
+    selectedValue = widget.flashcardCount;
   }
 
   @override
   Widget build(BuildContext context) {
-    int maxValue = min(100, widget.flashcardCount);
-    List<int> options = [for (int i = 0; i <= maxValue; i += 10) i];
-
+    List<int> options = [
+      for (int i = 0; i <= selectedValue; i += 10) i,
+      if (selectedValue % 10 != 0) selectedValue,
+    ];
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
