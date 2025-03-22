@@ -5,6 +5,7 @@ import 'package:jpec_sama/models/flashcard.dart';
 
 import '../../../theme/custom_theme.dart';
 import '../bloc/review_bloc.dart';
+import 'review_counters.dart';
 
 class FlashcardHead extends StatelessWidget {
   const FlashcardHead({
@@ -18,55 +19,59 @@ class FlashcardHead extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey.withAlpha(50),
-      height: MediaQuery.of(context).size.height * 0.20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: Stack(children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              spacing: 8,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      onPressed: () {
+                    InkWell(
+                      onTap: () {
                         context
                             .read<ReviewBloc>()
                             .add(const ReviewEvent.hintToggled());
                       },
-                      icon: const Icon(
-                        Icons.question_mark_outlined,
-                        size: 14,
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: const Icon(
+                          Icons.question_mark_outlined,
+                          size: 14,
+                        ),
                       ),
                     ),
-                    BlocBuilder<ReviewBloc, ReviewState>(
-                      buildWhen: (previous, current) =>
-                          previous.sessionAnswers != current.sessionAnswers ||
-                          previous.flashcards != current.flashcards,
-                      builder: (context, state) {
-                        return Text(
-                            "${state.sessionAnswers.length}/${state.flashcards.length}");
-                      },
-                    ),
+                    ReviewCounters(),
                   ],
                 ),
-              ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 8.0,
+                    right: 8.0,
+                    top: 8.0,
+                    bottom: 24.0,
+                  ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
                         onTap: () {
-                          context
-                              .read<ReviewBloc>()
-                              .add(const ReviewEvent.hintToggled());
+                          context.read<ReviewBloc>().add(
+                                const ReviewEvent.hintToggled(),
+                              );
                         },
                         child: Text(
                           currentCard.flashcardText,
-                          style: context.textTheme.titleLarge!.copyWith(
+                          style: context.textTheme.headlineMedium!.copyWith(
                             color: Colors.black,
                           ),
                         ),
@@ -78,7 +83,7 @@ class FlashcardHead extends StatelessWidget {
                           return state.isHintVisible && currentCard.hint != null
                               ? Text(
                                   currentCard.hint!,
-                                  style: context.textTheme.bodyMedium!.copyWith(
+                                  style: context.textTheme.titleLarge!.copyWith(
                                     color: Colors.black,
                                   ),
                                 )
@@ -88,14 +93,16 @@ class FlashcardHead extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-            ]),
+              ],
+            ),
           ),
           Container(
             decoration: const BoxDecoration(
               color: mizuasagi,
               border: Border.symmetric(
-                vertical: BorderSide(color: Colors.black),
+                horizontal: BorderSide(
+                  color: Colors.black,
+                ),
               ),
             ),
             child: Padding(
@@ -106,18 +113,24 @@ class FlashcardHead extends StatelessWidget {
                   children: [
                     Text(
                       '${currentCard.sourceLanguage} => ${currentCard.destLanguage}',
-                      style: context.textTheme.bodySmall!
-                          .copyWith(color: sakuraIro),
+                      style: context.textTheme.bodySmall!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       ' - ',
-                      style: context.textTheme.bodySmall!
-                          .copyWith(color: sakuraIro),
+                      style: context.textTheme.bodySmall!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       "Level ${currentCard.level + 1}",
-                      style: context.textTheme.bodySmall!
-                          .copyWith(color: sakuraIro),
+                      style: context.textTheme.bodySmall!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),

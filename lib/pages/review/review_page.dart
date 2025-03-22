@@ -18,7 +18,9 @@ class ReviewPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => ReviewBloc(
         maxCount: maxCount,
-      )..add(const ReviewEvent.started()),
+      )..add(
+          const ReviewEvent.started(),
+        ),
       child: const ReviewPageContent(),
     );
   }

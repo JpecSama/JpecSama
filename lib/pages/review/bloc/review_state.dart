@@ -11,6 +11,7 @@ class ReviewState with _$ReviewState {
     @Default(false) bool isSubmitting,
     @Default(false) bool isSessionEnded,
     //
+    @Default(false) bool shouldAlwaysShowAnswer,
     @Default(false) bool hasReviewError,
     @Default(false) bool isHintVisible,
     @Default(false) bool isAnswerVisible,

@@ -35,71 +35,88 @@ class _CardReviewContentState extends State<CardReviewContent> {
         FlashcardHead(
           currentCard: currentCard,
         ),
-        const FlashcardAnswerInput(),
-        BlocBuilder<ReviewBloc, ReviewState>(
-          buildWhen: (previous, current) =>
-              previous.hasReviewError != current.hasReviewError ||
-              previous.isAnswerVisible != current.isAnswerVisible,
-          builder: (context, state) {
-            if (!state.isAnswerVisible) {
-              return Container();
-            }
-            return Expanded(
-              child: Container(
+        Expanded(
+          child: BlocBuilder<ReviewBloc, ReviewState>(
+            buildWhen: (previous, current) =>
+                previous.hasReviewError != current.hasReviewError ||
+                previous.isAnswerVisible != current.isAnswerVisible,
+            builder: (context, state) {
+              Color? backgroundColor = state.isAnswerVisible
+                  ? (state.hasReviewError ? momoIro.withAlpha(230) : mizuasagi)
+                  : null;
+              return Container(
                 decoration: BoxDecoration(
-                  color:
-                      state.hasReviewError ? momoIro.withAlpha(230) : mizuasagi,
+                  color: backgroundColor,
                 ),
-                child: Center(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: kPadding * 4,
-                            horizontal: kPadding,
-                          ),
-                          child: Column(
-                            children: [
-                              Text(
-                                currentCard.flashcardAnswer
-                                    .map(
-                                      (f) => f.answer,
-                                    )
-                                    .join(','),
-                                style: context.textTheme.bodyLarge!.copyWith(
-                                  fontWeight: FontWeight.bold,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const FlashcardAnswerInput(),
+                    Expanded(
+                      child: BlocBuilder<ReviewBloc, ReviewState>(
+                        buildWhen: (previous, current) =>
+                            previous.hasReviewError != current.hasReviewError ||
+                            previous.isAnswerVisible != current.isAnswerVisible,
+                        builder: (context, state) {
+                          if (!state.isAnswerVisible) {
+                            return Container();
+                          }
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: kPadding * 4,
+                                    horizontal: kPadding,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        currentCard.flashcardAnswer
+                                            .map(
+                                              (f) => f.answer,
+                                            )
+                                            .join(','),
+                                        style: context.textTheme.bodyLarge!
+                                            .copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      currentCard.answerInfos == null
+                                          ? Container()
+                                          : Text(
+                                              currentCard.answerInfos!,
+                                              style: context
+                                                  .textTheme.bodyMedium,
+                                            ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              currentCard.answerInfos == null
-                                  ? Container()
-                                  : Text(
-                                      currentCard.answerInfos!,
-                                      style: context.textTheme.bodyMedium,
-                                    ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 8,
-                          ),
-                          child: AddFlashcardAnswer(
-                            flashcard: currentCard,
-                            reviewRepository: _reviewRepository,
-                            buttonBackgroundColor: state.hasReviewError
-                                ? mizuasagi
-                                : momoIro.withAlpha(230),
-                          ),
-                        ),
-                      ],
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 8,
+                                  ),
+                                  child: AddFlashcardAnswer(
+                                    flashcard: currentCard,
+                                    reviewRepository: _reviewRepository,
+                                    buttonBackgroundColor:
+                                        state.hasReviewError
+                                            ? mizuasagi
+                                            : momoIro.withAlpha(230),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ],
     );

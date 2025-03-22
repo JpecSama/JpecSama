@@ -43,6 +43,7 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     on<_SessionCanceled>(_onSessionCanceled);
     on<_SessionSaved>(_onSessionSaved);
     on<_HintToggled>(_onHintToggled);
+    on<_AlwaysShowAnswerToggled>(_onAlwaysShowAnswerToggled);
   }
 
   _onStarted(_Started event, Emitter<ReviewState> emit) async {
@@ -51,13 +52,16 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
         isInitialising: true,
       ),
     );
+    //
     List<Flashcard> flashcards = await _repo.getCardsToReview(maxCount);
     flashcards.shuffle();
-    emit(state.copyWith(
-      flashcards: flashcards,
-      currentCardId: flashcards.firstOrNull?.id,
-      isInitialising: false,
-    ));
+    emit(
+      state.copyWith(
+        flashcards: flashcards,
+        currentCardId: flashcards.firstOrNull?.id,
+        isInitialising: false,
+      ),
+    );
   }
 
   _onCurrentCardEdited(_CurrentCardEdited event, Emitter<ReviewState> emit) {
@@ -150,27 +154,35 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     return cardIds.firstOrNull;
   }
 
-  _onCardReviewed(_CardReview event, Emitter<ReviewState> emit) {
-    if (state.hasReviewError) {
-      emit(
-        state.copyWith(
-          hasReviewError: false,
-          isAnswerVisible: false,
-          isHintVisible: false,
-          currentCardId: _getRandomCardId(state.flashcards),
-        ),
-      );
-      return;
+  _updateCardsAndShowNext(
+      Emitter<ReviewState> emit, bool shouldRemoveCurrentCard) {
+    List<Flashcard> newFlashcards = [...state.flashcards];
+    if (shouldRemoveCurrentCard) {
+      newFlashcards.removeAt(state.currentCardIndex!);
     }
+    String? currentCardId = _getRandomCardId(newFlashcards);
 
-    FlashcardAnswer? usedAnswer =
-        getUsedAnswerIfCorrect(state.currentCard!, event.givenAnswer);
+    emit(
+      state.copyWith(
+        flashcards: newFlashcards,
+        hasReviewError: false,
+        isAnswerVisible: false,
+        isHintVisible: false,
+        currentCardId: currentCardId,
+      ),
+    );
+  }
+
+  _addCurrentAnswerToSessionAnswers(
+    Emitter<ReviewState> emit,
+    String givenAnswer,
+    FlashcardAnswer? usedAnswer,
+  ) {
     bool isCorrect = usedAnswer != null;
 
     final currentCard = state.currentCard!;
     int newLevel = currentCard.level + (isCorrect ? 1 : -1);
 
-    List<Flashcard> newFlashcards = [...state.flashcards];
     List<FlashcardSessionAnswer> answers = [
       ...state.sessionAnswers,
     ];
@@ -182,26 +194,48 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
         FlashcardSessionAnswer(
           flashCard: currentCard.copyWith(level: newLevel >= 0 ? newLevel : 0),
           flashCardAnswer: usedAnswer,
-          givenAnswer: event.givenAnswer,
+          givenAnswer: givenAnswer,
           isCorrect: isCorrect,
         ),
       );
     }
-    if (isCorrect) {
-      newFlashcards.removeAt(state.currentCardIndex!);
-    }
-    String? currentCardId =
-        isCorrect ? _getRandomCardId(newFlashcards) : state.currentCardId;
 
     emit(
       state.copyWith(
-        flashcards: newFlashcards,
-        hasReviewError: !isCorrect,
-        isAnswerVisible: !isCorrect,
-        currentCardId: currentCardId,
         answerCount: state.answerCount + 1,
-        isHintVisible: false,
         sessionAnswers: answers,
+      ),
+    );
+  }
+
+  _onCardReviewed(_CardReview event, Emitter<ReviewState> emit) {
+    if (state.isAnswerVisible) {
+      _updateCardsAndShowNext(emit, !state.hasReviewError);
+      return;
+    }
+    FlashcardAnswer? usedAnswer =
+        getUsedAnswerIfCorrect(state.currentCard!, event.givenAnswer);
+    bool isCorrect = usedAnswer != null;
+    // Add card answer to session answers
+    _addCurrentAnswerToSessionAnswers(emit, event.givenAnswer, usedAnswer);
+
+    if (!isCorrect || state.shouldAlwaysShowAnswer) {
+      emit(
+        state.copyWith(
+          hasReviewError: !isCorrect,
+          isAnswerVisible: true,
+        ),
+      );
+      return;
+    }
+    _updateCardsAndShowNext(emit, true);
+  }
+
+  _onAlwaysShowAnswerToggled(
+      _AlwaysShowAnswerToggled event, Emitter<ReviewState> emit) {
+    emit(
+      state.copyWith(
+        shouldAlwaysShowAnswer: !state.shouldAlwaysShowAnswer,
       ),
     );
   }

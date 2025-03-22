@@ -54,39 +54,43 @@ class _HomeTabState extends State<HomeTab> {
           ),
           child: Column(
             children: [
-              FutureBuilder<List<Flashcard>>(
-                future: _graphFuture,
-                initialData: const [],
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return ReviewGraph(
-                    flashcards: snapshot.data ?? [],
-                  );
-                },
+              Expanded(
+                child: FutureBuilder<List<Flashcard>>(
+                  future: _graphFuture,
+                  initialData: const [],
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    return ReviewGraph(
+                      flashcards: snapshot.data ?? [],
+                    );
+                  },
+                ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: kPadding * 2),
-                child: Center(
-                  child: FutureBuilder(
-                      future: _countFuture,
-                      builder: (context, snap) {
-                        if (snap.connectionState == ConnectionState.waiting) {
-                          return ElevatedButton(
-                            onPressed: () {
-                              context.pushNamed(ReviewPage.routeName);
-                            },
-                            child: const Text('? Review'),
-                          );
-                        }
-                        if (snap.hasData &&
-                            snap.data != null &&
-                            snap.data != 0) {
-                          final flashcardCount = snap.data!;
-                          return StartReviewButton(
-                            flashcardCount: flashcardCount,
-                          );
-                        }
-                        return SizedBox.shrink();
-                      }),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: kPadding * 2),
+                  child: Center(
+                    child: FutureBuilder(
+                        future: _countFuture,
+                        builder: (context, snap) {
+                          if (snap.connectionState == ConnectionState.waiting) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                context.pushNamed(ReviewPage.routeName);
+                              },
+                              child: const Text('? Review'),
+                            );
+                          }
+                          if (snap.hasData &&
+                              snap.data != null &&
+                              snap.data != 0) {
+                            final flashcardCount = snap.data!;
+                            return StartReviewButton(
+                              flashcardCount: flashcardCount,
+                            );
+                          }
+                          return SizedBox.shrink();
+                        }),
+                  ),
                 ),
               ),
             ],

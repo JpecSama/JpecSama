@@ -19,6 +19,7 @@ mixin _$ReviewEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() alwaysShowAnswerToggled,
     required TResult Function(String givenAnswer) cardReviewed,
     required TResult Function() nextCard,
     required TResult Function() sessionSaved,
@@ -30,6 +31,7 @@ mixin _$ReviewEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
+    TResult? Function()? alwaysShowAnswerToggled,
     TResult? Function(String givenAnswer)? cardReviewed,
     TResult? Function()? nextCard,
     TResult? Function()? sessionSaved,
@@ -41,6 +43,7 @@ mixin _$ReviewEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? alwaysShowAnswerToggled,
     TResult Function(String givenAnswer)? cardReviewed,
     TResult Function()? nextCard,
     TResult Function()? sessionSaved,
@@ -53,6 +56,8 @@ mixin _$ReviewEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_AlwaysShowAnswerToggled value)
+        alwaysShowAnswerToggled,
     required TResult Function(_CardReview value) cardReviewed,
     required TResult Function(_NextCard value) nextCard,
     required TResult Function(_SessionSaved value) sessionSaved,
@@ -64,6 +69,7 @@ mixin _$ReviewEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
+    TResult? Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult? Function(_CardReview value)? cardReviewed,
     TResult? Function(_NextCard value)? nextCard,
     TResult? Function(_SessionSaved value)? sessionSaved,
@@ -75,6 +81,7 @@ mixin _$ReviewEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult Function(_CardReview value)? cardReviewed,
     TResult Function(_NextCard value)? nextCard,
     TResult Function(_SessionSaved value)? sessionSaved,
@@ -149,6 +156,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() alwaysShowAnswerToggled,
     required TResult Function(String givenAnswer) cardReviewed,
     required TResult Function() nextCard,
     required TResult Function() sessionSaved,
@@ -163,6 +171,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
+    TResult? Function()? alwaysShowAnswerToggled,
     TResult? Function(String givenAnswer)? cardReviewed,
     TResult? Function()? nextCard,
     TResult? Function()? sessionSaved,
@@ -177,6 +186,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? alwaysShowAnswerToggled,
     TResult Function(String givenAnswer)? cardReviewed,
     TResult Function()? nextCard,
     TResult Function()? sessionSaved,
@@ -195,6 +205,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_AlwaysShowAnswerToggled value)
+        alwaysShowAnswerToggled,
     required TResult Function(_CardReview value) cardReviewed,
     required TResult Function(_NextCard value) nextCard,
     required TResult Function(_SessionSaved value) sessionSaved,
@@ -209,6 +221,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
+    TResult? Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult? Function(_CardReview value)? cardReviewed,
     TResult? Function(_NextCard value)? nextCard,
     TResult? Function(_SessionSaved value)? sessionSaved,
@@ -223,6 +236,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult Function(_CardReview value)? cardReviewed,
     TResult Function(_NextCard value)? nextCard,
     TResult Function(_SessionSaved value)? sessionSaved,
@@ -240,6 +254,151 @@ class _$StartedImpl implements _Started {
 
 abstract class _Started implements ReviewEvent {
   const factory _Started() = _$StartedImpl;
+}
+
+/// @nodoc
+abstract class _$$AlwaysShowAnswerToggledImplCopyWith<$Res> {
+  factory _$$AlwaysShowAnswerToggledImplCopyWith(
+          _$AlwaysShowAnswerToggledImpl value,
+          $Res Function(_$AlwaysShowAnswerToggledImpl) then) =
+      __$$AlwaysShowAnswerToggledImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$AlwaysShowAnswerToggledImplCopyWithImpl<$Res>
+    extends _$ReviewEventCopyWithImpl<$Res, _$AlwaysShowAnswerToggledImpl>
+    implements _$$AlwaysShowAnswerToggledImplCopyWith<$Res> {
+  __$$AlwaysShowAnswerToggledImplCopyWithImpl(
+      _$AlwaysShowAnswerToggledImpl _value,
+      $Res Function(_$AlwaysShowAnswerToggledImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ReviewEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$AlwaysShowAnswerToggledImpl implements _AlwaysShowAnswerToggled {
+  const _$AlwaysShowAnswerToggledImpl();
+
+  @override
+  String toString() {
+    return 'ReviewEvent.alwaysShowAnswerToggled()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AlwaysShowAnswerToggledImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() alwaysShowAnswerToggled,
+    required TResult Function(String givenAnswer) cardReviewed,
+    required TResult Function() nextCard,
+    required TResult Function() sessionSaved,
+    required TResult Function() sessionCanceled,
+    required TResult Function() hintToggled,
+    required TResult Function(Flashcard flashcard) currentCardEdited,
+  }) {
+    return alwaysShowAnswerToggled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? alwaysShowAnswerToggled,
+    TResult? Function(String givenAnswer)? cardReviewed,
+    TResult? Function()? nextCard,
+    TResult? Function()? sessionSaved,
+    TResult? Function()? sessionCanceled,
+    TResult? Function()? hintToggled,
+    TResult? Function(Flashcard flashcard)? currentCardEdited,
+  }) {
+    return alwaysShowAnswerToggled?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? alwaysShowAnswerToggled,
+    TResult Function(String givenAnswer)? cardReviewed,
+    TResult Function()? nextCard,
+    TResult Function()? sessionSaved,
+    TResult Function()? sessionCanceled,
+    TResult Function()? hintToggled,
+    TResult Function(Flashcard flashcard)? currentCardEdited,
+    required TResult orElse(),
+  }) {
+    if (alwaysShowAnswerToggled != null) {
+      return alwaysShowAnswerToggled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_AlwaysShowAnswerToggled value)
+        alwaysShowAnswerToggled,
+    required TResult Function(_CardReview value) cardReviewed,
+    required TResult Function(_NextCard value) nextCard,
+    required TResult Function(_SessionSaved value) sessionSaved,
+    required TResult Function(_SessionCanceled value) sessionCanceled,
+    required TResult Function(_HintToggled value) hintToggled,
+    required TResult Function(_CurrentCardEdited value) currentCardEdited,
+  }) {
+    return alwaysShowAnswerToggled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
+    TResult? Function(_CardReview value)? cardReviewed,
+    TResult? Function(_NextCard value)? nextCard,
+    TResult? Function(_SessionSaved value)? sessionSaved,
+    TResult? Function(_SessionCanceled value)? sessionCanceled,
+    TResult? Function(_HintToggled value)? hintToggled,
+    TResult? Function(_CurrentCardEdited value)? currentCardEdited,
+  }) {
+    return alwaysShowAnswerToggled?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
+    TResult Function(_CardReview value)? cardReviewed,
+    TResult Function(_NextCard value)? nextCard,
+    TResult Function(_SessionSaved value)? sessionSaved,
+    TResult Function(_SessionCanceled value)? sessionCanceled,
+    TResult Function(_HintToggled value)? hintToggled,
+    TResult Function(_CurrentCardEdited value)? currentCardEdited,
+    required TResult orElse(),
+  }) {
+    if (alwaysShowAnswerToggled != null) {
+      return alwaysShowAnswerToggled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AlwaysShowAnswerToggled implements ReviewEvent {
+  const factory _AlwaysShowAnswerToggled() = _$AlwaysShowAnswerToggledImpl;
 }
 
 /// @nodoc
@@ -312,6 +471,7 @@ class _$CardReviewImpl implements _CardReview {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() alwaysShowAnswerToggled,
     required TResult Function(String givenAnswer) cardReviewed,
     required TResult Function() nextCard,
     required TResult Function() sessionSaved,
@@ -326,6 +486,7 @@ class _$CardReviewImpl implements _CardReview {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
+    TResult? Function()? alwaysShowAnswerToggled,
     TResult? Function(String givenAnswer)? cardReviewed,
     TResult? Function()? nextCard,
     TResult? Function()? sessionSaved,
@@ -340,6 +501,7 @@ class _$CardReviewImpl implements _CardReview {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? alwaysShowAnswerToggled,
     TResult Function(String givenAnswer)? cardReviewed,
     TResult Function()? nextCard,
     TResult Function()? sessionSaved,
@@ -358,6 +520,8 @@ class _$CardReviewImpl implements _CardReview {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_AlwaysShowAnswerToggled value)
+        alwaysShowAnswerToggled,
     required TResult Function(_CardReview value) cardReviewed,
     required TResult Function(_NextCard value) nextCard,
     required TResult Function(_SessionSaved value) sessionSaved,
@@ -372,6 +536,7 @@ class _$CardReviewImpl implements _CardReview {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
+    TResult? Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult? Function(_CardReview value)? cardReviewed,
     TResult? Function(_NextCard value)? nextCard,
     TResult? Function(_SessionSaved value)? sessionSaved,
@@ -386,6 +551,7 @@ class _$CardReviewImpl implements _CardReview {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult Function(_CardReview value)? cardReviewed,
     TResult Function(_NextCard value)? nextCard,
     TResult Function(_SessionSaved value)? sessionSaved,
@@ -456,6 +622,7 @@ class _$NextCardImpl implements _NextCard {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() alwaysShowAnswerToggled,
     required TResult Function(String givenAnswer) cardReviewed,
     required TResult Function() nextCard,
     required TResult Function() sessionSaved,
@@ -470,6 +637,7 @@ class _$NextCardImpl implements _NextCard {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
+    TResult? Function()? alwaysShowAnswerToggled,
     TResult? Function(String givenAnswer)? cardReviewed,
     TResult? Function()? nextCard,
     TResult? Function()? sessionSaved,
@@ -484,6 +652,7 @@ class _$NextCardImpl implements _NextCard {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? alwaysShowAnswerToggled,
     TResult Function(String givenAnswer)? cardReviewed,
     TResult Function()? nextCard,
     TResult Function()? sessionSaved,
@@ -502,6 +671,8 @@ class _$NextCardImpl implements _NextCard {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_AlwaysShowAnswerToggled value)
+        alwaysShowAnswerToggled,
     required TResult Function(_CardReview value) cardReviewed,
     required TResult Function(_NextCard value) nextCard,
     required TResult Function(_SessionSaved value) sessionSaved,
@@ -516,6 +687,7 @@ class _$NextCardImpl implements _NextCard {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
+    TResult? Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult? Function(_CardReview value)? cardReviewed,
     TResult? Function(_NextCard value)? nextCard,
     TResult? Function(_SessionSaved value)? sessionSaved,
@@ -530,6 +702,7 @@ class _$NextCardImpl implements _NextCard {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult Function(_CardReview value)? cardReviewed,
     TResult Function(_NextCard value)? nextCard,
     TResult Function(_SessionSaved value)? sessionSaved,
@@ -591,6 +764,7 @@ class _$SessionSavedImpl implements _SessionSaved {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() alwaysShowAnswerToggled,
     required TResult Function(String givenAnswer) cardReviewed,
     required TResult Function() nextCard,
     required TResult Function() sessionSaved,
@@ -605,6 +779,7 @@ class _$SessionSavedImpl implements _SessionSaved {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
+    TResult? Function()? alwaysShowAnswerToggled,
     TResult? Function(String givenAnswer)? cardReviewed,
     TResult? Function()? nextCard,
     TResult? Function()? sessionSaved,
@@ -619,6 +794,7 @@ class _$SessionSavedImpl implements _SessionSaved {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? alwaysShowAnswerToggled,
     TResult Function(String givenAnswer)? cardReviewed,
     TResult Function()? nextCard,
     TResult Function()? sessionSaved,
@@ -637,6 +813,8 @@ class _$SessionSavedImpl implements _SessionSaved {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_AlwaysShowAnswerToggled value)
+        alwaysShowAnswerToggled,
     required TResult Function(_CardReview value) cardReviewed,
     required TResult Function(_NextCard value) nextCard,
     required TResult Function(_SessionSaved value) sessionSaved,
@@ -651,6 +829,7 @@ class _$SessionSavedImpl implements _SessionSaved {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
+    TResult? Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult? Function(_CardReview value)? cardReviewed,
     TResult? Function(_NextCard value)? nextCard,
     TResult? Function(_SessionSaved value)? sessionSaved,
@@ -665,6 +844,7 @@ class _$SessionSavedImpl implements _SessionSaved {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult Function(_CardReview value)? cardReviewed,
     TResult Function(_NextCard value)? nextCard,
     TResult Function(_SessionSaved value)? sessionSaved,
@@ -726,6 +906,7 @@ class _$SessionCanceledImpl implements _SessionCanceled {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() alwaysShowAnswerToggled,
     required TResult Function(String givenAnswer) cardReviewed,
     required TResult Function() nextCard,
     required TResult Function() sessionSaved,
@@ -740,6 +921,7 @@ class _$SessionCanceledImpl implements _SessionCanceled {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
+    TResult? Function()? alwaysShowAnswerToggled,
     TResult? Function(String givenAnswer)? cardReviewed,
     TResult? Function()? nextCard,
     TResult? Function()? sessionSaved,
@@ -754,6 +936,7 @@ class _$SessionCanceledImpl implements _SessionCanceled {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? alwaysShowAnswerToggled,
     TResult Function(String givenAnswer)? cardReviewed,
     TResult Function()? nextCard,
     TResult Function()? sessionSaved,
@@ -772,6 +955,8 @@ class _$SessionCanceledImpl implements _SessionCanceled {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_AlwaysShowAnswerToggled value)
+        alwaysShowAnswerToggled,
     required TResult Function(_CardReview value) cardReviewed,
     required TResult Function(_NextCard value) nextCard,
     required TResult Function(_SessionSaved value) sessionSaved,
@@ -786,6 +971,7 @@ class _$SessionCanceledImpl implements _SessionCanceled {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
+    TResult? Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult? Function(_CardReview value)? cardReviewed,
     TResult? Function(_NextCard value)? nextCard,
     TResult? Function(_SessionSaved value)? sessionSaved,
@@ -800,6 +986,7 @@ class _$SessionCanceledImpl implements _SessionCanceled {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult Function(_CardReview value)? cardReviewed,
     TResult Function(_NextCard value)? nextCard,
     TResult Function(_SessionSaved value)? sessionSaved,
@@ -861,6 +1048,7 @@ class _$HintToggledImpl implements _HintToggled {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() alwaysShowAnswerToggled,
     required TResult Function(String givenAnswer) cardReviewed,
     required TResult Function() nextCard,
     required TResult Function() sessionSaved,
@@ -875,6 +1063,7 @@ class _$HintToggledImpl implements _HintToggled {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
+    TResult? Function()? alwaysShowAnswerToggled,
     TResult? Function(String givenAnswer)? cardReviewed,
     TResult? Function()? nextCard,
     TResult? Function()? sessionSaved,
@@ -889,6 +1078,7 @@ class _$HintToggledImpl implements _HintToggled {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? alwaysShowAnswerToggled,
     TResult Function(String givenAnswer)? cardReviewed,
     TResult Function()? nextCard,
     TResult Function()? sessionSaved,
@@ -907,6 +1097,8 @@ class _$HintToggledImpl implements _HintToggled {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_AlwaysShowAnswerToggled value)
+        alwaysShowAnswerToggled,
     required TResult Function(_CardReview value) cardReviewed,
     required TResult Function(_NextCard value) nextCard,
     required TResult Function(_SessionSaved value) sessionSaved,
@@ -921,6 +1113,7 @@ class _$HintToggledImpl implements _HintToggled {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
+    TResult? Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult? Function(_CardReview value)? cardReviewed,
     TResult? Function(_NextCard value)? nextCard,
     TResult? Function(_SessionSaved value)? sessionSaved,
@@ -935,6 +1128,7 @@ class _$HintToggledImpl implements _HintToggled {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult Function(_CardReview value)? cardReviewed,
     TResult Function(_NextCard value)? nextCard,
     TResult Function(_SessionSaved value)? sessionSaved,
@@ -1037,6 +1231,7 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
+    required TResult Function() alwaysShowAnswerToggled,
     required TResult Function(String givenAnswer) cardReviewed,
     required TResult Function() nextCard,
     required TResult Function() sessionSaved,
@@ -1051,6 +1246,7 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
+    TResult? Function()? alwaysShowAnswerToggled,
     TResult? Function(String givenAnswer)? cardReviewed,
     TResult? Function()? nextCard,
     TResult? Function()? sessionSaved,
@@ -1065,6 +1261,7 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
+    TResult Function()? alwaysShowAnswerToggled,
     TResult Function(String givenAnswer)? cardReviewed,
     TResult Function()? nextCard,
     TResult Function()? sessionSaved,
@@ -1083,6 +1280,8 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
+    required TResult Function(_AlwaysShowAnswerToggled value)
+        alwaysShowAnswerToggled,
     required TResult Function(_CardReview value) cardReviewed,
     required TResult Function(_NextCard value) nextCard,
     required TResult Function(_SessionSaved value) sessionSaved,
@@ -1097,6 +1296,7 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
+    TResult? Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult? Function(_CardReview value)? cardReviewed,
     TResult? Function(_NextCard value)? nextCard,
     TResult? Function(_SessionSaved value)? sessionSaved,
@@ -1111,6 +1311,7 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
+    TResult Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
     TResult Function(_CardReview value)? cardReviewed,
     TResult Function(_NextCard value)? nextCard,
     TResult Function(_SessionSaved value)? sessionSaved,
@@ -1150,6 +1351,7 @@ mixin _$ReviewState {
   bool get isInitialising => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
   bool get isSessionEnded => throw _privateConstructorUsedError; //
+  bool get shouldAlwaysShowAnswer => throw _privateConstructorUsedError;
   bool get hasReviewError => throw _privateConstructorUsedError;
   bool get isHintVisible => throw _privateConstructorUsedError;
   bool get isAnswerVisible => throw _privateConstructorUsedError;
@@ -1180,6 +1382,7 @@ abstract class $ReviewStateCopyWith<$Res> {
       bool isInitialising,
       bool isSubmitting,
       bool isSessionEnded,
+      bool shouldAlwaysShowAnswer,
       bool hasReviewError,
       bool isHintVisible,
       bool isAnswerVisible,
@@ -1208,6 +1411,7 @@ class _$ReviewStateCopyWithImpl<$Res, $Val extends ReviewState>
     Object? isInitialising = null,
     Object? isSubmitting = null,
     Object? isSessionEnded = null,
+    Object? shouldAlwaysShowAnswer = null,
     Object? hasReviewError = null,
     Object? isHintVisible = null,
     Object? isAnswerVisible = null,
@@ -1235,6 +1439,10 @@ class _$ReviewStateCopyWithImpl<$Res, $Val extends ReviewState>
       isSessionEnded: null == isSessionEnded
           ? _value.isSessionEnded
           : isSessionEnded // ignore: cast_nullable_to_non_nullable
+              as bool,
+      shouldAlwaysShowAnswer: null == shouldAlwaysShowAnswer
+          ? _value.shouldAlwaysShowAnswer
+          : shouldAlwaysShowAnswer // ignore: cast_nullable_to_non_nullable
               as bool,
       hasReviewError: null == hasReviewError
           ? _value.hasReviewError
@@ -1278,6 +1486,7 @@ abstract class _$$ReviewStateImplCopyWith<$Res>
       bool isInitialising,
       bool isSubmitting,
       bool isSessionEnded,
+      bool shouldAlwaysShowAnswer,
       bool hasReviewError,
       bool isHintVisible,
       bool isAnswerVisible,
@@ -1304,6 +1513,7 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
     Object? isInitialising = null,
     Object? isSubmitting = null,
     Object? isSessionEnded = null,
+    Object? shouldAlwaysShowAnswer = null,
     Object? hasReviewError = null,
     Object? isHintVisible = null,
     Object? isAnswerVisible = null,
@@ -1331,6 +1541,10 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
       isSessionEnded: null == isSessionEnded
           ? _value.isSessionEnded
           : isSessionEnded // ignore: cast_nullable_to_non_nullable
+              as bool,
+      shouldAlwaysShowAnswer: null == shouldAlwaysShowAnswer
+          ? _value.shouldAlwaysShowAnswer
+          : shouldAlwaysShowAnswer // ignore: cast_nullable_to_non_nullable
               as bool,
       hasReviewError: null == hasReviewError
           ? _value.hasReviewError
@@ -1369,6 +1583,7 @@ class _$ReviewStateImpl extends _ReviewState {
       this.isInitialising = false,
       this.isSubmitting = false,
       this.isSessionEnded = false,
+      this.shouldAlwaysShowAnswer = false,
       this.hasReviewError = false,
       this.isHintVisible = false,
       this.isAnswerVisible = false,
@@ -1399,6 +1614,9 @@ class _$ReviewStateImpl extends _ReviewState {
 //
   @override
   @JsonKey()
+  final bool shouldAlwaysShowAnswer;
+  @override
+  @JsonKey()
   final bool hasReviewError;
   @override
   @JsonKey()
@@ -1426,7 +1644,7 @@ class _$ReviewStateImpl extends _ReviewState {
 
   @override
   String toString() {
-    return 'ReviewState(submissionError: $submissionError, answerCount: $answerCount, isInitialising: $isInitialising, isSubmitting: $isSubmitting, isSessionEnded: $isSessionEnded, hasReviewError: $hasReviewError, isHintVisible: $isHintVisible, isAnswerVisible: $isAnswerVisible, currentCardId: $currentCardId, flashcards: $flashcards, sessionAnswers: $sessionAnswers)';
+    return 'ReviewState(submissionError: $submissionError, answerCount: $answerCount, isInitialising: $isInitialising, isSubmitting: $isSubmitting, isSessionEnded: $isSessionEnded, shouldAlwaysShowAnswer: $shouldAlwaysShowAnswer, hasReviewError: $hasReviewError, isHintVisible: $isHintVisible, isAnswerVisible: $isAnswerVisible, currentCardId: $currentCardId, flashcards: $flashcards, sessionAnswers: $sessionAnswers)';
   }
 
   @override
@@ -1444,6 +1662,8 @@ class _$ReviewStateImpl extends _ReviewState {
                 other.isSubmitting == isSubmitting) &&
             (identical(other.isSessionEnded, isSessionEnded) ||
                 other.isSessionEnded == isSessionEnded) &&
+            (identical(other.shouldAlwaysShowAnswer, shouldAlwaysShowAnswer) ||
+                other.shouldAlwaysShowAnswer == shouldAlwaysShowAnswer) &&
             (identical(other.hasReviewError, hasReviewError) ||
                 other.hasReviewError == hasReviewError) &&
             (identical(other.isHintVisible, isHintVisible) ||
@@ -1467,6 +1687,7 @@ class _$ReviewStateImpl extends _ReviewState {
       isInitialising,
       isSubmitting,
       isSessionEnded,
+      shouldAlwaysShowAnswer,
       hasReviewError,
       isHintVisible,
       isAnswerVisible,
@@ -1497,6 +1718,7 @@ abstract class _ReviewState extends ReviewState {
           final bool isInitialising,
           final bool isSubmitting,
           final bool isSessionEnded,
+          final bool shouldAlwaysShowAnswer,
           final bool hasReviewError,
           final bool isHintVisible,
           final bool isAnswerVisible,
@@ -1519,6 +1741,8 @@ abstract class _ReviewState extends ReviewState {
   bool get isSubmitting;
   @override
   bool get isSessionEnded; //
+  @override
+  bool get shouldAlwaysShowAnswer;
   @override
   bool get hasReviewError;
   @override

@@ -13,6 +13,8 @@ _$ReviewStateImpl _$$ReviewStateImplFromJson(Map<String, dynamic> json) =>
       isInitialising: json['is_initialising'] as bool? ?? false,
       isSubmitting: json['is_submitting'] as bool? ?? false,
       isSessionEnded: json['is_session_ended'] as bool? ?? false,
+      shouldAlwaysShowAnswer:
+          json['should_always_show_answer'] as bool? ?? false,
       hasReviewError: json['has_review_error'] as bool? ?? false,
       isHintVisible: json['is_hint_visible'] as bool? ?? false,
       isAnswerVisible: json['is_answer_visible'] as bool? ?? false,
@@ -33,6 +35,7 @@ Map<String, dynamic> _$$ReviewStateImplToJson(_$ReviewStateImpl instance) =>
       'is_initialising': instance.isInitialising,
       'is_submitting': instance.isSubmitting,
       'is_session_ended': instance.isSessionEnded,
+      'should_always_show_answer': instance.shouldAlwaysShowAnswer,
       'has_review_error': instance.hasReviewError,
       'is_hint_visible': instance.isHintVisible,
       'is_answer_visible': instance.isAnswerVisible,

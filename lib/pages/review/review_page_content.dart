@@ -77,10 +77,14 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
             IconButton(
               onPressed: () {
                 showDialog(
-                    context: context,
-                    builder: (dialogContext) {
-                      return ReviewSettingsDialog();
-                    });
+                  context: context,
+                  builder: (_) {
+                    return BlocProvider.value(
+                      value: context.read<ReviewBloc>(),
+                      child: ReviewSettingsDialog(),
+                    );
+                  },
+                );
               },
               icon: const Icon(
                 Icons.settings,
@@ -98,7 +102,7 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
                   previous.currentCardId != current.currentCardId,
               builder: (context, state) {
                 if (state.isInitialising) {
-                  return const CircularProgressIndicator();
+                  return Center(child: const CircularProgressIndicator());
                 }
                 Flashcard? currentCard = state.currentCard;
 

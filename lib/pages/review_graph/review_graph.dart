@@ -113,15 +113,20 @@ class ReviewGraph extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(top: 8.0),
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-      child: AspectRatio(
-        aspectRatio: 1.66,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final barsSpace = 4.0 * constraints.maxWidth / 400;
-            final barsWidth = 8.0 * constraints.maxWidth / 400;
-            return BarChart(
-                _buildChartData(hourlyCounts, barsWidth, barsSpace));
-          },
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.height * 0.75,
+        ),
+        child: AspectRatio(
+          aspectRatio: 1.66,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final barsSpace = 4.0 * constraints.maxWidth / 400;
+              final barsWidth = 8.0 * constraints.maxWidth / 400;
+              return BarChart(
+                  _buildChartData(hourlyCounts, barsWidth, barsSpace));
+            },
+          ),
         ),
       ),
     );

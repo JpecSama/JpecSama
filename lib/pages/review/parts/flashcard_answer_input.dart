@@ -66,6 +66,7 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
               buildWhen: (previous, current) =>
                   previous.currentCard?.destLanguage !=
                       current.currentCard?.destLanguage ||
+                  previous.isAnswerVisible != current.isAnswerVisible ||
                   previous.hasReviewError != current.hasReviewError,
               builder: (context, state) {
                 return Padding(
@@ -79,7 +80,7 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
                     keyboardType: TextInputType.text,
                     textCapitalization: TextCapitalization.none,
                     validator: (value) {
-                      if (state.hasReviewError) {
+                      if (state.isAnswerVisible) {
                         return null;
                       }
                       if (value?.trim().isEmpty ?? true) {
