@@ -203,6 +203,18 @@ class CustomTheme {
       ),
       textStyle: const TextStyle(color: sumiIro),
     ),
+    dropdownMenuTheme: DropdownMenuThemeData(
+      
+      inputDecorationTheme: InputDecorationTheme(),
+      textStyle: TextStyle(
+        color: Colors.white,
+      ),
+      menuStyle: MenuStyle(
+        backgroundColor: WidgetStateProperty.all(
+          CustomTheme.mizuasagi,
+        ), // Dropdown background color
+      ),
+    ),
 
     listTileTheme: const ListTileThemeData(
       textColor: sumiIro,

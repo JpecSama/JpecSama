@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:jpec_sama/extensions/string_extension.dart';
@@ -65,9 +66,14 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
   }
 
   _onCurrentCardEdited(_CurrentCardEdited event, Emitter<ReviewState> emit) {
+    debugPrint('Current card edited');
     List<Flashcard> flashcards = [...state.flashcards];
     flashcards[state.currentCardIndex!] = event.flashcard;
-    emit(state.copyWith(flashcards: flashcards));
+    emit(
+      state.copyWith(
+        flashcards: flashcards,
+      ),
+    );
   }
 
   int levenshtein(String a, String b) {

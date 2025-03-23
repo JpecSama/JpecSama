@@ -101,6 +101,8 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
                   previous.currentCard != current.currentCard ||
                   previous.currentCardId != current.currentCardId,
               builder: (context, state) {
+                print(
+                    "ReviewPageContent: state: ${state.currentCard?.flashcardText}");
                 if (state.isInitialising) {
                   return Center(child: const CircularProgressIndicator());
                 }
@@ -136,6 +138,7 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
                   );
                 }
                 return CardReviewContent(
+                  key: UniqueKey(),
                   currentCard: currentCard,
                 );
               },

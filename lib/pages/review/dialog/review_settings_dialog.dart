@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jpec_sama/dialogs/edit_flashcard/edit_card_dialog.dart';
+import 'package:jpec_sama/models/flashcard.dart';
 import 'package:jpec_sama/pages/review/bloc/review_bloc.dart';
 import 'package:jpec_sama/theme/custom_theme.dart';
 
@@ -33,7 +35,7 @@ class ReviewSettingsDialog extends StatelessWidget {
                   title: const Text('Always show answer'),
                   subtitle: const Text(
                       'Show the answer immediately after submitting your answer'),
-                  trailing: Switch(
+                  leading: Switch(
                     value: state.shouldAlwaysShowAnswer,
                     onChanged: (value) {
                       context.read<ReviewBloc>().add(
@@ -44,6 +46,40 @@ class ReviewSettingsDialog extends StatelessWidget {
                 );
               },
             ),
+            ListTile(
+              onTap: () {
+                Flashcard? flashcard =
+                    context.read<ReviewBloc>().state.currentCard;
+                if (flashcard == null) {
+                  return;
+                }
+                Navigator.of(context).pop();
+
+                showDialog(
+                  context: context,
+                  builder: (_) => EditCardDialog(
+                    flashcard: flashcard,
+                  ),
+                ).then((value) {
+                  print('-----------');
+                  print(value);
+                  if (value == null) {
+                    return;
+                  }
+                  if (value is Flashcard) {
+                    print('IN');
+                    context.read<ReviewBloc>().add(
+                          ReviewEvent.currentCardEdited(flashcard: value),
+                        );
+                  }
+                });
+              },
+              leading: const Icon(Icons.edit),
+              title: const Text('Edit'),
+              subtitle: const Text(
+                'Edit the current card',
+              ),
+            )
           ],
         ),
       ),

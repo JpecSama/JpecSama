@@ -223,8 +223,11 @@ class _EditCardDialogContentState extends State<EditCardDialogContent> {
                                             controller.text.trim())
                                         .where((text) => text.isNotEmpty)
                                     : null);
+                        print("isSuccess: $isSuccess");
                         if (isSuccess) {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pop(
+                            _flashcard,
+                          );
                         }
                       },
                       child: Text(context.translations.submit),

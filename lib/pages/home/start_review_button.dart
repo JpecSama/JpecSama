@@ -33,14 +33,6 @@ class _StartReviewButtonState extends State<StartReviewButton> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        DropdownSelector(
-          flashcardCount: maxCount,
-          onChanged: (int newValue) {
-            setState(() {
-              count = newValue;
-            });
-          },
-        ),
         ElevatedButton(
           onPressed: () {
             context.pushNamed(
@@ -50,8 +42,19 @@ class _StartReviewButtonState extends State<StartReviewButton> {
               },
             );
           },
-          child: Text(
-              "${widget.flashcardCount} Review${widget.flashcardCount > 1 ? 's' : ''}"),
+          child: Row(
+            children: [
+              DropdownSelector(
+                flashcardCount: maxCount,
+                onChanged: (int newValue) {
+                  setState(() {
+                    count = newValue;
+                  });
+                },
+              ),
+              Text("Review${widget.flashcardCount > 1 ? 's' : ''}"),
+            ],
+          ),
         ),
       ],
     );
@@ -87,28 +90,32 @@ class _DropdownSelectorState extends State<DropdownSelector> {
       for (int i = 0; i <= selectedValue; i += 10) i,
       if (selectedValue % 10 != 0) selectedValue,
     ];
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: CustomTheme.mizuasagi,
-      ),
-      child: DropdownButton<int>(
-        value: selectedValue,
-        underline: Container(),
-        alignment: Alignment.center,
-        items: options.map((int value) {
-          return DropdownMenuItem<int>(
-            value: value,
-            child: Text(value.toString()),
-          );
-        }).toList(),
-        onChanged: (int? newValue) {
-          if (newValue != null) {
-            setState(() => selectedValue = newValue);
-            widget.onChanged(newValue);
-          }
-        },
-      ),
+    return DropdownButton<int>(
+      value: selectedValue,
+      iconEnabledColor: Colors.white,
+      alignment: Alignment.center,
+
+      items: options.map((int value) {
+        return DropdownMenuItem<int>(
+          value: value,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            child: Text(
+              value.toString(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        );
+      }).toList(),
+      onChanged: (int? newValue) {
+        if (newValue != null) {
+          setState(() => selectedValue = newValue);
+          widget.onChanged(newValue);
+        }
+      },
     );
   }
 }
