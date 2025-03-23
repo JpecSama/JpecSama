@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "sendResetPasswordByEmail": "Send reset password email",
+  "@sendResetPasswordByEmail": {},
   "helloWorld": "Hello World!",
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
@@ -8,6 +9,7 @@
   "notMemberRegister": "Not yet a member ? Sign up here",
   "passwordForgotten": "Password forgotten ?",
   "signInWithPassword": "Sign in with password",
+  "@signInWithPassword": {},
   "password": "Password",
   "email": "Email",
   "answer": "Answer",

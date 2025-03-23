@@ -56,7 +56,7 @@ class ReviewGraph extends StatelessWidget {
                 toY: entry.value.toDouble(),
                 borderRadius: BorderRadius.zero,
                 width: barsWidth,
-                color: ebicha,
+                color: CustomTheme.ebicha,
               ),
             ],
           ),
@@ -99,7 +99,7 @@ class ReviewGraph extends StatelessWidget {
         show: true,
         checkToShowHorizontalLine: (value) => value % 1 == 0,
         getDrawingHorizontalLine: (_) =>
-            FlLine(color: sumiIro.withAlpha(50), strokeWidth: 1),
+            FlLine(color: CustomTheme.sumiIro.withAlpha(50), strokeWidth: 1),
         drawVerticalLine: true,
       ),
       barGroups: _generateBarGroups(hourlyCounts, barsWidth, barsSpace),

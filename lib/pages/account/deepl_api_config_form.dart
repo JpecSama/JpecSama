@@ -84,7 +84,6 @@ class _DeeplApiConfigFormState extends State<DeeplApiConfigForm> {
                     return;
                   }
                   UserCredRepository repo = UserCredRepository();
-                  // TODO Validate key
                   await repo.setDeeplApiKey(
                     userId,
                     _apiKeyTextController.text.trim(),

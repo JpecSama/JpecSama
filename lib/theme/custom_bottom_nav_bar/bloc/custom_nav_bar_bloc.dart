@@ -14,7 +14,6 @@ class CustomNavBarBloc extends Bloc<CustomNavBarEvent, CustomNavBarState> {
 
   _onNavigate(_Navigate event, Emitter<CustomNavBarState> emit) {
     //navigate
-    print('_onNavigate');
     emit(state.copyWith(currentRoute: event.routeName));
   }
 }

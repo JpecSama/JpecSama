@@ -100,7 +100,10 @@ class _FlashcardAnswerInputState extends State<FlashcardAnswerInput> {
                         onPressed: () {
                           _onAnswerSubmitted(_answerController.text);
                         },
-                        icon: const Icon(Icons.arrow_circle_right_outlined),
+                        icon: const Icon(
+                          Icons.arrow_circle_right_outlined,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                     onFieldSubmitted: _onAnswerSubmitted,

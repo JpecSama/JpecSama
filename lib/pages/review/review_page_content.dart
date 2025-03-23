@@ -64,7 +64,7 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
         }
       },
       child: Scaffold(
-        backgroundColor: momoIro,
+        backgroundColor: CustomTheme.momoIro,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           title: const Text('Review'),

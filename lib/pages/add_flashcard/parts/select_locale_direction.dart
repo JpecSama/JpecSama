@@ -1,6 +1,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
+import 'package:jpec_sama/theme/custom_theme.dart';
 
 import '../../../constants.dart';
 import '../../../services/language_service.dart';
@@ -25,8 +26,6 @@ class SelectLocaleDirection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("initialSourceLocale $initialSourceLocale");
-    print("initialDestLocale $initialDestLocale");
     return Container(
       margin: const EdgeInsets.only(
         top: kPadding,
@@ -42,6 +41,7 @@ class SelectLocaleDirection extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   border: Border.all(),
+                  color: CustomTheme.shironeri,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(
@@ -87,7 +87,9 @@ class SelectLocaleDirection extends StatelessWidget {
             onPressed: () {
               onLocaleSwitched();
             },
-            icon: const Icon(Icons.swap_horizontal_circle_outlined),
+            icon: const Icon(
+              Icons.swap_horizontal_circle_outlined,
+            ),
           ),
           Expanded(
             child: Center(
@@ -97,6 +99,7 @@ class SelectLocaleDirection extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   border: Border.all(),
+                  color: CustomTheme.shironeri,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(

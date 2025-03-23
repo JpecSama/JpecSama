@@ -90,7 +90,7 @@ class _DropdownSelectorState extends State<DropdownSelector> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: mizuasagi,
+        color: CustomTheme.mizuasagi,
       ),
       child: DropdownButton<int>(
         value: selectedValue,

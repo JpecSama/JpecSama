@@ -42,7 +42,7 @@ class _CardReviewContentState extends State<CardReviewContent> {
                 previous.isAnswerVisible != current.isAnswerVisible,
             builder: (context, state) {
               Color? backgroundColor = state.isAnswerVisible
-                  ? (state.hasReviewError ? momoIro.withAlpha(230) : mizuasagi)
+                  ? (state.hasReviewError ? CustomTheme.momoIro.withAlpha(230) : CustomTheme.mizuasagi)
                   : null;
               return Container(
                 decoration: BoxDecoration(
@@ -102,8 +102,8 @@ class _CardReviewContentState extends State<CardReviewContent> {
                                     reviewRepository: _reviewRepository,
                                     buttonBackgroundColor:
                                         state.hasReviewError
-                                            ? mizuasagi
-                                            : momoIro.withAlpha(230),
+                                            ? CustomTheme.mizuasagi
+                                            : CustomTheme.momoIro.withAlpha(230),
                                   ),
                                 ),
                               ],

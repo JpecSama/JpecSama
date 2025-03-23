@@ -65,8 +65,6 @@ class ReviewRepository {
     Iterable<String> answers,
     bool isReversable,
   ) async {
-    print('createFlashcard');
-    print(flashcard.toJson());
     final res = await supabase
         .from('flashcard')
         .insert(flashcard
@@ -259,7 +257,7 @@ class ReviewRepository {
         ))
         .toIso8601String();
 
-    List<Map<String, dynamic>> updatedCards = await supabase
+    await supabase
         .from('flashcard')
         .update({
           'level': level,
@@ -267,6 +265,5 @@ class ReviewRepository {
         })
         .inFilter('id', ids)
         .select('*');
-    print(updatedCards);
   }
 }

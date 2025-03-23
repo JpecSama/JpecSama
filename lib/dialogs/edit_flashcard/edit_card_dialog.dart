@@ -116,17 +116,17 @@ class _EditCardDialogContentState extends State<EditCardDialogContent> {
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: ebicha,
+                          color: CustomTheme.ebicha,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: ebicha,
+                          color: CustomTheme.ebicha,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
-                          color: ebicha,
+                          color: CustomTheme.ebicha,
                         ),
                       ),
                     ),
@@ -170,22 +170,22 @@ class _EditCardDialogContentState extends State<EditCardDialogContent> {
                                 },
                                 icon: const Icon(
                                   Icons.delete,
-                                  color: tonocha,
+                                  color: CustomTheme.tonocha,
                                 ),
                               ),
                               border: const OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: ebicha,
+                                  color: CustomTheme.ebicha,
                                 ),
                               ),
                               enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: ebicha,
+                                  color: CustomTheme.ebicha,
                                 ),
                               ),
                               focusedBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: ebicha,
+                                  color: CustomTheme.ebicha,
                                 ),
                               ),
                             ),
@@ -197,7 +197,7 @@ class _EditCardDialogContentState extends State<EditCardDialogContent> {
                     padding: const EdgeInsets.only(top: 8.0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: tonocha,
+                        backgroundColor: CustomTheme.tonocha,
                       ),
                       onPressed: () {
                         setState(() {
@@ -212,7 +212,7 @@ class _EditCardDialogContentState extends State<EditCardDialogContent> {
                     padding: const EdgeInsets.only(top: 4 * kPadding),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: ebicha,
+                        backgroundColor: CustomTheme.ebicha,
                       ),
                       onPressed: () async {
                         bool isSuccess =

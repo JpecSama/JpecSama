@@ -14,7 +14,6 @@ class _JapaneseDynamicTextFieldState extends State<JapaneseDynamicTextField> {
   final JapaneseTextTranslator _japaneseTextTranslator =
       JapaneseTextTranslator();
   late TextEditingController _controller;
-  String _input = '';
   String _japanese = '';
 
   @override

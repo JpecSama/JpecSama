@@ -98,7 +98,7 @@ class FlashcardHead extends StatelessWidget {
           ),
           Container(
             decoration: const BoxDecoration(
-              color: mizuasagi,
+              color: CustomTheme.mizuasagi,
               border: Border.symmetric(
                 horizontal: BorderSide(
                   color: Colors.black,

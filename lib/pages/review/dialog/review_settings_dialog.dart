@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jpec_sama/pages/review/bloc/review_bloc.dart';
+import 'package:jpec_sama/theme/custom_theme.dart';
 
 class ReviewSettingsDialog extends StatelessWidget {
   const ReviewSettingsDialog({
@@ -9,6 +10,7 @@ class ReviewSettingsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: CustomTheme.shironeri,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Column(

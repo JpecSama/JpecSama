@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
+import 'package:jpec_sama/theme/custom_theme.dart';
 
 import '../../models/flashcard.dart';
 import '../../services/supabase/repositories/review_repository.dart';
@@ -61,33 +62,36 @@ class _ListTabState extends State<ListTab> {
       body: SafeArea(
         child: Column(
           children: [
-            SelectLocaleDirection(
-              initialSourceLocale: _sourceLocale,
-              initialDestLocale: _destLocale,
-              onLocaleSwitched: () {
-                String tmpLocale = _sourceLocale;
-                setState(() {
-                  _sourceLocale = _destLocale;
-                  _destLocale = tmpLocale;
-                });
-                _pagingController.refresh();
-              },
-              onSourceLocaleChanged: (locale) {
-                if (locale != _sourceLocale) {
+            Container(
+              color: CustomTheme.momoIro,
+              child: SelectLocaleDirection(
+                initialSourceLocale: _sourceLocale,
+                initialDestLocale: _destLocale,
+                onLocaleSwitched: () {
+                  String tmpLocale = _sourceLocale;
                   setState(() {
-                    _sourceLocale = locale;
+                    _sourceLocale = _destLocale;
+                    _destLocale = tmpLocale;
                   });
                   _pagingController.refresh();
-                }
-              },
-              onDestLocaleChanged: (locale) {
-                if (locale != _destLocale) {
-                  setState(() {
-                    _destLocale = locale;
-                  });
-                  _pagingController.refresh();
-                }
-              },
+                },
+                onSourceLocaleChanged: (locale) {
+                  if (locale != _sourceLocale) {
+                    setState(() {
+                      _sourceLocale = locale;
+                    });
+                    _pagingController.refresh();
+                  }
+                },
+                onDestLocaleChanged: (locale) {
+                  if (locale != _destLocale) {
+                    setState(() {
+                      _destLocale = locale;
+                    });
+                    _pagingController.refresh();
+                  }
+                },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
