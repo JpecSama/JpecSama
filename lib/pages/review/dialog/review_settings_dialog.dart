@@ -59,20 +59,13 @@ class ReviewSettingsDialog extends StatelessWidget {
                   context: context,
                   builder: (_) => EditCardDialog(
                     flashcard: flashcard,
+                    onFlashcardUpdated: (flashcard) {
+                      context.read<ReviewBloc>().add(
+                            ReviewEvent.currentCardEdited(flashcard: flashcard),
+                          );
+                    },
                   ),
-                ).then((value) {
-                  print('-----------');
-                  print(value);
-                  if (value == null) {
-                    return;
-                  }
-                  if (value is Flashcard) {
-                    print('IN');
-                    context.read<ReviewBloc>().add(
-                          ReviewEvent.currentCardEdited(flashcard: value),
-                        );
-                  }
-                });
+                );
               },
               leading: const Icon(Icons.edit),
               title: const Text('Edit'),

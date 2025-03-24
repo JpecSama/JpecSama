@@ -12,8 +12,10 @@ class EditCardDialog extends StatelessWidget {
   const EditCardDialog({
     super.key,
     required this.flashcard,
+    this.onFlashcardUpdated,
   });
   final Flashcard flashcard;
+  final void Function(Flashcard flashcard)? onFlashcardUpdated;
 
   @override
   Widget build(BuildContext context) {
@@ -26,22 +28,31 @@ class EditCardDialog extends StatelessWidget {
 }
 
 class EditCardDialogWrapper extends StatelessWidget {
-  const EditCardDialogWrapper({super.key});
+  const EditCardDialogWrapper({
+    super.key,
+    this.onFlashcardUpdated,
+  });
+  final void Function(Flashcard flashcard)? onFlashcardUpdated;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<EditFlashcardBloc, EditFlashcardState>(
       buildWhen: (previous, current) => previous.flashcard != current.flashcard,
       builder: (context, state) {
-        return EditCardDialogContent(flashcard: state.flashcard);
+        return EditCardDialogContent(
+          flashcard: state.flashcard,
+          onFlashcardUpdated: onFlashcardUpdated,
+        );
       },
     );
   }
 }
 
 class EditCardDialogContent extends StatefulWidget {
-  const EditCardDialogContent({super.key, required this.flashcard});
+  const EditCardDialogContent(
+      {super.key, required this.flashcard, this.onFlashcardUpdated});
   final Flashcard flashcard;
+  final void Function(Flashcard flashcard)? onFlashcardUpdated;
 
   @override
   State<EditCardDialogContent> createState() => _EditCardDialogContentState();
@@ -225,6 +236,9 @@ class _EditCardDialogContentState extends State<EditCardDialogContent> {
                                     : null);
                         print("isSuccess: $isSuccess");
                         if (isSuccess) {
+                          if (widget.onFlashcardUpdated != null) {
+                            widget.onFlashcardUpdated!(_flashcard);
+                          }
                           Navigator.of(context).pop(
                             _flashcard,
                           );
