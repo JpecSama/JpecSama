@@ -123,7 +123,8 @@ class _ListTabState extends State<ListTab> {
                                   builder: (context) {
                                     return AlertDialog(
                                       title: const Text(
-                                          "Are you sure you want to delete the item"),
+                                        "Are you sure you want to delete the item ?",
+                                      ),
                                       actions: [
                                         TextButton(
                                             onPressed: () async {

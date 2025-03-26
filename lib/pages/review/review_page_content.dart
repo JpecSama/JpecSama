@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 import 'package:jpec_sama/models/flashcard.dart';
@@ -20,6 +21,14 @@ class ReviewPageContent extends StatefulWidget {
 }
 
 class _ReviewPageContentState extends State<ReviewPageContent> {
+  late final FlutterTts flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    flutterTts = FlutterTts();
+  }
+
   _showExitReviewConfirmDialog() {
     showDialog(
         context: context,
@@ -95,11 +104,29 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
         body: SafeArea(
           child: Container(
             color: Colors.white,
-            child: BlocBuilder<ReviewBloc, ReviewState>(
+            child: BlocConsumer<ReviewBloc, ReviewState>(
               buildWhen: (previous, current) =>
                   previous.isInitialising != current.isInitialising ||
                   previous.currentCard != current.currentCard ||
                   previous.currentCardId != current.currentCardId,
+              listenWhen: (previous, current) {
+                return previous.currentCard?.flashcardText !=
+                    current.currentCard?.flashcardText;
+              },
+              listener: (context, state) {
+                if (state.currentCard?.flashcardText != null) {
+                  try {
+                    flutterTts.setLanguage(
+                      state.currentCard!.sourceLanguage == 'EN'
+                          ? 'en-US'
+                          : 'ja-JP',
+                    );
+                    flutterTts.speak(state.currentCard!.flashcardText);
+                  } catch (e) {
+                    print(e);
+                  }
+                }
+              },
               builder: (context, state) {
                 if (state.isInitialising) {
                   return Center(child: const CircularProgressIndicator());
@@ -136,7 +163,6 @@ class _ReviewPageContentState extends State<ReviewPageContent> {
                   );
                 }
                 return CardReviewContent(
-                  key: UniqueKey(),
                   currentCard: currentCard,
                 );
               },

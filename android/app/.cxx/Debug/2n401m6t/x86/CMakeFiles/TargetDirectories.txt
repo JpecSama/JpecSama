@@ -1,0 +1,2 @@
+/Users/jpec/Prog/JpecSama/android/app/.cxx/Debug/2n401m6t/x86/CMakeFiles/edit_cache.dir
+/Users/jpec/Prog/JpecSama/android/app/.cxx/Debug/2n401m6t/x86/CMakeFiles/rebuild_cache.dir

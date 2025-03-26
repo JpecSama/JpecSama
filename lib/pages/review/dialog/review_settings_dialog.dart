@@ -35,12 +35,34 @@ class ReviewSettingsDialog extends StatelessWidget {
                   selected: state.shouldAlwaysShowAnswer,
                   title: const Text('Always show answer'),
                   subtitle: const Text(
-                      'Show the answer immediately after submitting your answer'),
+                    'Show the answer immediately after submitting your answer',
+                  ),
                   leading: Switch(
                     value: state.shouldAlwaysShowAnswer,
                     onChanged: (value) {
                       context.read<ReviewBloc>().add(
                             ReviewEvent.alwaysShowAnswerToggled(),
+                          );
+                    },
+                  ),
+                );
+              },
+            ),
+            BlocBuilder<ReviewBloc, ReviewState>(
+              buildWhen: (previous, current) =>
+                  previous.isMuted != current.isMuted,
+              builder: (context, state) {
+                return ListTile(
+                  selected: !state.isMuted,
+                  title: const Text('With sound'),
+                  subtitle: const Text(
+                    'Wheter a sound is played when a new card is presented or not',
+                  ),
+                  leading: Switch(
+                    value: !state.isMuted,
+                    onChanged: (value) {
+                      context.read<ReviewBloc>().add(
+                            ReviewEvent.muteToggled(),
                           );
                     },
                   ),

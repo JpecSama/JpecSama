@@ -78,9 +78,11 @@ class FlashcardHead extends StatelessWidget {
                       ),
                       BlocBuilder<ReviewBloc, ReviewState>(
                         buildWhen: (previous, current) =>
-                            previous.isHintVisible != current.isHintVisible,
+                            previous.isHintVisible != current.isHintVisible ||
+                            previous.isAnswerVisible != current.isAnswerVisible,
                         builder: (context, state) {
-                          if (!state.isHintVisible ||
+                          if ((!state.isHintVisible &&
+                                  !state.isAnswerVisible) ||
                               currentCard.hint == null) {
                             return SizedBox.shrink();
                           }

@@ -9,6 +9,7 @@ class ReviewState with _$ReviewState {
     @Default(0) int answerCount,
     @Default(false) bool isInitialising,
     @Default(false) bool isSubmitting,
+    @Default(false) bool isMuted,
     @Default(false) bool isSessionEnded,
     //
     @Default(false) bool shouldAlwaysShowAnswer,

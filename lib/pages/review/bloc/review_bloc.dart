@@ -45,6 +45,7 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     on<_SessionCanceled>(_onSessionCanceled);
     on<_SessionSaved>(_onSessionSaved);
     on<_HintToggled>(_onHintToggled);
+    on<_MuteToggled>(_onMuteToggled);
     on<_AlwaysShowAnswerToggled>(_onAlwaysShowAnswerToggled);
   }
 
@@ -57,6 +58,7 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     var box = await Hive.openBox('review');
     bool shouldAlwaysShowAnswer =
         box.get('shouldAlwaysShowAnswer', defaultValue: true);
+    bool isMuted = box.get('isMuted', defaultValue: false);
 
     List<Flashcard> flashcards = await _repo.getCardsToReview(maxCount);
     flashcards.shuffle();
@@ -65,6 +67,7 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
         flashcards: flashcards,
         currentCardId: flashcards.firstOrNull?.id,
         isInitialising: false,
+        isMuted: isMuted,
         shouldAlwaysShowAnswer: shouldAlwaysShowAnswer,
       ),
     );
@@ -251,6 +254,18 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
     emit(
       state.copyWith(
         shouldAlwaysShowAnswer: newValue,
+      ),
+    );
+  }
+
+  _onMuteToggled(_MuteToggled event, Emitter<ReviewState> emit) async {
+    var box = await Hive.openBox('review');
+    bool newValue = !state.isMuted;
+    await box.put('isMuted', newValue);
+
+    emit(
+      state.copyWith(
+        isMuted: newValue,
       ),
     );
   }

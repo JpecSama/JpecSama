@@ -25,6 +25,7 @@ mixin _$ReviewEvent {
     required TResult Function() sessionSaved,
     required TResult Function() sessionCanceled,
     required TResult Function() hintToggled,
+    required TResult Function() muteToggled,
     required TResult Function(Flashcard flashcard) currentCardEdited,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,6 +38,7 @@ mixin _$ReviewEvent {
     TResult? Function()? sessionSaved,
     TResult? Function()? sessionCanceled,
     TResult? Function()? hintToggled,
+    TResult? Function()? muteToggled,
     TResult? Function(Flashcard flashcard)? currentCardEdited,
   }) =>
       throw _privateConstructorUsedError;
@@ -49,6 +51,7 @@ mixin _$ReviewEvent {
     TResult Function()? sessionSaved,
     TResult Function()? sessionCanceled,
     TResult Function()? hintToggled,
+    TResult Function()? muteToggled,
     TResult Function(Flashcard flashcard)? currentCardEdited,
     required TResult orElse(),
   }) =>
@@ -63,6 +66,7 @@ mixin _$ReviewEvent {
     required TResult Function(_SessionSaved value) sessionSaved,
     required TResult Function(_SessionCanceled value) sessionCanceled,
     required TResult Function(_HintToggled value) hintToggled,
+    required TResult Function(_MuteToggled value) muteToggled,
     required TResult Function(_CurrentCardEdited value) currentCardEdited,
   }) =>
       throw _privateConstructorUsedError;
@@ -75,6 +79,7 @@ mixin _$ReviewEvent {
     TResult? Function(_SessionSaved value)? sessionSaved,
     TResult? Function(_SessionCanceled value)? sessionCanceled,
     TResult? Function(_HintToggled value)? hintToggled,
+    TResult? Function(_MuteToggled value)? muteToggled,
     TResult? Function(_CurrentCardEdited value)? currentCardEdited,
   }) =>
       throw _privateConstructorUsedError;
@@ -87,6 +92,7 @@ mixin _$ReviewEvent {
     TResult Function(_SessionSaved value)? sessionSaved,
     TResult Function(_SessionCanceled value)? sessionCanceled,
     TResult Function(_HintToggled value)? hintToggled,
+    TResult Function(_MuteToggled value)? muteToggled,
     TResult Function(_CurrentCardEdited value)? currentCardEdited,
     required TResult orElse(),
   }) =>
@@ -162,6 +168,7 @@ class _$StartedImpl implements _Started {
     required TResult Function() sessionSaved,
     required TResult Function() sessionCanceled,
     required TResult Function() hintToggled,
+    required TResult Function() muteToggled,
     required TResult Function(Flashcard flashcard) currentCardEdited,
   }) {
     return started();
@@ -177,6 +184,7 @@ class _$StartedImpl implements _Started {
     TResult? Function()? sessionSaved,
     TResult? Function()? sessionCanceled,
     TResult? Function()? hintToggled,
+    TResult? Function()? muteToggled,
     TResult? Function(Flashcard flashcard)? currentCardEdited,
   }) {
     return started?.call();
@@ -192,6 +200,7 @@ class _$StartedImpl implements _Started {
     TResult Function()? sessionSaved,
     TResult Function()? sessionCanceled,
     TResult Function()? hintToggled,
+    TResult Function()? muteToggled,
     TResult Function(Flashcard flashcard)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -212,6 +221,7 @@ class _$StartedImpl implements _Started {
     required TResult Function(_SessionSaved value) sessionSaved,
     required TResult Function(_SessionCanceled value) sessionCanceled,
     required TResult Function(_HintToggled value) hintToggled,
+    required TResult Function(_MuteToggled value) muteToggled,
     required TResult Function(_CurrentCardEdited value) currentCardEdited,
   }) {
     return started(this);
@@ -227,6 +237,7 @@ class _$StartedImpl implements _Started {
     TResult? Function(_SessionSaved value)? sessionSaved,
     TResult? Function(_SessionCanceled value)? sessionCanceled,
     TResult? Function(_HintToggled value)? hintToggled,
+    TResult? Function(_MuteToggled value)? muteToggled,
     TResult? Function(_CurrentCardEdited value)? currentCardEdited,
   }) {
     return started?.call(this);
@@ -242,6 +253,7 @@ class _$StartedImpl implements _Started {
     TResult Function(_SessionSaved value)? sessionSaved,
     TResult Function(_SessionCanceled value)? sessionCanceled,
     TResult Function(_HintToggled value)? hintToggled,
+    TResult Function(_MuteToggled value)? muteToggled,
     TResult Function(_CurrentCardEdited value)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -307,6 +319,7 @@ class _$AlwaysShowAnswerToggledImpl implements _AlwaysShowAnswerToggled {
     required TResult Function() sessionSaved,
     required TResult Function() sessionCanceled,
     required TResult Function() hintToggled,
+    required TResult Function() muteToggled,
     required TResult Function(Flashcard flashcard) currentCardEdited,
   }) {
     return alwaysShowAnswerToggled();
@@ -322,6 +335,7 @@ class _$AlwaysShowAnswerToggledImpl implements _AlwaysShowAnswerToggled {
     TResult? Function()? sessionSaved,
     TResult? Function()? sessionCanceled,
     TResult? Function()? hintToggled,
+    TResult? Function()? muteToggled,
     TResult? Function(Flashcard flashcard)? currentCardEdited,
   }) {
     return alwaysShowAnswerToggled?.call();
@@ -337,6 +351,7 @@ class _$AlwaysShowAnswerToggledImpl implements _AlwaysShowAnswerToggled {
     TResult Function()? sessionSaved,
     TResult Function()? sessionCanceled,
     TResult Function()? hintToggled,
+    TResult Function()? muteToggled,
     TResult Function(Flashcard flashcard)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -357,6 +372,7 @@ class _$AlwaysShowAnswerToggledImpl implements _AlwaysShowAnswerToggled {
     required TResult Function(_SessionSaved value) sessionSaved,
     required TResult Function(_SessionCanceled value) sessionCanceled,
     required TResult Function(_HintToggled value) hintToggled,
+    required TResult Function(_MuteToggled value) muteToggled,
     required TResult Function(_CurrentCardEdited value) currentCardEdited,
   }) {
     return alwaysShowAnswerToggled(this);
@@ -372,6 +388,7 @@ class _$AlwaysShowAnswerToggledImpl implements _AlwaysShowAnswerToggled {
     TResult? Function(_SessionSaved value)? sessionSaved,
     TResult? Function(_SessionCanceled value)? sessionCanceled,
     TResult? Function(_HintToggled value)? hintToggled,
+    TResult? Function(_MuteToggled value)? muteToggled,
     TResult? Function(_CurrentCardEdited value)? currentCardEdited,
   }) {
     return alwaysShowAnswerToggled?.call(this);
@@ -387,6 +404,7 @@ class _$AlwaysShowAnswerToggledImpl implements _AlwaysShowAnswerToggled {
     TResult Function(_SessionSaved value)? sessionSaved,
     TResult Function(_SessionCanceled value)? sessionCanceled,
     TResult Function(_HintToggled value)? hintToggled,
+    TResult Function(_MuteToggled value)? muteToggled,
     TResult Function(_CurrentCardEdited value)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -477,6 +495,7 @@ class _$CardReviewImpl implements _CardReview {
     required TResult Function() sessionSaved,
     required TResult Function() sessionCanceled,
     required TResult Function() hintToggled,
+    required TResult Function() muteToggled,
     required TResult Function(Flashcard flashcard) currentCardEdited,
   }) {
     return cardReviewed(givenAnswer);
@@ -492,6 +511,7 @@ class _$CardReviewImpl implements _CardReview {
     TResult? Function()? sessionSaved,
     TResult? Function()? sessionCanceled,
     TResult? Function()? hintToggled,
+    TResult? Function()? muteToggled,
     TResult? Function(Flashcard flashcard)? currentCardEdited,
   }) {
     return cardReviewed?.call(givenAnswer);
@@ -507,6 +527,7 @@ class _$CardReviewImpl implements _CardReview {
     TResult Function()? sessionSaved,
     TResult Function()? sessionCanceled,
     TResult Function()? hintToggled,
+    TResult Function()? muteToggled,
     TResult Function(Flashcard flashcard)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -527,6 +548,7 @@ class _$CardReviewImpl implements _CardReview {
     required TResult Function(_SessionSaved value) sessionSaved,
     required TResult Function(_SessionCanceled value) sessionCanceled,
     required TResult Function(_HintToggled value) hintToggled,
+    required TResult Function(_MuteToggled value) muteToggled,
     required TResult Function(_CurrentCardEdited value) currentCardEdited,
   }) {
     return cardReviewed(this);
@@ -542,6 +564,7 @@ class _$CardReviewImpl implements _CardReview {
     TResult? Function(_SessionSaved value)? sessionSaved,
     TResult? Function(_SessionCanceled value)? sessionCanceled,
     TResult? Function(_HintToggled value)? hintToggled,
+    TResult? Function(_MuteToggled value)? muteToggled,
     TResult? Function(_CurrentCardEdited value)? currentCardEdited,
   }) {
     return cardReviewed?.call(this);
@@ -557,6 +580,7 @@ class _$CardReviewImpl implements _CardReview {
     TResult Function(_SessionSaved value)? sessionSaved,
     TResult Function(_SessionCanceled value)? sessionCanceled,
     TResult Function(_HintToggled value)? hintToggled,
+    TResult Function(_MuteToggled value)? muteToggled,
     TResult Function(_CurrentCardEdited value)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -628,6 +652,7 @@ class _$NextCardImpl implements _NextCard {
     required TResult Function() sessionSaved,
     required TResult Function() sessionCanceled,
     required TResult Function() hintToggled,
+    required TResult Function() muteToggled,
     required TResult Function(Flashcard flashcard) currentCardEdited,
   }) {
     return nextCard();
@@ -643,6 +668,7 @@ class _$NextCardImpl implements _NextCard {
     TResult? Function()? sessionSaved,
     TResult? Function()? sessionCanceled,
     TResult? Function()? hintToggled,
+    TResult? Function()? muteToggled,
     TResult? Function(Flashcard flashcard)? currentCardEdited,
   }) {
     return nextCard?.call();
@@ -658,6 +684,7 @@ class _$NextCardImpl implements _NextCard {
     TResult Function()? sessionSaved,
     TResult Function()? sessionCanceled,
     TResult Function()? hintToggled,
+    TResult Function()? muteToggled,
     TResult Function(Flashcard flashcard)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -678,6 +705,7 @@ class _$NextCardImpl implements _NextCard {
     required TResult Function(_SessionSaved value) sessionSaved,
     required TResult Function(_SessionCanceled value) sessionCanceled,
     required TResult Function(_HintToggled value) hintToggled,
+    required TResult Function(_MuteToggled value) muteToggled,
     required TResult Function(_CurrentCardEdited value) currentCardEdited,
   }) {
     return nextCard(this);
@@ -693,6 +721,7 @@ class _$NextCardImpl implements _NextCard {
     TResult? Function(_SessionSaved value)? sessionSaved,
     TResult? Function(_SessionCanceled value)? sessionCanceled,
     TResult? Function(_HintToggled value)? hintToggled,
+    TResult? Function(_MuteToggled value)? muteToggled,
     TResult? Function(_CurrentCardEdited value)? currentCardEdited,
   }) {
     return nextCard?.call(this);
@@ -708,6 +737,7 @@ class _$NextCardImpl implements _NextCard {
     TResult Function(_SessionSaved value)? sessionSaved,
     TResult Function(_SessionCanceled value)? sessionCanceled,
     TResult Function(_HintToggled value)? hintToggled,
+    TResult Function(_MuteToggled value)? muteToggled,
     TResult Function(_CurrentCardEdited value)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -770,6 +800,7 @@ class _$SessionSavedImpl implements _SessionSaved {
     required TResult Function() sessionSaved,
     required TResult Function() sessionCanceled,
     required TResult Function() hintToggled,
+    required TResult Function() muteToggled,
     required TResult Function(Flashcard flashcard) currentCardEdited,
   }) {
     return sessionSaved();
@@ -785,6 +816,7 @@ class _$SessionSavedImpl implements _SessionSaved {
     TResult? Function()? sessionSaved,
     TResult? Function()? sessionCanceled,
     TResult? Function()? hintToggled,
+    TResult? Function()? muteToggled,
     TResult? Function(Flashcard flashcard)? currentCardEdited,
   }) {
     return sessionSaved?.call();
@@ -800,6 +832,7 @@ class _$SessionSavedImpl implements _SessionSaved {
     TResult Function()? sessionSaved,
     TResult Function()? sessionCanceled,
     TResult Function()? hintToggled,
+    TResult Function()? muteToggled,
     TResult Function(Flashcard flashcard)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -820,6 +853,7 @@ class _$SessionSavedImpl implements _SessionSaved {
     required TResult Function(_SessionSaved value) sessionSaved,
     required TResult Function(_SessionCanceled value) sessionCanceled,
     required TResult Function(_HintToggled value) hintToggled,
+    required TResult Function(_MuteToggled value) muteToggled,
     required TResult Function(_CurrentCardEdited value) currentCardEdited,
   }) {
     return sessionSaved(this);
@@ -835,6 +869,7 @@ class _$SessionSavedImpl implements _SessionSaved {
     TResult? Function(_SessionSaved value)? sessionSaved,
     TResult? Function(_SessionCanceled value)? sessionCanceled,
     TResult? Function(_HintToggled value)? hintToggled,
+    TResult? Function(_MuteToggled value)? muteToggled,
     TResult? Function(_CurrentCardEdited value)? currentCardEdited,
   }) {
     return sessionSaved?.call(this);
@@ -850,6 +885,7 @@ class _$SessionSavedImpl implements _SessionSaved {
     TResult Function(_SessionSaved value)? sessionSaved,
     TResult Function(_SessionCanceled value)? sessionCanceled,
     TResult Function(_HintToggled value)? hintToggled,
+    TResult Function(_MuteToggled value)? muteToggled,
     TResult Function(_CurrentCardEdited value)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -912,6 +948,7 @@ class _$SessionCanceledImpl implements _SessionCanceled {
     required TResult Function() sessionSaved,
     required TResult Function() sessionCanceled,
     required TResult Function() hintToggled,
+    required TResult Function() muteToggled,
     required TResult Function(Flashcard flashcard) currentCardEdited,
   }) {
     return sessionCanceled();
@@ -927,6 +964,7 @@ class _$SessionCanceledImpl implements _SessionCanceled {
     TResult? Function()? sessionSaved,
     TResult? Function()? sessionCanceled,
     TResult? Function()? hintToggled,
+    TResult? Function()? muteToggled,
     TResult? Function(Flashcard flashcard)? currentCardEdited,
   }) {
     return sessionCanceled?.call();
@@ -942,6 +980,7 @@ class _$SessionCanceledImpl implements _SessionCanceled {
     TResult Function()? sessionSaved,
     TResult Function()? sessionCanceled,
     TResult Function()? hintToggled,
+    TResult Function()? muteToggled,
     TResult Function(Flashcard flashcard)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -962,6 +1001,7 @@ class _$SessionCanceledImpl implements _SessionCanceled {
     required TResult Function(_SessionSaved value) sessionSaved,
     required TResult Function(_SessionCanceled value) sessionCanceled,
     required TResult Function(_HintToggled value) hintToggled,
+    required TResult Function(_MuteToggled value) muteToggled,
     required TResult Function(_CurrentCardEdited value) currentCardEdited,
   }) {
     return sessionCanceled(this);
@@ -977,6 +1017,7 @@ class _$SessionCanceledImpl implements _SessionCanceled {
     TResult? Function(_SessionSaved value)? sessionSaved,
     TResult? Function(_SessionCanceled value)? sessionCanceled,
     TResult? Function(_HintToggled value)? hintToggled,
+    TResult? Function(_MuteToggled value)? muteToggled,
     TResult? Function(_CurrentCardEdited value)? currentCardEdited,
   }) {
     return sessionCanceled?.call(this);
@@ -992,6 +1033,7 @@ class _$SessionCanceledImpl implements _SessionCanceled {
     TResult Function(_SessionSaved value)? sessionSaved,
     TResult Function(_SessionCanceled value)? sessionCanceled,
     TResult Function(_HintToggled value)? hintToggled,
+    TResult Function(_MuteToggled value)? muteToggled,
     TResult Function(_CurrentCardEdited value)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -1054,6 +1096,7 @@ class _$HintToggledImpl implements _HintToggled {
     required TResult Function() sessionSaved,
     required TResult Function() sessionCanceled,
     required TResult Function() hintToggled,
+    required TResult Function() muteToggled,
     required TResult Function(Flashcard flashcard) currentCardEdited,
   }) {
     return hintToggled();
@@ -1069,6 +1112,7 @@ class _$HintToggledImpl implements _HintToggled {
     TResult? Function()? sessionSaved,
     TResult? Function()? sessionCanceled,
     TResult? Function()? hintToggled,
+    TResult? Function()? muteToggled,
     TResult? Function(Flashcard flashcard)? currentCardEdited,
   }) {
     return hintToggled?.call();
@@ -1084,6 +1128,7 @@ class _$HintToggledImpl implements _HintToggled {
     TResult Function()? sessionSaved,
     TResult Function()? sessionCanceled,
     TResult Function()? hintToggled,
+    TResult Function()? muteToggled,
     TResult Function(Flashcard flashcard)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -1104,6 +1149,7 @@ class _$HintToggledImpl implements _HintToggled {
     required TResult Function(_SessionSaved value) sessionSaved,
     required TResult Function(_SessionCanceled value) sessionCanceled,
     required TResult Function(_HintToggled value) hintToggled,
+    required TResult Function(_MuteToggled value) muteToggled,
     required TResult Function(_CurrentCardEdited value) currentCardEdited,
   }) {
     return hintToggled(this);
@@ -1119,6 +1165,7 @@ class _$HintToggledImpl implements _HintToggled {
     TResult? Function(_SessionSaved value)? sessionSaved,
     TResult? Function(_SessionCanceled value)? sessionCanceled,
     TResult? Function(_HintToggled value)? hintToggled,
+    TResult? Function(_MuteToggled value)? muteToggled,
     TResult? Function(_CurrentCardEdited value)? currentCardEdited,
   }) {
     return hintToggled?.call(this);
@@ -1134,6 +1181,7 @@ class _$HintToggledImpl implements _HintToggled {
     TResult Function(_SessionSaved value)? sessionSaved,
     TResult Function(_SessionCanceled value)? sessionCanceled,
     TResult Function(_HintToggled value)? hintToggled,
+    TResult Function(_MuteToggled value)? muteToggled,
     TResult Function(_CurrentCardEdited value)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -1146,6 +1194,154 @@ class _$HintToggledImpl implements _HintToggled {
 
 abstract class _HintToggled implements ReviewEvent {
   const factory _HintToggled() = _$HintToggledImpl;
+}
+
+/// @nodoc
+abstract class _$$MuteToggledImplCopyWith<$Res> {
+  factory _$$MuteToggledImplCopyWith(
+          _$MuteToggledImpl value, $Res Function(_$MuteToggledImpl) then) =
+      __$$MuteToggledImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$MuteToggledImplCopyWithImpl<$Res>
+    extends _$ReviewEventCopyWithImpl<$Res, _$MuteToggledImpl>
+    implements _$$MuteToggledImplCopyWith<$Res> {
+  __$$MuteToggledImplCopyWithImpl(
+      _$MuteToggledImpl _value, $Res Function(_$MuteToggledImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ReviewEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$MuteToggledImpl implements _MuteToggled {
+  const _$MuteToggledImpl();
+
+  @override
+  String toString() {
+    return 'ReviewEvent.muteToggled()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$MuteToggledImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function() alwaysShowAnswerToggled,
+    required TResult Function(String givenAnswer) cardReviewed,
+    required TResult Function() nextCard,
+    required TResult Function() sessionSaved,
+    required TResult Function() sessionCanceled,
+    required TResult Function() hintToggled,
+    required TResult Function() muteToggled,
+    required TResult Function(Flashcard flashcard) currentCardEdited,
+  }) {
+    return muteToggled();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function()? alwaysShowAnswerToggled,
+    TResult? Function(String givenAnswer)? cardReviewed,
+    TResult? Function()? nextCard,
+    TResult? Function()? sessionSaved,
+    TResult? Function()? sessionCanceled,
+    TResult? Function()? hintToggled,
+    TResult? Function()? muteToggled,
+    TResult? Function(Flashcard flashcard)? currentCardEdited,
+  }) {
+    return muteToggled?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function()? alwaysShowAnswerToggled,
+    TResult Function(String givenAnswer)? cardReviewed,
+    TResult Function()? nextCard,
+    TResult Function()? sessionSaved,
+    TResult Function()? sessionCanceled,
+    TResult Function()? hintToggled,
+    TResult Function()? muteToggled,
+    TResult Function(Flashcard flashcard)? currentCardEdited,
+    required TResult orElse(),
+  }) {
+    if (muteToggled != null) {
+      return muteToggled();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_AlwaysShowAnswerToggled value)
+        alwaysShowAnswerToggled,
+    required TResult Function(_CardReview value) cardReviewed,
+    required TResult Function(_NextCard value) nextCard,
+    required TResult Function(_SessionSaved value) sessionSaved,
+    required TResult Function(_SessionCanceled value) sessionCanceled,
+    required TResult Function(_HintToggled value) hintToggled,
+    required TResult Function(_MuteToggled value) muteToggled,
+    required TResult Function(_CurrentCardEdited value) currentCardEdited,
+  }) {
+    return muteToggled(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
+    TResult? Function(_CardReview value)? cardReviewed,
+    TResult? Function(_NextCard value)? nextCard,
+    TResult? Function(_SessionSaved value)? sessionSaved,
+    TResult? Function(_SessionCanceled value)? sessionCanceled,
+    TResult? Function(_HintToggled value)? hintToggled,
+    TResult? Function(_MuteToggled value)? muteToggled,
+    TResult? Function(_CurrentCardEdited value)? currentCardEdited,
+  }) {
+    return muteToggled?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_AlwaysShowAnswerToggled value)? alwaysShowAnswerToggled,
+    TResult Function(_CardReview value)? cardReviewed,
+    TResult Function(_NextCard value)? nextCard,
+    TResult Function(_SessionSaved value)? sessionSaved,
+    TResult Function(_SessionCanceled value)? sessionCanceled,
+    TResult Function(_HintToggled value)? hintToggled,
+    TResult Function(_MuteToggled value)? muteToggled,
+    TResult Function(_CurrentCardEdited value)? currentCardEdited,
+    required TResult orElse(),
+  }) {
+    if (muteToggled != null) {
+      return muteToggled(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _MuteToggled implements ReviewEvent {
+  const factory _MuteToggled() = _$MuteToggledImpl;
 }
 
 /// @nodoc
@@ -1237,6 +1433,7 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
     required TResult Function() sessionSaved,
     required TResult Function() sessionCanceled,
     required TResult Function() hintToggled,
+    required TResult Function() muteToggled,
     required TResult Function(Flashcard flashcard) currentCardEdited,
   }) {
     return currentCardEdited(flashcard);
@@ -1252,6 +1449,7 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
     TResult? Function()? sessionSaved,
     TResult? Function()? sessionCanceled,
     TResult? Function()? hintToggled,
+    TResult? Function()? muteToggled,
     TResult? Function(Flashcard flashcard)? currentCardEdited,
   }) {
     return currentCardEdited?.call(flashcard);
@@ -1267,6 +1465,7 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
     TResult Function()? sessionSaved,
     TResult Function()? sessionCanceled,
     TResult Function()? hintToggled,
+    TResult Function()? muteToggled,
     TResult Function(Flashcard flashcard)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -1287,6 +1486,7 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
     required TResult Function(_SessionSaved value) sessionSaved,
     required TResult Function(_SessionCanceled value) sessionCanceled,
     required TResult Function(_HintToggled value) hintToggled,
+    required TResult Function(_MuteToggled value) muteToggled,
     required TResult Function(_CurrentCardEdited value) currentCardEdited,
   }) {
     return currentCardEdited(this);
@@ -1302,6 +1502,7 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
     TResult? Function(_SessionSaved value)? sessionSaved,
     TResult? Function(_SessionCanceled value)? sessionCanceled,
     TResult? Function(_HintToggled value)? hintToggled,
+    TResult? Function(_MuteToggled value)? muteToggled,
     TResult? Function(_CurrentCardEdited value)? currentCardEdited,
   }) {
     return currentCardEdited?.call(this);
@@ -1317,6 +1518,7 @@ class _$CurrentCardEditedImpl implements _CurrentCardEdited {
     TResult Function(_SessionSaved value)? sessionSaved,
     TResult Function(_SessionCanceled value)? sessionCanceled,
     TResult Function(_HintToggled value)? hintToggled,
+    TResult Function(_MuteToggled value)? muteToggled,
     TResult Function(_CurrentCardEdited value)? currentCardEdited,
     required TResult orElse(),
   }) {
@@ -1350,6 +1552,7 @@ mixin _$ReviewState {
   int get answerCount => throw _privateConstructorUsedError;
   bool get isInitialising => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
+  bool get isMuted => throw _privateConstructorUsedError;
   bool get isSessionEnded => throw _privateConstructorUsedError; //
   bool get shouldAlwaysShowAnswer => throw _privateConstructorUsedError;
   bool get hasReviewError => throw _privateConstructorUsedError;
@@ -1381,6 +1584,7 @@ abstract class $ReviewStateCopyWith<$Res> {
       int answerCount,
       bool isInitialising,
       bool isSubmitting,
+      bool isMuted,
       bool isSessionEnded,
       bool shouldAlwaysShowAnswer,
       bool hasReviewError,
@@ -1410,6 +1614,7 @@ class _$ReviewStateCopyWithImpl<$Res, $Val extends ReviewState>
     Object? answerCount = null,
     Object? isInitialising = null,
     Object? isSubmitting = null,
+    Object? isMuted = null,
     Object? isSessionEnded = null,
     Object? shouldAlwaysShowAnswer = null,
     Object? hasReviewError = null,
@@ -1435,6 +1640,10 @@ class _$ReviewStateCopyWithImpl<$Res, $Val extends ReviewState>
       isSubmitting: null == isSubmitting
           ? _value.isSubmitting
           : isSubmitting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isMuted: null == isMuted
+          ? _value.isMuted
+          : isMuted // ignore: cast_nullable_to_non_nullable
               as bool,
       isSessionEnded: null == isSessionEnded
           ? _value.isSessionEnded
@@ -1485,6 +1694,7 @@ abstract class _$$ReviewStateImplCopyWith<$Res>
       int answerCount,
       bool isInitialising,
       bool isSubmitting,
+      bool isMuted,
       bool isSessionEnded,
       bool shouldAlwaysShowAnswer,
       bool hasReviewError,
@@ -1512,6 +1722,7 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
     Object? answerCount = null,
     Object? isInitialising = null,
     Object? isSubmitting = null,
+    Object? isMuted = null,
     Object? isSessionEnded = null,
     Object? shouldAlwaysShowAnswer = null,
     Object? hasReviewError = null,
@@ -1537,6 +1748,10 @@ class __$$ReviewStateImplCopyWithImpl<$Res>
       isSubmitting: null == isSubmitting
           ? _value.isSubmitting
           : isSubmitting // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isMuted: null == isMuted
+          ? _value.isMuted
+          : isMuted // ignore: cast_nullable_to_non_nullable
               as bool,
       isSessionEnded: null == isSessionEnded
           ? _value.isSessionEnded
@@ -1582,6 +1797,7 @@ class _$ReviewStateImpl extends _ReviewState {
       this.answerCount = 0,
       this.isInitialising = false,
       this.isSubmitting = false,
+      this.isMuted = false,
       this.isSessionEnded = false,
       this.shouldAlwaysShowAnswer = false,
       this.hasReviewError = false,
@@ -1608,6 +1824,9 @@ class _$ReviewStateImpl extends _ReviewState {
   @override
   @JsonKey()
   final bool isSubmitting;
+  @override
+  @JsonKey()
+  final bool isMuted;
   @override
   @JsonKey()
   final bool isSessionEnded;
@@ -1644,7 +1863,7 @@ class _$ReviewStateImpl extends _ReviewState {
 
   @override
   String toString() {
-    return 'ReviewState(submissionError: $submissionError, answerCount: $answerCount, isInitialising: $isInitialising, isSubmitting: $isSubmitting, isSessionEnded: $isSessionEnded, shouldAlwaysShowAnswer: $shouldAlwaysShowAnswer, hasReviewError: $hasReviewError, isHintVisible: $isHintVisible, isAnswerVisible: $isAnswerVisible, currentCardId: $currentCardId, flashcards: $flashcards, sessionAnswers: $sessionAnswers)';
+    return 'ReviewState(submissionError: $submissionError, answerCount: $answerCount, isInitialising: $isInitialising, isSubmitting: $isSubmitting, isMuted: $isMuted, isSessionEnded: $isSessionEnded, shouldAlwaysShowAnswer: $shouldAlwaysShowAnswer, hasReviewError: $hasReviewError, isHintVisible: $isHintVisible, isAnswerVisible: $isAnswerVisible, currentCardId: $currentCardId, flashcards: $flashcards, sessionAnswers: $sessionAnswers)';
   }
 
   @override
@@ -1660,6 +1879,7 @@ class _$ReviewStateImpl extends _ReviewState {
                 other.isInitialising == isInitialising) &&
             (identical(other.isSubmitting, isSubmitting) ||
                 other.isSubmitting == isSubmitting) &&
+            (identical(other.isMuted, isMuted) || other.isMuted == isMuted) &&
             (identical(other.isSessionEnded, isSessionEnded) ||
                 other.isSessionEnded == isSessionEnded) &&
             (identical(other.shouldAlwaysShowAnswer, shouldAlwaysShowAnswer) ||
@@ -1686,6 +1906,7 @@ class _$ReviewStateImpl extends _ReviewState {
       answerCount,
       isInitialising,
       isSubmitting,
+      isMuted,
       isSessionEnded,
       shouldAlwaysShowAnswer,
       hasReviewError,
@@ -1717,6 +1938,7 @@ abstract class _ReviewState extends ReviewState {
           final int answerCount,
           final bool isInitialising,
           final bool isSubmitting,
+          final bool isMuted,
           final bool isSessionEnded,
           final bool shouldAlwaysShowAnswer,
           final bool hasReviewError,
@@ -1739,6 +1961,8 @@ abstract class _ReviewState extends ReviewState {
   bool get isInitialising;
   @override
   bool get isSubmitting;
+  @override
+  bool get isMuted;
   @override
   bool get isSessionEnded; //
   @override

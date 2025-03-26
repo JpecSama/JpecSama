@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:jpec_sama/constants.dart';
 import 'package:jpec_sama/extensions/context_extension.dart';
 
@@ -14,6 +15,8 @@ class FlashcardTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final f = DateFormat('yyyy-MM-dd hh:mm');
+
     return InkWell(
       onTap: () {
         showDialog(
@@ -55,7 +58,7 @@ class FlashcardTile extends StatelessWidget {
               flashcard.flashcardAnswer.map((ans) => ans.answer).join(', '),
             ),
             Text(
-              "${context.translations.nextAvailable}: ${flashcard.nextAvailableAt.toIso8601String()}",
+              "${context.translations.nextAvailable}: ${f.format(flashcard.nextAvailableAt)}",
               style: context.textTheme.labelMedium,
             ),
           ],
