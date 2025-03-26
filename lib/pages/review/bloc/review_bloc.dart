@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:jpec_sama/extensions/string_extension.dart';
 import 'package:jpec_sama/models/flashcard.dart';
@@ -53,7 +54,10 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
         isInitialising: true,
       ),
     );
-    //
+    var box = await Hive.openBox('review');
+    bool shouldAlwaysShowAnswer =
+        box.get('shouldAlwaysShowAnswer', defaultValue: true);
+
     List<Flashcard> flashcards = await _repo.getCardsToReview(maxCount);
     flashcards.shuffle();
     emit(
@@ -61,6 +65,7 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
         flashcards: flashcards,
         currentCardId: flashcards.firstOrNull?.id,
         isInitialising: false,
+        shouldAlwaysShowAnswer: shouldAlwaysShowAnswer,
       ),
     );
   }
@@ -238,10 +243,14 @@ class ReviewBloc extends HydratedBloc<ReviewEvent, ReviewState> {
   }
 
   _onAlwaysShowAnswerToggled(
-      _AlwaysShowAnswerToggled event, Emitter<ReviewState> emit) {
+      _AlwaysShowAnswerToggled event, Emitter<ReviewState> emit) async {
+    var box = await Hive.openBox('review');
+    bool newValue = !state.shouldAlwaysShowAnswer;
+    await box.put('shouldAlwaysShowAnswer', newValue);
+
     emit(
       state.copyWith(
-        shouldAlwaysShowAnswer: !state.shouldAlwaysShowAnswer,
+        shouldAlwaysShowAnswer: newValue,
       ),
     );
   }

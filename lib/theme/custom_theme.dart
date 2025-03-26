@@ -20,6 +20,7 @@ class CustomTheme {
   static const mushikuri = Color(0xffD3B17D);
 
   static const aimirucha = Color(0xff2E372E);
+  static const lightMizuasagi = Color.fromARGB(255, 151, 194, 176);
   static const mizuasagi = Color(0xff749F8D);
   static const hanasagi = Color(0xff1D697C);
   static const aotake = Color(0xffC6C2B6); // https://nipponcolors.com/#aotake
@@ -34,6 +35,7 @@ class CustomTheme {
 
   static ThemeData defaultTheme = ThemeData(
     useMaterial3: true,
+
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
         foregroundColor: WidgetStateProperty.all(Colors.black),
@@ -198,13 +200,11 @@ class CustomTheme {
     ),
     tooltipTheme: TooltipThemeData(
       decoration: BoxDecoration(
-        // color: const Color(0xFF9e7b56), // Akakō
         borderRadius: BorderRadius.circular(5),
       ),
       textStyle: const TextStyle(color: sumiIro),
     ),
     dropdownMenuTheme: DropdownMenuThemeData(
-      
       inputDecorationTheme: InputDecorationTheme(),
       textStyle: TextStyle(
         color: Colors.white,
@@ -216,15 +216,19 @@ class CustomTheme {
       ),
     ),
 
-    listTileTheme: const ListTileThemeData(
+    listTileTheme: ListTileThemeData(
       textColor: sumiIro,
-      tileColor: null,
+      tileColor: CustomTheme.sakuraIro,
+      selectedTileColor: CustomTheme.mizuasagi,
       iconColor: sumiIro,
       minVerticalPadding: 8,
-      // shape: RoundedRectangleBorder(
-      //   side: const BorderSide(color: Colors.black, width: 1),
-      //   borderRadius: BorderRadius.circular(5),
-      // ),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: Colors.black,
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(2),
+      ),
     ),
   );
 }

@@ -22,7 +22,9 @@ class EditCardDialog extends StatelessWidget {
     return BlocProvider(
       create: (context) => EditFlashcardBloc(initialFlashcard: flashcard)
         ..add(const EditFlashcardEvent.started()),
-      child: const EditCardDialogWrapper(),
+      child: EditCardDialogWrapper(
+        onFlashcardUpdated: onFlashcardUpdated,
+      ),
     );
   }
 }
@@ -49,8 +51,11 @@ class EditCardDialogWrapper extends StatelessWidget {
 }
 
 class EditCardDialogContent extends StatefulWidget {
-  const EditCardDialogContent(
-      {super.key, required this.flashcard, this.onFlashcardUpdated});
+  const EditCardDialogContent({
+    super.key,
+    required this.flashcard,
+    this.onFlashcardUpdated,
+  });
   final Flashcard flashcard;
   final void Function(Flashcard flashcard)? onFlashcardUpdated;
 
@@ -226,25 +231,29 @@ class _EditCardDialogContentState extends State<EditCardDialogContent> {
                         backgroundColor: CustomTheme.ebicha,
                       ),
                       onPressed: () async {
-                        bool isSuccess =
-                            await _reviewRepository.updateFlashcard(_flashcard,
-                                answers: _withAnswers
-                                    ? _answerControllers
-                                        .map((controller) =>
-                                            controller.text.trim())
-                                        .where((text) => text.isNotEmpty)
-                                    : null);
-                        print("isSuccess: $isSuccess");
-                        if (isSuccess) {
+                        Flashcard? updatedFlashcard =
+                            await _reviewRepository.updateFlashcard(
+                          _flashcard,
+                          answers: _withAnswers
+                              ? _answerControllers
+                                  .map((controller) => controller.text.trim())
+                                  .where((text) => text.isNotEmpty)
+                              : null,
+                        );
+                        if (updatedFlashcard != null) {
                           if (widget.onFlashcardUpdated != null) {
-                            widget.onFlashcardUpdated!(_flashcard);
+                            widget.onFlashcardUpdated!(updatedFlashcard);
+                            Navigator.of(context).pop();
+                          } else {
+                            Navigator.of(context).pop(
+                              _flashcard,
+                            );
                           }
-                          Navigator.of(context).pop(
-                            _flashcard,
-                          );
                         }
                       },
-                      child: Text(context.translations.submit),
+                      child: Text(
+                        context.translations.submit,
+                      ),
                     ),
                   )
                 ],

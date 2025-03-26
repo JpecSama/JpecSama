@@ -42,7 +42,9 @@ class _CardReviewContentState extends State<CardReviewContent> {
                 previous.isAnswerVisible != current.isAnswerVisible,
             builder: (context, state) {
               Color? backgroundColor = state.isAnswerVisible
-                  ? (state.hasReviewError ? CustomTheme.momoIro.withAlpha(230) : CustomTheme.mizuasagi)
+                  ? (state.hasReviewError
+                      ? CustomTheme.momoIro.withAlpha(230)
+                      : CustomTheme.mizuasagi.withAlpha(150))
                   : null;
               return Container(
                 decoration: BoxDecoration(
@@ -86,8 +88,8 @@ class _CardReviewContentState extends State<CardReviewContent> {
                                           ? Container()
                                           : Text(
                                               currentCard.answerInfos!,
-                                              style: context
-                                                  .textTheme.bodyMedium,
+                                              style:
+                                                  context.textTheme.bodyMedium,
                                             ),
                                     ],
                                   ),
@@ -100,10 +102,9 @@ class _CardReviewContentState extends State<CardReviewContent> {
                                   child: AddFlashcardAnswer(
                                     flashcard: currentCard,
                                     reviewRepository: _reviewRepository,
-                                    buttonBackgroundColor:
-                                        state.hasReviewError
-                                            ? CustomTheme.mizuasagi
-                                            : CustomTheme.momoIro.withAlpha(230),
+                                    buttonBackgroundColor: state.hasReviewError
+                                        ? CustomTheme.mizuasagi
+                                        : CustomTheme.momoIro.withAlpha(230),
                                   ),
                                 ),
                               ],

@@ -32,6 +32,7 @@ class ReviewSettingsDialog extends StatelessWidget {
                   current.shouldAlwaysShowAnswer,
               builder: (context, state) {
                 return ListTile(
+                  selected: state.shouldAlwaysShowAnswer,
                   title: const Text('Always show answer'),
                   subtitle: const Text(
                       'Show the answer immediately after submitting your answer'),
@@ -53,16 +54,15 @@ class ReviewSettingsDialog extends StatelessWidget {
                 if (flashcard == null) {
                   return;
                 }
-                Navigator.of(context).pop();
-
                 showDialog(
                   context: context,
-                  builder: (_) => EditCardDialog(
+                  builder: (dialogContext) => EditCardDialog(
                     flashcard: flashcard,
                     onFlashcardUpdated: (flashcard) {
                       context.read<ReviewBloc>().add(
                             ReviewEvent.currentCardEdited(flashcard: flashcard),
                           );
+                      Navigator.of(dialogContext).pop();
                     },
                   ),
                 );
@@ -72,7 +72,7 @@ class ReviewSettingsDialog extends StatelessWidget {
               subtitle: const Text(
                 'Edit the current card',
               ),
-            )
+            ),
           ],
         ),
       ),

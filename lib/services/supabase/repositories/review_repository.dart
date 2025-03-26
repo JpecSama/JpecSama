@@ -1,4 +1,5 @@
 import 'package:jpec_sama/models/flashcard.dart';
+import 'package:jpec_sama/models/flashcard_answer.dart';
 import 'package:jpec_sama/services/review_service.dart';
 import 'package:jpec_sama/services/supabase/supabase_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -7,7 +8,7 @@ import '../../../models/flashcard_session_answer.dart';
 import '../../notification_service.dart';
 
 class ReviewRepository {
-  Future<bool> updateFlashcard(Flashcard flashcard,
+  Future<Flashcard?> updateFlashcard(Flashcard flashcard,
       {Iterable<String>? answers}) async {
     try {
       await supabase
@@ -15,15 +16,16 @@ class ReviewRepository {
           .update(flashcard.toInsertJson())
           .eq('id', flashcard.id!);
     } catch (e) {
-      print(e);
-      return false;
+      return null;
     }
-
+    List<FlashcardAnswer> flashcardAnswers = flashcard.flashcardAnswer;
     if (answers != null) {
       await deleteFlashcardAnswers(flashcard.id!);
-      await createFlashcardAnswers(flashcard.id!, answers);
+      flashcardAnswers = await createFlashcardAnswers(flashcard.id!, answers);
     }
-    return true;
+    return flashcard.copyWith(
+      flashcardAnswer: flashcardAnswers,
+    );
   }
 
   Future<String?> addFlashcardAnswer(String flashcardId, String answer) async {
@@ -49,14 +51,18 @@ class ReviewRepository {
         .eq('flashcard_id', flashcardId);
   }
 
-  Future<void> createFlashcardAnswers(
+  Future<List<FlashcardAnswer>> createFlashcardAnswers(
       String flashcardId, Iterable<String> answers) async {
-    await supabase.from('flashcard_answer').insert(answers.map((answer) {
+    final insertedAnswers = await supabase
+        .from('flashcard_answer')
+        .insert(answers.map((answer) {
           return {
             'flashcard_id': flashcardId,
             'answer': answer,
           };
-        }).toList());
+        }).toList())
+        .select('*');
+    return insertedAnswers.map((el) => FlashcardAnswer.fromJson(el)).toList();
   }
 
   Future<bool> createFlashcard(
@@ -76,8 +82,8 @@ class ReviewRepository {
         .single();
 
     final flashcardId = res['id'];
-
-    await createFlashcardAnswers(flashcardId, answers);
+    List<FlashcardAnswer> flashcardAnswers =
+        await createFlashcardAnswers(flashcardId, answers);
 
     if (isReversable) {
       String text = answers.first;
@@ -91,6 +97,7 @@ class ReviewRepository {
         userId,
         flashcard.copyWith(
           flashcardText: text,
+          flashcardAnswer: flashcardAnswers,
           hint: hint,
           sourceLanguage: flashcard.destLanguage,
           destLanguage: flashcard.sourceLanguage,

@@ -26,7 +26,6 @@ class FlashcardHead extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               spacing: 8,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,6 +61,7 @@ class FlashcardHead extends StatelessWidget {
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InkWell(
                         onTap: () {
@@ -80,14 +80,16 @@ class FlashcardHead extends StatelessWidget {
                         buildWhen: (previous, current) =>
                             previous.isHintVisible != current.isHintVisible,
                         builder: (context, state) {
-                          return state.isHintVisible && currentCard.hint != null
-                              ? Text(
-                                  currentCard.hint!,
-                                  style: context.textTheme.titleLarge!.copyWith(
-                                    color: Colors.black,
-                                  ),
-                                )
-                              : Container();
+                          if (!state.isHintVisible ||
+                              currentCard.hint == null) {
+                            return SizedBox.shrink();
+                          }
+                          return Text(
+                            currentCard.hint!,
+                            style: context.textTheme.titleMedium!.copyWith(
+                              color: Colors.black,
+                            ),
+                          );
                         },
                       ),
                     ],
